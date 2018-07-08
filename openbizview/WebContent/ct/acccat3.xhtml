@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- 
+     Copyright (C) 2011 - 2016  DVCONSULTORES
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+	
+	    http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+ --> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if IE 8]> <html lang="en" class="ie8"/> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"/> <![endif]-->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body class="nav-md" onload="myModalAccesRol();">
+
+    <div class="container body">
+        <div class="main_container">
+
+         <ui:include src="/WEB-INF/templates/menu.xhtml" />
+            <!-- page content -->
+            <div class="right_col" role="main">
+               <div class="page-title">
+                        <div class="title_left">
+                            <h3>#{msg.acccat3tit} &nbsp; </h3>    
+                             <!-- Mensaje -->                                       
+                        </div>                            
+                    </div>
+               <div class="clearfix"></div>
+               <h:form id="formacccat3" styleClass="form-horizontal form-label-left">
+               
+               <div class="col-md-4 col-sm-4 col-xs-12">
+                        
+                            <div class="x_panel">
+                                <div class="x_title">
+                                <h2><small>#{msg.htmlload}</small></h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li class="dropdown">
+                                        <a HREF="http://www.openbizview.com/wiki/doku.php?id=acccat3" target="_new" title="Wiki"><i class="fa fa-file-text text-info"></i> #{text.html11}</a>
+                                        </li>
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                <p:panel id="panel" style="border:0">
+                                
+                                   <div class="form-group">
+                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.bvtmenurol}</label>
+                                         <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <p:autoComplete id="rol" value="#{acccat3.b_codrol}" placeholder="#{msg.acccat1rol}"   completeMethod="#{autocomplete.completeRol}"  dropdown="true" scrollHeight="250" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}">
+										    <p:ajax event="itemSelect" update="tbResult"  listener="#{acccat3.updatetbfilter(acccat3.b_codrol, '', '')}" />
+										     </p:autoComplete>
+										     <p:message for="rol" styleClass="margin-top-5"/> 
+										     <p:autoComplete id="bcodcat1" value="#{acccat3.b_codcat1}" placeholder="#{msg.acccat3Cat1}" emptyMessage="#{msg.html138}" completeMethod="#{autocomplete.completeCat1AccCat2}"  dropdown="true" scrollHeight="250" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}">
+										     <p:ajax event="itemSelect" update="tbResult" listener="#{acccat3.updatetbfilter(acccat3.b_codrol, acccat3.b_codcat1, '')}"/>		     	
+										     </p:autoComplete>
+										     <p:message for="bcodcat1" styleClass="margin-top-5"/>
+										     <p:autoComplete id="bcodcat2" value="#{acccat3.b_codcat2}" placeholder="#{msg.acccat3Cat2}" emptyMessage="#{msg.html138}" completeMethod="#{autocomplete.completeCat2AccCat3}"  dropdown="true" scrollHeight="250" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}">
+										     <p:ajax event="itemSelect"  update="tbResult" listener="#{acccat3.updatetbfilter(acccat3.b_codrol, acccat3.b_codcat1, acccat3.b_codcat2)}" />
+										     </p:autoComplete>
+							                 <p:message for="bcodcat2" styleClass="margin-top-5"/>
+                                         </div>
+                                         
+                                   </div>
+                                   
+
+                                        <div class="ln_solid"></div>
+                                        <div class="form-group">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                             <p:commandButton update="tbResult, panel, growl" accesskey="i" id="btnIn" action="#{acccat3.guardar}"  
+                                              rendered="#{smnubean.opcbot('1')}" value="#{msg.htmlguardar}" title="#{msg.htmlg}" icon="fa fa-floppy-o" styleClass="btn btn-success btn-md"/>                                         
+                                                <p:commandButton icon="fa fa-refresh" update="panel, tbResult, growl" process="@this"  action="#{acccat3.reset()}"
+								                 title="#{msg.htmlr}"  styleClass="btn btn-primary btn-sm">  
+								                 <p:resetInput target="panel" /> 
+								                 <f:actionListener binding="#{bd.setRol('')}"/>
+								                 <f:actionListener binding="#{bd.setAccCat1('')}"/>
+								                 <f:actionListener binding="#{bd.setAccCat2('')}"/>
+								                 </p:commandButton> 
+                                            </div>
+                                        </div>   
+                                 </p:panel>
+
+                                </div>
+                            </div>
+                            <p:messages globalOnly="true" id="growl" closable="true" showIcon="true"/> 
+                        </div>
+                        
+                        
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                 <div class="x_panel">
+                   <div class="x_title">
+                   <h2><small>#{msg.htmlfilter}</small></h2>
+                   <ul class="nav navbar-right panel_toolbox">
+                   </ul>
+                  <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                               
+                   <!-- Tabla con el resultado -->
+					<p:dataTable id="tbResult" styleClass="table table-striped" emptyMessage="#{msg.result}" var="tb"  value="#{acccat3.lazyModel}"   lazy="true" sortBy="b_codcat1"  
+					paginator="true" paginatorAlwaysVisible="false" rows="50" rowsPerPageTemplate="5,10,15,20,50,100,500" paginatorPosition="top"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} &#160;&#160; {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}"
+					currentPageReportTemplate=" {currentPage} - {totalPages} #{msg.html28} #{acccat1.rows}"  
+					 widgetVar="global" reflow="true">
+					
+					<f:facet name="header"> 			
+		            <p:outputPanel>  
+		                <h:outputText value="#{msg.htmlb}" />&#160;&#160;  
+		                <p:inputText id="globalFilter" onkeyup="PF('global').filter()" style="width:150px;height:35px;" /> 
+		                <p:tooltip for="globalFilter" value="#{msg.html36}" showEffect="fade" hideEffect="fade" />  
+		                <p:watermark for="globalFilter" value="#{msg.html29}" />
+		            </p:outputPanel>         
+		            </f:facet> 
+		            
+		            <p:column width="100">  
+		            <f:facet name="header">#{msg.acccat3TbCod3}</f:facet>  
+		            <h:outputLabel value="#{tb.b_codcat3}"  />
+		            </p:column> 
+		            
+		            <p:column styleClass="wrap">  
+		            <f:facet name="header">#{msg.acccat3TbCat3}</f:facet>  
+		            <h:outputLabel value="#{tb.descat3}"  />
+		            </p:column> 
+		            
+		            <p:column width="68" >  
+		            <f:facet  name="header">
+		            <p:commandLink value="#{msg.bvtmenuTbAcc}" onclick="fm_check('toAcc',true)" />
+		            </f:facet>  
+		            <input type="checkbox" name="toAcc" class="chk" value="#{tb.b_codcat3}"/>
+		            </p:column>
+		            
+		            <p:column width="60" >  
+		            <f:facet  name="header">
+		            <p:commandLink value="#{msg.bvtmenuTbNegAcc}" styleClass="order" onclick="fm_check('toDacc',true)" />
+		            </f:facet>  
+		            <input type="checkbox" name="toDacc" class="chk" value="#{tb.b_codcat3}"/>
+		            </p:column>
+		            
+		            <p:column  width="40">  
+		            <center>
+		            <i class="#{acccat3.isAcccat3(tb.b_codcat3)}" ></i>
+		            </center>
+		            </p:column> 
+		
+		          </p:dataTable>   
+
+                                </div>
+                            </div>
+                       </div>
+                       
+                        <!-- Modal -->
+			<div class="modal fade" id="myModalAccesRol" tabindex="-1" role="dialog" aria-labelledby="myModalAccesRol">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-body">
+			       <center style="font-size: 14px">#{msg.html58}</center>
+			      </div>
+			      <div class="modal-footer">
+			       <p:commandButton  styleClass="btn btn-blue btn-sm" value="Ok" immediate="true"  accesskey="r" onclick="myModalAccesRolHide()"/>
+			        </div>
+			    </div>
+			  </div>
+			</div>	
+               </h:form>         
+            </div>
+
+    </div>
+   </div> 
+ 
+<ui:include src="/WEB-INF/templates/footer_no_jquery.xhtml" />
+</h:body>
+</html>

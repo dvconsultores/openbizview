@@ -1,0 +1,124 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:form id="chart-form">
+		<p:dialog id="chart-config" header="#{msgp['title.chart']}"
+			widgetVar="chartConfig" modal="true" width="460" height="410"
+			closable="true" resizable="false" dynamic="true"
+			styleClass="chart-config" showEffect="fade" hideEffect="fade">
+			<h:panelGroup id="chart-panel" layout="block">
+				<p:fieldset legend="#{msgp['header.chart.axisSettings']}">
+					<h:panelGrid columns="2" columnClasses="field-name,field-input">
+						<p:outputLabel value="#{msgp['label.chart.axis.plot']}"
+							title="#{msgp['label.chart.axis.plot.description']}"
+							for="axis-plot" />
+						<p:selectOneRadio id="axis-plot" value="#{chartHandler.plotAxis}"
+							converter="axisConverter">
+							<f:selectItem itemLabel="#{msgp['label.rows']}" itemValue="ROWS" />
+							<f:selectItem itemLabel="#{msgp['label.columns']}"
+								itemValue="COLUMNS" />
+						</p:selectOneRadio>
+
+						<p:outputLabel value="#{msgp['label.chart.axis.chart']}"
+							title="#{msgp['label.chart.axis.chart.description']}"
+							for="axis-chart" />
+						<p:selectOneRadio id="axis-chart"
+							value="#{chartHandler.chartAxis}" converter="axisConverter">
+							<f:selectItem itemLabel="#{msgp['label.rows']}" itemValue="ROWS" />
+							<f:selectItem itemLabel="#{msgp['label.columns']}"
+								itemValue="COLUMNS" />
+							<f:selectItem itemLabel="(#{msgp['label.none']})"
+								noSelectionOption="true" />
+						</p:selectOneRadio>
+
+						<p:outputLabel value="#{msgp['label.chart.axis.series']}"
+							title="#{msgp['label.chart.axis.series.description']}"
+							for="axis-series" />
+						<p:selectOneRadio id="axis-series"
+							value="#{chartHandler.seriesAxis}" converter="axisConverter">
+							<f:selectItem itemLabel="#{msgp['label.rows']}" itemValue="ROWS" />
+							<f:selectItem itemLabel="#{msgp['label.columns']}"
+								itemValue="COLUMNS" />
+							<f:selectItem itemLabel="(#{msgp['label.none']})"
+								noSelectionOption="true" />
+						</p:selectOneRadio>
+
+						<p:outputLabel value="#{msgp['label.chart.axis.page']}"
+							title="#{msgp['label.chart.axis.page.description']}"
+							for="axis-page" />
+						<p:selectOneRadio id="axis-page" value="#{chartHandler.pageAxis}"
+							converter="axisConverter">
+							<f:selectItem itemLabel="#{msgp['label.rows']}" itemValue="ROWS" />
+							<f:selectItem itemLabel="#{msgp['label.columns']}"
+								itemValue="COLUMNS" />
+							<f:selectItem itemLabel="(#{msgp['label.none']})"
+								noSelectionOption="true" />
+						</p:selectOneRadio>
+					</h:panelGrid>
+
+					<p:messages id="axis-msg" for="axis-plot" showDetail="true"
+						closable="true" />
+				</p:fieldset>
+
+				<p:spacer height="2" />
+
+				<p:fieldset legend="#{msgp['header.chart.appearance']}">
+					<h:panelGrid columns="2" columnClasses="field-name,field-input">
+						<p:outputLabel value="#{msgp['label.chart.width']}" for="width" />
+						<h:panelGroup>
+							<p:spinner id="width" value="#{chartHandler.width}" min="0"
+								size="5" />
+							<h:outputText value="px" styleClass="unit" />
+							<h:outputText value="#{msgp['label.chart.width.instruction']}"
+								styleClass="info" style="margin-left: 0.5em;" />
+						</h:panelGroup>
+
+						<p:outputLabel value="#{msgp['label.chart.height']}" for="height" />
+						<h:panelGroup>
+							<p:spinner id="height" value="#{chartHandler.height}" min="0"
+								size="5" />
+							<h:outputText value="px" styleClass="unit" />
+						</h:panelGroup>
+					</h:panelGrid>
+				</p:fieldset>
+
+				<p:spacer height="2" />
+
+				<p:fieldset legend="#{msgp['header.chart.legend']}">
+					<h:panelGrid columns="2" columnClasses="field-name,field-input">
+						<p:outputLabel value="#{msgp['label.chart.legend.position']}"
+							for="legend-position" />
+						<p:selectOneRadio id="legend-position"
+							value="#{chartHandler.legendPosition}">
+							<f:selectItem itemLabel="#{msgp['label.chart.legend.position.w']}"
+								itemValue="w" />
+							<f:selectItem itemLabel="#{msgp['label.chart.legend.position.e']}"
+								itemValue="e" />
+							<f:selectItem itemLabel="#{msgp['label.chart.legend.position.n']}"
+								itemValue="n" />
+							<f:selectItem itemLabel="#{msgp['label.chart.legend.position.s']}"
+								itemValue="s" />
+						</p:selectOneRadio>
+					</h:panelGrid>
+				</p:fieldset>
+			</h:panelGroup>
+
+			<f:facet name="footer">
+				<h:panelGroup id="button-bar" styleClass="ui-dialog-buttonpane"
+					layout="block">
+					<p:commandButton value="#{msgp['button.ok']}" icon="ui-icon-check"
+						action="#{chartHandler.apply}" update=":grid-form,chart-panel"
+						onsuccess="onViewChanged(); PF('chartConfig').hide();" />
+					<p:commandButton value="#{msgp['button.apply']}"
+						icon="ui-icon-check" action="#{chartHandler.apply}"
+						update=":grid-form,chart-panel" oncomplete="onViewChanged()" />
+					<p:commandButton value="#{msgp['button.close']}"
+						icon="ui-icon-close" onclick="PF('chartConfig').hide(); return false;" />
+				</h:panelGroup>
+			</f:facet>
+		</p:dialog>
+	</h:form>
+</ui:composition>

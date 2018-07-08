@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>OpenBizview Pivot</title>
+
+	<c:set var="contextPath"
+		value="#{facesContext.externalContext.requestContextPath}" />
+
+	<link rel="shortcut icon" href="../assets/images/favicon.ico"/>
+	
+	 <!-- Bootstrap core CSS -->
+
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet"/>
+
+ <!-- Custom styling plus plugins -->
+    <link href="../assets/css/custom.min.css" rel="stylesheet"/>
+    <link href="../assets/css/openbizview.css" rel="stylesheet"/>
+    	
+	  <!-- Custom styling plus plugins -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu"
+		rel="stylesheet" />
+	<link href="../assets/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+	<h:outputStylesheet library="pivot4j" name="css/style.css" />
+	<h:outputStylesheet library="pivot4j" name="css/jquery.ui.tabs.css" />
+
+	<h:outputScript library="pivot4j" name="js/jquery.ui.tabs.js" />
+	<h:outputScript library="pivot4j" name="js/pivot4j.js" />
+
+	<script type="text/javascript">
+		var settings = {
+			"viewParameterName" : "#{settings.viewParameterName}"
+		};
+
+		function exportHSSF() {
+			getActiveWindow().PrimeFaces.addSubmitParam("toolbar-form", {
+				"toolbar-form:mi-export-xls" : "toolbar-form:mi-export-xls",
+				"format" : "HSSF"
+			}).submit("toolbar-form");
+		}
+
+		function exportSXSSF() {
+			getActiveWindow().PrimeFaces.addSubmitParam("toolbar-form", {
+				"toolbar-form:mi-export-xlsx" : "toolbar-form:mi-export-xlsx",
+				"format" : "SXSSF"
+			}).submit("toolbar-form");
+		}
+	</script>
+</h:head>
+
+<h:body id="body" styleClass="pivot4j">
+
+<ui:include src="/WEB-INF/templates/bundle.xhtml" />
+ <p:idleMonitor timeout="5400000" onidle="PF('idleDialog').show()" />
+
+	<p:dialog header="#{msg.sessionCad}" resizable="false" closable="false" responsive="true"
+		widgetVar="idleDialog" modal="true" >
+		<h:outputText value="#{msg.sessionMsj}" />
+
+		<h:form>
+			<center>
+				<p:commandButton value="OPEN-BIZVIEW - LOGIN" icon=""
+					action="#{loginBean.logout}" />
+			</center>
+		</h:form>
+	</p:dialog>
+	<f:event listener="#{accesPivot.init}" type="preRenderView" />
+	<pe:layout id="workbench" fullPage="true"
+		options="#{workbenchHandler.layoutOptions}"
+		widgetVar="workbench">
+		<pe:layoutPane id="toolbar-pane" position="north"
+			styleClassContent="toolbar-area">
+			<h:form id="toolbar-form">
+				<p:toolbar id="toolbar">
+					<p:toolbarGroup align="left">
+						<p:commandButton value="#{msgp['toolbar.new']}" styleClass="btn btn-sm"
+							action="#{repositoryHandler.create}"
+							oncomplete="addTab(args.report);"
+							update="toolbar,:repository-form:view-id,:growl"
+							title="#{msgp['toolbar.new.tooltip']}" icon="fa fa-file-o" />
+						<p:commandButton value="#{msgp['toolbar.open']}" styleClass="btn btn-sm"
+							action="#{repositoryHandler.open}"
+							oncomplete="addTab(args.report)"
+							update=":repository-form:repository-panel,toolbar,:growl"
+							title="#{msgp['toolbar.open.tooltip']}" icon="fa fa-folder-open-o"
+							disabled="#{!repositoryHandler.openEnabled}"
+							widgetVar="openButton" />
+						<p:commandButton value="#{msgp['toolbar.save']}" styleClass="btn btn-success btn-sm"
+							action="#{repositoryHandler.save}"
+							title="#{msgp['toolbar.save.tooltip']}" icon="fa fa-floppy-o"
+							disabled="#{!workbenchHandler.saveEnabled}" />
+						<p:commandButton value="#{msgp['toolbar.saveAs']}" styleClass="btn btn-success btn-sm"
+							title="#{msgp['toolbar.saveAs.tooltip']}" icon="fa fa-floppy-o"
+							action="#{repositoryHandler.suggestNewName}"
+							update=":new-form,:growl" oncomplete="PF('newReportDialog').show()"
+							disabled="#{!workbenchHandler.viewActive}" />
+						<p:commandButton value="#{msgp['toolbar.delete']}" styleClass="btn btn-blue btn-sm"
+							title="#{msgp['toolbar.delete.tooltip']}" icon="fa fa-trash"
+							type="button" onclick="PF('confirmDeleteReportDialog').show();"
+							disabled="#{!workbenchHandler.deleteEnabled}" />
+						<p:separator />
+						<p:commandButton value="#{msgp['toolbar.refresh']}" styleClass="btn btn-primary btn-sm"
+							title="#{msgp['toolbar.refresh.tooltip']}" type="button"
+							icon="fa fa-refresh" disabled="#{!workbenchHandler.viewActive}"
+							onclick="getActiveWindow().document.location.reload();" />	
+						<p:separator />
+						<p:commandButton value="#{msgp['toolbar.print']}" styleClass="btn btn-sm"
+							title="#{msgp['toolbar.print.tooltip']}" type="button"
+							icon="fa fa-print"
+							onclick="getActiveWindow().$('table.pivot-grid:first').jqprint();"
+							disabled="#{!workbenchHandler.viewValid}" />
+						<p:menuButton value="#{msgp['toolbar.export']}" 
+							styleClass="btn btn-sm">
+							<p:menuitem value="#{msgp['toolbar.export.format.xls']}"
+								icon="ui-icon-disk" onclick="exportHSSF();"
+								disabled="#{!workbenchHandler.viewValid}" />
+							<p:menuitem value="#{msgp['toolbar.export.format.xlsx']}"
+								icon="ui-icon-disk" onclick="exportSXSSF();"
+								disabled="#{!workbenchHandler.viewValid}" />
+							<p:menuitem value="#{msgp['toolbar.export.format.pdf']}"
+								icon="ui-icon-print" rendered="false"
+								onclick="getActiveWindow().PF('exportConfig').show();"
+								disabled="#{!workbenchHandler.viewValid}" />
+						</p:menuButton>					
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<p:menuButton value="#{loginBean.getLogged()}" styleClass="margin-top-5">
+							<p:menuitem value="#{msg.salir}" action="#{loginBean.logout}" />
+						</p:menuButton>
+					</p:toolbarGroup>
+				</p:toolbar>
+			</h:form>
+		</pe:layoutPane>
+
+		<pe:layoutPane id="navigator-pane" position="west">
+			<f:facet name="header">
+				<h:panelGroup layout="block">
+					<h:panelGroup styleClass="ui-icon ui-icon-title ui-icon-search" />
+					<h:outputText value="#{msgp['header.navigator.report']}" />
+				</h:panelGroup>
+			</f:facet>
+
+			<h:form id="repository-form">
+				<h:panelGroup id="repository-panel" layout="block">
+					<p:tree id="repository-navigator" styleClass="navigator"
+						value="#{repositoryHandler.rootNode}"
+						selection="#{repositoryHandler.selection}" dynamic="true"
+						cache="true" var="node" animate="true" selectionMode="single"
+						widgetVar="navigatorTree">
+						<p:treeNode type="directory" expandedIcon="ui-icon-folder-open"
+							collapsedIcon="ui-icon-folder-collapsed">
+							<h:outputText id="directory-node" value="#{node.name}"
+								styleClass="node-directory" />
+						</p:treeNode>
+
+						<p:treeNode type="root" expandedIcon="ui-icon-home"
+							collapsedIcon="ui-icon-home">
+							<h:outputText id="root-node" value="#{msgp['label.repository']}"
+								styleClass="node-directory" />
+						</p:treeNode>
+
+						<p:treeNode type="file" icon="ui-icon-document">
+							<h:outputText id="file-node" value="#{node.name}"
+								styleClass="node-file #{node.selected?'node-active-file':''}" />
+						</p:treeNode>
+
+						<p:ajax event="select"
+							listener="#{repositoryHandler.onSelectionChange}" global="false"
+							update=":repository-form:navigator-menu,:toolbar-form:toolbar" />
+					</p:tree>
+
+					<h:inputHidden id="view-id"
+						value="#{repositoryHandler.activeViewId}" />
+				</h:panelGroup>
+
+				<p:contextMenu id="navigator-menu" for="repository-navigator">
+					<p:menuitem value="#{msgp['toolbar.open']}"
+						title="#{msgp['toolbar.open.tooltip']}"
+						action="#{repositoryHandler.open}"
+						update=":toolbar-form,repository-panel,navigator-menu,:growl"
+						oncomplete="addTab(args.report);" icon="ui-icon-folder-open"
+						rendered="#{!repositoryHandler.selection.object.directory}"
+						disabled="#{!repositoryHandler.openEnabled}" />
+					<p:menuitem value="#{msgp['menu.new.folder']}"
+						title="#{msgp['menu.new.folder.tooltip']}"
+						icon="ui-icon-folder-collapsed" update=":new-folder-form:dialog"
+						oncomplete="PF('newFolderDialog').show();"
+						rendered="#{repositoryHandler.selection.object.directory}" />
+					<p:menuitem value="#{msgp['menu.delete']}"
+						title="#{msgp['menu.delete.folder.tooltip']}" icon="ui-icon-trash"
+						rendered="#{repositoryHandler.selection.object.directory}"
+						onclick="PF('confirmDeleteFolderDialog').show(); return false;"
+						disabled="#{!repositoryHandler.deleteEnabled}" />
+					<p:menuitem value="#{msgp['menu.delete']}"
+						title="#{msgp['menu.delete.report.tooltip']}" icon="ui-icon-trash"
+						rendered="#{!repositoryHandler.selection.object.directory}"
+						onclick="PF('confirmDeleteFileDialog').show(); return false;"
+						disabled="#{!repositoryHandler.deleteEnabled}" />
+					<p:menuitem value="#{msgp['menu.refresh']}"
+						title="#{msgp['menu.refresh.tooltip']}" icon="ui-icon-refresh"
+						action="#{repositoryHandler.refresh}"
+						rendered="#{repositoryHandler.selection.object.directory}"
+						update=":toolbar-form,repository-panel,navigator-menu,:growl" />
+				</p:contextMenu>
+
+				<p:remoteCommand name="openReport"
+					action="#{repositoryHandler.open}" oncomplete="addTab(args.report)"
+					update="repository-panel,:toolbar-form:toolbar,:growl" />
+				<pe:remoteCommand name="closeReport"
+					actionListener="#{repositoryHandler.close}"
+					update="repository-panel,:toolbar-form:toolbar,:growl">
+					<pe:methodSignature parameters="java.lang.String" />
+					<pe:methodParam name="viewId" />
+				</pe:remoteCommand>
+				<p:remoteCommand name="onReportSelected"
+					action="#{repositoryHandler.onTabChange}"
+					update="repository-panel,navigator-menu,:toolbar-form:toolbar,:growl" />
+				<p:remoteCommand name="onReportChanged"
+					action="#{repositoryHandler.onChange}"
+					update="repository-panel,:toolbar-form:toolbar,:growl"
+					global="false" />
+			</h:form>
+		</pe:layoutPane>
+
+		<pe:layoutPane id="main-content-pane" position="center">
+			<div id="tab-panel">
+				<ul></ul>
+			</div>
+		</pe:layoutPane>
+	</pe:layout>
+
+	<h:form id="new-form">
+		<p:confirmDialog id="new-report-dialog"
+			header="#{msgp['title.save.report']}" severity="info"
+			widgetVar="newReportDialog" responsive="true">
+			<f:facet name="message">
+				<p:outputLabel id="label" value="#{msgp['label.name']}" for="name" />
+				<p:inputText id="name" value="#{repositoryHandler.reportName}"
+					required="true" widgetVar="newReportName" />
+			</f:facet>
+
+			<p:commandButton value="#{msgp['button.ok']}"
+				action="#{repositoryHandler.saveAs}"
+				oncomplete="onReportSaved(args)"
+				update="name,label,focus,:repository-form:repository-panel,:toolbar-form:toolbar,:growl" />
+			<p:commandButton value="#{msgp['button.close']}"
+				onclick="PF('newReportDialog').hide(); return false;" type="button" />
+
+			<p:focus id="focus" />
+		</p:confirmDialog>
+	</h:form>
+
+	<h:form id="new-folder-form">
+		<p:confirmDialog id="dialog" header="#{msgp['title.new.folder']}"
+			severity="info" widgetVar="newFolderDialog" responsive="true">
+			<f:facet name="message">
+				<p:outputLabel id="label" value="#{msgp['label.name']}" for="name" />
+				<p:inputText id="name" value="#{repositoryHandler.folderName}"
+					required="true" widgetVar="newFolderName" />
+			</f:facet>
+
+			<p:commandButton value="#{msgp['button.ok']}"
+				action="#{repositoryHandler.createDirectory}"
+				update="name,label,focus,:repository-form:repository-panel,:growl" />
+			<p:commandButton value="#{msgp['button.close']}"
+				onclick="PF('newFolderDialog').hide(); return false;" type="button" />
+
+			<p:focus id="focus" for="name" />
+		</p:confirmDialog>
+	</h:form>
+
+	<h:form id="close-form">
+		<p:confirmDialog id="confirm-close-dialog"
+			message="#{msgp['confirm.report.close']}"
+			header="#{msgp['title.confirm']}" severity="alert"
+			widgetVar="confirmCloseDialog" responsive="true">
+			<p:commandButton value="#{msgp['button.yes']}"
+				action="#{repositoryHandler.save}"
+				onstart="attachClosingViewParam()"
+				onsuccess="PF('confirmCloseDialog').hide()">
+				<f:param name="close" value="true" />
+			</p:commandButton>
+			<p:commandButton value="#{msgp['button.no']}"
+				action="#{repositoryHandler.close}"
+				update=":repository-form:repository-panel,:toolbar-form:toolbar,close-form,:growl"
+				onstart="attachClosingViewParam()"
+				onsuccess="PF('confirmCloseDialog').hide()" />
+			<p:commandButton value="#{msgp['button.cancel']}"
+				onclick="PF('confirmCloseDialog').hide(); return false;" type="button" />
+		</p:confirmDialog>
+	</h:form>
+
+	<h:form id="dialog-form">
+		<p:confirmDialog id="confirm-delete-report"
+			message="#{msgp['confirm.report.delete']}"
+			header="#{msgp['title.confirm']}" severity="alert"
+			widgetVar="confirmDeleteReportDialog" responsive="true">
+			<p:commandButton value="#{msgp['button.ok']}"
+				action="#{repositoryHandler.delete}"
+				onsuccess="PF('confirmDeleteReportDialog').hide()" process="@this"
+				update=":repository-form:repository-panel,:toolbar-form:toolbar,:growl" />
+			<p:commandButton value="#{msgp['button.cancel']}"
+				onclick="PF('confirmDeleteReportDialog').hide(); return false;"
+				type="button" />
+		</p:confirmDialog>
+
+		<p:confirmDialog id="confirm-delete-file"
+			message="#{msgp['confirm.report.delete']}"
+			header="#{msgp['title.confirm']}" severity="alert"
+			widgetVar="confirmDeleteFileDialog" responsive="true">
+			<p:commandButton value="#{msgp['button.ok']}"
+				action="#{repositoryHandler.deleteFile}"
+				onsuccess="PF('confirmDeleteFileDialog').hide()" process="@this"
+				update=":repository-form:repository-panel,:toolbar-form:toolbar,:growl" />
+			<p:commandButton value="#{msgp['button.cancel']}"
+				onclick="PF('confirmDeleteFileDialog').hide(); return false;"
+				type="button" />
+		</p:confirmDialog>
+
+		<p:confirmDialog id="confirm-delete-folder"
+			message="#{msgp['confirm.folder.delete']}"
+			header="#{msgp['title.confirm']}" severity="alert"
+			widgetVar="confirmDeleteFolderDialog" responsive="true">
+			<p:commandButton value="#{msgp['button.ok']}"
+				action="#{repositoryHandler.deleteDirectory}"
+				onsuccess="PF('confirmDeleteFolderDialog').hide()" process="@this"
+				update=":repository-form:repository-panel,:toolbar-form:toolbar,:growl" />
+			<p:commandButton value="#{msgp['button.cancel']}"
+				onclick="PF('confirmDeleteFolderDialog').hide(); return false;"
+				type="button" />
+		</p:confirmDialog>
+	</h:form>
+
+	<h:form id="form">
+		<p:poll interval="#{viewStateHolder.keepAliveInterval}" async="true"
+			process="@this" global="false" />
+
+		<p:remoteCommand name="onPageLoad" autoRun="true"
+			action="#{repositoryHandler.loadReports}"
+			oncomplete="initializeTabs(args)" />
+	</h:form>
+
+	<p:ajaxStatus styleClass="ajax-status" onstart="showWaitDialog();"
+		oncomplete="hideWaitDialog();" />
+
+	<pe:blockUI widgetVar="waitDialog" targetSelector="body">
+		<h:panelGrid columns="2">
+			<p:graphicImage library="pivot4j" name="images/loading.gif" />
+			<h:outputText value="#{msgp['message.loading']}" />
+		</h:panelGrid>
+	</pe:blockUI>
+
+	<p:growl id="growl" showDetail="true" sticky="false" autoUpdate="true" />
+	
+</h:body>
+</html>

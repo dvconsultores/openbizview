@@ -1,0 +1,453 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- 
+     Copyright (C) 2011 - 2016  DVCONSULTORES
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+	
+	    http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+ --> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if IE 8]> <html lang="en" class="ie8"/> <![endif]-->
+<!--[if IE 9]>HREF="http://www.openbizview.com/wiki/doku.php?id=categoria1" <html lang="en" class="ie9"/> <![endif]-->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body class="nav-md">
+
+    <div class="container body">
+        <div class="main_container">
+
+         <ui:include src="/WEB-INF/templates/menu.xhtml" />
+            <!-- page content -->
+            <div class="right_col" role="main">
+               <div class="page-title">
+                        <div class="title_left">
+                            <h3>#{msg.maistareaTit} &nbsp; </h3>    
+                             <!-- Mensaje -->                                       
+                        </div>                            
+                    </div>
+               <div class="clearfix"></div>
+               <h:form id="formmailconfig" styleClass="form-horizontal form-label-left">
+               
+               <div class="col-md-12 col-sm-12 col-xs-12">
+                        <p:messages globalOnly="true" id="growl" closable="true" showIcon="true"/> 
+                            <div class="x_panel">
+                                <div class="x_title">
+                                <h2><small>#{msg.htmlload}</small></h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li class="dropdown">
+                                        <a HREF="http://www.openbizview.com/wiki/doku.php?id=tareas" target="_new" title="Wiki"><i class="fa fa-file-text text-info"></i> #{text.html11}</a>
+                                        </li>
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                <p:panel id="panel" style="border:0">
+                                
+                                   <div class="form-group">
+                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.mailFiltroRep}</label>
+                                         <div class="col-md-9 col-sm-9 col-xs-12">
+                                             <p:autoComplete id="reporte" placeholder="#{msg.mailFiltroRep}" value="#{programacion.mailreporteFiltro}"  completeMethod="#{autocomplete.completeRep}"  dropdown="true" scrollHeight="250" >
+									         <p:ajax event="itemSelect"   update=":formmailconfig:tbResult" listener="#{bd.setMailReporte(programacion.mailreporteFiltro)}"/>
+									         </p:autoComplete> 
+                                         </div>
+                                         
+                                   </div>
+                                   
+                                   <div class="form-group">
+                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.mailFiltroIntervalo}</label>
+                                         <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <p:autoComplete id="frecuencia" placeholder="#{msg.mailFiltroIntervalo}" value="#{programacion.mailfrecuenciaFiltro}"  completeMethod="#{autocomplete.completeFrecuenciaRepeticion}"  dropdown="true" scrollHeight="250" >
+									         <p:ajax event="itemSelect"  update=":formmailconfig:tbResult" listener="#{bd.setMailFrecuencia(programacion.mailfrecuenciaFiltro)}"/>
+									         </p:autoComplete> 
+                                         </div>
+                                   </div>
+                                   
+                                   <div class="form-group">
+                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.mailFiltroGrupo}</label>
+                                         <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <p:autoComplete id="grupo" placeholder="#{msg.mailFiltroGrupo}" value="#{programacion.mailgrupoFiltro}"  completeMethod="#{autocomplete.completeMailGrupos}"  dropdown="true" scrollHeight="250" >
+									         <p:ajax event="itemSelect"  update=":formmailconfig:tbResult" listener="#{bd.setMailgrupo(programacion.mailgrupoFiltro)}"/>
+									         </p:autoComplete> 
+                                         </div>
+                                   </div>
+                                 
+                                   
+
+                                        <div class="ln_solid"></div>
+                                        <div class="form-group">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <p:commandButton icon="fa fa-play " accesskey="t" process="@this"  title="#{msg.mailacc1}" value="#{msg.mailtareaCrearTarea}"  styleClass="btn btn-success btn-md" onclick="PF('dlg1').show();listarBt1();"/>                  
+								                 <p:commandButton icon="fa fa-refresh" update="panel, tbResult, growl" process="@this" 
+								                 title="#{msg.htmlr}"  styleClass="btn btn-primary btn-sm" actionListener="#{programacion.reset()}" >  
+								                 <p:resetInput target="panel" /> 
+								                 <f:actionListener binding="#{bd.setMailReporte('')}"/>
+								                 <f:actionListener binding="#{bd.setMailFrecuencia('')}"/>
+								                 <f:actionListener binding="#{bd.setMailgrupo('')}"/>
+								                 </p:commandButton> 
+                                            </div>
+                                        </div>   
+                                 </p:panel>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                 <div class="x_panel">
+                   <div class="x_title">
+                   <h2><small>#{msg.htmlfilter}</small></h2>
+                   <ul class="nav navbar-right panel_toolbox">
+                   </ul>
+                  <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                               
+                   <!-- Tabla con el resultado -->
+		            <p:dataTable id="tbResult"  styleClass="table table-striped" emptyMessage="#{msg.result}" var="tb"   value="#{programacion.lazyModel}"   lazy="true"  sortBy="#{tb.a.job}"  
+					paginator="true" paginatorAlwaysVisible="false" rows="15" rowsPerPageTemplate="5,10,15,20,50,100,500" paginatorPosition="top"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} &#160;&#160; {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}"
+					currentPageReportTemplate=" {currentPage} - {totalPages} #{msg.html28} #{programacion.rows}"  
+					widgetVar="global" reflow="true">
+					
+					 <f:facet name="header"> 			
+		            <p:outputPanel>  
+		                <h:outputText value="#{msg.htmlbmailtareas}" />&#160;&#160;  
+		                <p:inputText id="globalFilter" onkeyup="PF('global').filter()" style="width:150px;height:35px;" /> 
+		                <p:tooltip for="globalFilter" value="#{msg.html36}" showEffect="fade" hideEffect="fade" />  
+		                <p:watermark for="globalFilter" value="#{msg.html29}" /> 
+		            </p:outputPanel>         
+		            </f:facet>            			
+		
+		            <p:column width="180" >  
+		            <f:facet name="header">#{msg.mailtbnbrjob}</f:facet> 
+		            <h:outputLabel value="#{tb.vjob}" />  
+		            </p:column>  
+		            
+		            <p:column width="150">  
+		            <f:facet name="header">#{msg.mailtbnbrreporte}</f:facet> 
+		            <h:outputLabel value="#{tb.vcodrep}" />  
+		            </p:column> 
+		            
+		            <p:column>  
+		            <f:facet name="header">#{msg.mailtbnbrgrupo}</f:facet> 
+		            <h:outputLabel value="#{tb.viddesidgrupo}" />  
+		            </p:column> 
+		            
+		            <p:column width="170">  
+		            <f:facet name="header">#{msg.mailtbnbreRepeticion}</f:facet> 
+		            <h:outputLabel value="#{tb.vfrecuenciades}" />  
+		            </p:column> 
+		            
+		            <p:column width="120">  
+		            <f:facet name="header">#{msg.mailtbnbrhora}</f:facet> 
+		            <h:outputLabel value="#{tb.vdiainicio}" />  
+		            </p:column> 
+		                                               
+		            <p:column width="80">  
+		            <f:facet name="header">#{msg.mailtbAcciones}</f:facet>  
+		            <center>
+		            <p:commandLink  
+		            update=":formmailconfig:tbResult"
+		            oncomplete="PF('ctrTabView').select(0);"
+		            onclick="PF('dlg1').show();enviar('#{tb.vjob}', '#{tb.vdisparador}','hora ya no existe','minuto ya no existe','#{tb.vfrecuenciades}','#{tb.vdiasem}','#{tb.vcodrep}', '#{tb.vidgrupo} - #{tb.viddesidgrupo}', '#{tb.vasunto}', '#{tb.vcontenido}', '#{tb.vdiames}', '#{tb.vdiainicio}', '#{tb.activa}', '#{tb.vintervalo}');"
+		            title="Enviar"><i class="fa fa-cogs fa-2x text-info"></i></p:commandLink>  
+		            </center>
+		            </p:column>
+		            
+		            <p:column width="40" styleClass="wrap">  
+		            <f:facet name="header">#{msg.mailtbEstatus}</f:facet> 
+		            <i class="#{tb.statusIncon}"></i>        
+		            </p:column> 
+		            
+		           	</p:dataTable>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        
+                        
+            <!-- Modal -->
+			<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header panel-heading">
+			        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			        <h4 class="modal-title" id="myModalLabel"><b>#{msg.html32}</b></h4>
+			      </div>
+			      <div class="modal-body">
+			       <center style="font-size: 14px">#{msg.html31}</center>
+			      </div>
+			      <div class="modal-footer">
+			        <p:commandLink  action="#{programacion.detenerTarea()}" update="tbResult, panel, growl, panelTarea"  styleClass="btn btn-md btn-info" value="#{msg.htmlborrar}"  accesskey="r" onclick="modalHide()"/>
+
+			        <p:commandLink  styleClass="btn btn-md btn-info" value="#{msg.html48}" immediate="true" update="tbResult, growl" onclick="modalHide()"/>
+			       </div>
+			    </div>
+			  </div>
+			</div>	
+        
+        
+        <!-- Panel Params-->  
+		<p:dialog header="#{msg.mailtareaParams}"  widgetVar="dlg2" position="center top"  positionType="absolute" style="margin-top:35px;font-family: 'Ubuntu', serif;font-size: 12px;" responsive="true"  showEffect="fade">                
+        <p:panel id="panelParams" style="font-family: 'Ubuntu', serif;font-size: 12px;">                    
+		<c:forEach items="#{programacion.inputs}" varStatus="loop"> 
+		<c:if test="${programacion.inputs > '0'}">
+		<div class="row">
+		<div class="col-lg-12 col-md-6 col-sm-4">   
+        <h:outputText   value="#{programacion.vlTabla[loop.index][0]}: *"/>
+        <p:inputText  required="true" styleClass="form-control input" maxlength="500" value="#{programacion.inputs[loop.index]}" />
+   
+        </div>
+        </div>
+        </c:if>
+        </c:forEach>   
+       </p:panel>
+       <div class="ln_solid"></div>
+          <div class="form-group">
+            <p:commandButton icon="fa fa-floppy-o" 
+	           value="#{msg.mailacc1}" onsuccess="PF('dlg2').hide();" />     
+         </div>
+        </p:dialog>	
+        
+        <!-- Panel Ruta-->  
+		<p:dialog header="#{msg.mailtareaParams1}"  widgetVar="dlg3"  positionType="absolute" style="margin-top:35px;font-family: 'Ubuntu', serif;font-size: 12px;" responsive="true"  >                
+        <p:panel id="panelRuta" styleClass="border:0"> 
+         <div class="row">
+		<div class="col-lg-12 col-md-6 col-sm-4"> 
+		<p:inputText id="ruta" maxlength="500" size="50"  value="#{programacion.ruta_salida}" required="true"  requiredMessage="#{bd.getMessage('htmlvalidate')}"/>
+		<p:watermark for="ruta" value="#{msg.mailtareaRutaOutReporte}" />
+		<p:message for="ruta"/> 
+		</div>
+		</div>
+        </p:panel>
+        <div class="ln_solid"></div>
+          <div class="form-group">
+            <p:commandButton icon="fa fa-floppy-o" 
+	           value="#{msg.mailacc1}" onsuccess="PF('dlg3').hide();" />     
+         </div>
+        </p:dialog>	
+        
+        
+        <!-- Panel Dias semana-->
+        <p:dialog header="#{msg.mailtareaRepeticion}" style="font-family: 'Ubuntu', serif;font-size: 12px;" position="center"  widgetVar="dlg4" responsive="true">         
+		<div class="row">
+		<div class="col-lg-12 col-md-6 col-sm-4">   
+		<p:dataGrid value="#{programacion.list1}" id="panelDias" var="dias" columns="1" layout="grid" styleClass="border:0">
+		<input type="checkbox" name="toDelete"  value=" #{dias.vdiasSemana}"/>
+		 #{dias.vdiasSemanaDesc}      
+		</p:dataGrid>
+		<div class="ln_solid"></div>
+          <div class="form-group">
+            <p:commandButton icon="fa fa-floppy-o" 
+	           value="#{msg.mailacc1}" onsuccess="PF('dlg4').hide();" />     
+         </div>
+                     
+		</div>
+		</div>
+		</p:dialog>
+			
+			
+			
+			
+			<!-- Panel Crear tarea-->  
+		<p:dialog header="#{msg.maistareaTit}" position="center top" width="900" positionType="absolute" style="margin-top:35px; margin-left: 15px"  widgetVar="dlg1" responsive="true" showEffect="fade"> 
+		<p:panel id="panelTarea" style="border:0">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="x_content">
+              
+               <p:tabView id="tabView"  widgetVar="ctrTabView" >
+			        <p:tab title="#{msg.tabNombres}" id="tab1">
+			        
+			            <div class="form-group"> 	 
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.mailtareaOpciones}</label>
+                         <div class="col-md-9 col-sm-9 col-xs-12">
+				         <p:selectOneMenu id="opciones" value="#{programacion.opctareas}" onblur="inputs()" style="width: 100% !important">
+		                 <f:selectItems value="#{listBean.opcTareas}"/>
+		                 <p:ajax update=":formmailconfig:tbResult" listener="#{programacion.showUrl()}" />
+		                 </p:selectOneMenu> 
+			             </div>
+			            </div> 
+			             
+			            <div class="form-group">  
+			            <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.maltareaoutputFormat}</label>
+			             <div class="col-md-9 col-sm-9 col-xs-12">
+		                 <p:selectOneMenu id="emiters" value="#{programacion.formato}" style="width: 100% !important" >
+		                 <f:selectItems value="#{listBean.opcEmiters}"/>
+		                 </p:selectOneMenu>  
+			             </div>
+			            </div>
+			            
+			            <div class="form-group">  
+			            <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.mailtareaNbrTarea}</label>
+			             <div class="col-md-9 col-sm-9 col-xs-12">
+		                 <p:inputText id="tarea" maxlength="20" placeholder="#{msg.mailtareaNbrTarea}"  styleClass="form-control input" value="#{programacion.tarea}" required="true"  requiredMessage="#{bd.getMessage('htmlvalidate')}"/>  
+			             <p:message for="tarea" styleClass="margin-top-5"/>
+			             </div>
+			            </div>
+			            
+			            <div class="form-group">  
+			            <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.mailtareaPrg}</label>
+			             <div class="col-md-9 col-sm-9 col-xs-12">
+		                 <p:inputText id="prg"  maxlength="20" placeholder="#{msg.mailtareaPrg}" styleClass="form-control input" value="#{programacion.vltrigger}"  required="true"  requiredMessage="#{bd.getMessage('htmlvalidate')}"/> 	     
+			             <p:message for="prg" styleClass="margin-top-5"/>
+			             </div>
+			            </div>
+			            
+			        </p:tab>
+			        <p:tab title="#{msg.tabPrograma}" id="tab2">
+			        
+			            <div class="form-group"> 	 
+                         <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.mailtareaFrecuencia}</label>
+                         <div class="col-md-9 col-sm-9 col-xs-12">
+				         <p:selectOneMenu id="idfrecuencia" value="#{programacion.frecuencia}" required="true"  requiredMessage="#{bd.getMessage('htmlvalidate')}" style="width: 100% !important" >
+		                 <f:selectItems value="#{listBean.frecuencia}"/>
+		                 <p:ajax event="change"  listener="#{programacion.showDays()}" />
+		                 </p:selectOneMenu>
+		                 <div style="position: absolute; margin-top: -32px; margin-left: 98%">
+		                 <p:commandButton title="#{msg.html40}" onclick="PF('dlg4').show()"   immediate="true" icon="fa fa-folder-open"/>
+		                 </div>
+			             </div>
+			            </div> 
+			             
+			            <div class="form-group">  
+			            <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.mailtareaDias}</label>
+			             <div class="col-md-9 col-sm-9 col-xs-12">
+		                 <p:selectOneMenu id="dias" value="#{programacion.dias}" style="width: 100% !important">
+		                 <f:selectItems value="#{listBean.diassemana}"/>
+		                 </p:selectOneMenu>
+		                 <p:message for="dias" styleClass="margin-top-5"/>
+			             </div>
+			            </div>
+			            
+			            
+			            
+			            <div class="form-group">  
+			            <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.mailtareaDiaMes}</label>
+			             <div class="col-md-9 col-sm-9 col-xs-12">
+		                 <p:selectOneMenu id="diames" value="#{programacion.diames}" style="width: 100% !important" >
+		                 <f:selectItems value="#{listBean.diasmes}"/>
+		                 </p:selectOneMenu>
+		                 <p:message for="diames"/>
+			             </div>
+			            </div>
+			            
+			            <div class="form-group">  
+			            <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.mailtareaDiaInicio}</label>
+			             <div class="col-md-9 col-sm-9 col-xs-12">
+		                 <p:calendar pattern="dd/MM/yyyy HH:mm" id="ini"  locale="es" navigator="true" maxlength="10" value="#{programacion.diainicio}" showOn="button"/>            
+		                 <p:message for="ini" styleClass="margin-top-5"/>
+			             </div>
+			            </div>
+			            
+			             <div class="form-group">  
+			             <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.mailtareaHoraRepF}</label>
+			             <div class="col-md-9 col-sm-9 col-xs-12">
+		                 <p:inputText id="horarep"  maxlength="2"  styleClass="form-control input" value="#{programacion.horarepeticion}"  converter="javax.faces.Integer" converterMessage="#{bd.getMessage('isInt')}"  />
+			             <p:message for="horarep" styleClass="margin-top-5"/>
+			             </div>
+			            </div>
+			            
+			        </p:tab>
+			        <p:tab title="#{msg.tabEnvio}" id="tab3">
+			        
+			           <div class="form-group">  
+                         <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.mailtareaReporte}</label>
+			             <div class="col-md-9 col-sm-9 col-xs-12">
+		                   <p:autoComplete id="reporte1" placeholder="#{msg.mailtareaReporte}" value="#{programacion.reporte}"  completeMethod="#{autocomplete.completeRep}"  dropdown="true" maxResults="250" scrollHeight="250" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}">
+				           <p:ajax event="itemSelect" listener="#{programacion.ReadParamsBirtReport(programacion.getRutaRepReal())}" update=":formmailconfig:panelParams"/>
+				           </p:autoComplete>            
+		                   <p:message for="reporte1" styleClass="margin-top-5"/>
+			             </div>
+			            </div>
+			            
+			            <div class="form-group">  
+			            <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.maillistaGrupo}</label>
+			             <div class="col-md-9 col-sm-9 col-xs-12">
+		                 <p:autoComplete id="idgrupo1" value="#{programacion.idgrupo}" placeholder="#{msg.maillistaGrupo}"  completeMethod="#{autocomplete.completeMailGrupos}"  dropdown="true" maxResults="250" scrollHeight="250" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}"/>            
+                         <p:message for="idgrupo1"/>
+		                 </div>
+			            </div>
+			            
+			        </p:tab>
+			        <p:tab title="#{msg.tabContenido}" id="tab4">
+			        
+			           <div class="form-group">  
+                         <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.mailtareaAsunto}</label>
+			             <div class="col-md-9 col-sm-9 col-xs-12">
+		                  <p:inputText id="asunto" placeholder="#{msg.mailtareaAsunto}" maxlength="50" style="margin-bottom:5px;" styleClass="form-control input" value="#{programacion.asunto}" required="true"  requiredMessage="#{bd.getMessage('htmlvalidate')}"/>			     
+			              <p:message for="asunto"/>
+		                 </div>
+			            </div>
+			            
+			            <div class="form-group">  
+			            <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.mailtareacontenido}</label>
+			             <div class="col-md-9 col-sm-9 col-xs-12">
+				         <p:editor id="contenido"  widgetVar="editorWidget" controls="bold italic underline | size style color highlight | alignleft center justify | bullets  numbering | redo undo | source | outdent indent | link  unlink | print" value="#{programacion.contenido}" width="550"  required="true" requiredMessage="#{utils.getMessage('htmlvalidate')}"/>                
+		                 <p:message for="contenido"/>
+		                 </div>
+			            </div>
+			            
+			        </p:tab>
+			        </p:tabView>
+                 
+    
+       
+                     <div class="ln_solid"></div>
+                     <div class="form-group">
+                     <div class="col-md-12 col-sm-12 col-xs-12">
+                     
+			        <div id="bt1" style="display: none; position: absolute; margin-left: 35px">
+			        <p:commandButton icon="fa fa-floppy-o"  update="tbResult, panel, growl, panelTarea, panelDias" action="#{programacion.iniciarTarea()}" 
+	                  value="#{msg.mailacc1}" onsuccess="PF('dlg1').hide();PF('dlg2').hide();PF('dlg3').hide();PF('dlg4').hide();" />
+	                </div> 
+	                <div id="bt2" style="display: none; position: absolute; margin-left: 35px">
+	                   <p:menuButton value="#{msg.mailacc0}" id="listaB">      
+				        <p:menuitem value="#{msg.mailacc2}"  icon="fa fa-cog text-info"  action="#{programacion.updateExistingJob()}" update="tbResult, panel, growl, panelTarea"  oncomplete="PF('dlg1').hide();PF('dlg2').hide();PF('dlg3').hide();PF('dlg4').hide();"/>
+				        <p:menuitem value="#{msg.mailacc3}"  icon="fa fa-trash text-info"  onclick="modalDelete();" oncomplete="PF('dlg1').hide();" />
+				        <p:menuitem value="#{msg.mailacc5}"  id="btnStartTask"  icon="fa fa-play text-success" action="#{programacion.reiniciarTarea()}" update="tbResult, panel, growl, panelTarea" oncomplete="PF('dlg1').hide();PF('dlg2').hide();PF('dlg3').hide();PF('dlg4').hide();"/>
+				        <p:menuitem value="#{msg.mailacc4}"  id="btnStopTask"   icon="fa fa-stop text-danger"  action="#{programacion.pararTarea()}"     update="tbResult, panel, growl, panelTarea" oncomplete="PF('dlg1').hide();PF('dlg2').hide();PF('dlg3').hide();PF('dlg4').hide();"/>
+				        <p:menuitem icon="fa fa-envelope text-info" title="#{msg.mailtareaEnvío}" id="bt4" value="#{msg.mailtareaEnvío}" action="#{programacion.enviarMailmanual()}" update="panel, growl" oncomplete="PF('dlg1').hide();PF('dlg2').hide();PF('dlg3').hide();PF('dlg4').hide();" />
+				       </p:menuButton> 
+				     </div>    
+			         <div id="bt3" >
+	                 <p:commandButton  icon="fa fa-close"  update="growl, panelTarea, tbResult" process="@this"   onclick="PF('dlg1').hide();PF('dlg2').hide();PF('dlg3').hide();PF('dlg4').hide();">
+	                 <p:resetInput target="panelTarea" /> 
+	                 </p:commandButton>
+	                </div>
+                      </div>
+                     </div>   
+
+             </div>
+          </div>		  		
+        </p:panel>   
+        </p:dialog>	
+        
+               </h:form>         
+            </div>
+
+    </div>
+   </div> 
+ 
+<script src="../assets/js/mailtarea.js" type="text/javascript"></script>
+<ui:include src="/WEB-INF/templates/footer_no_jquery.xhtml" />
+</h:body>
+</html>

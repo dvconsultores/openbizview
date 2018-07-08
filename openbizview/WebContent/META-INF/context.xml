@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- The contents of this file will be loaded for each web application -->
+<Context>
+
+       <Resource name="mail/recibos"
+		    auth="Container"
+		    type="javax.mail.Session"
+		    mail.smtp.host="smtp.gmail.com"
+		    mail.smtp.port="465"
+		    mail.smtp.auth="true"
+		    mail.smtp.user="info@mail.com"
+		    password="000000"
+		    mail.smtp.starttls.enable="true"
+		    mail.smtp.socketFactory.class="javax.net.ssl.SSLSocketFactory"
+		  /> 
+
+              
+  
+	     
+	 <Resource name="jdbc/orabiz" 
+          auth="Container"
+          type="javax.sql.DataSource"
+          factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+          testWhileIdle="true"
+          testOnBorrow="true"
+          testOnReturn="false"
+          validationQuery="SELECT 1"
+          validationInterval="30000"
+          timeBetweenEvictionRunsMillis="30000"
+          maxActive="1500"
+          minIdle="5"
+          maxWait="10000"
+          initialSize="10"
+          removeAbandonedTimeout="1800"
+          removeAbandoned="true"
+          logAbandoned="false"
+          minEvictableIdleTimeMillis="30000"
+          jmxEnabled="true"
+          jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;
+            org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
+          driverClassName="org.postgresql.Driver"
+          url="jdbc:postgresql://127.0.0.1:5432/openbizview"
+          username="openbizview" 
+          password="openbizview" />   
+       
+    <!--  
+    <Resource name="jdbc/orabiz" 
+          auth="Container"
+          type="javax.sql.DataSource"
+          factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+          testWhileIdle="true"
+          testOnBorrow="true"
+          testOnReturn="false"
+          validationQuery="SELECT * from dual"
+          validationInterval="30000"
+          timeBetweenEvictionRunsMillis="30000"
+          maxActive="1500"
+          minIdle="5"
+          maxWait="10000"
+          initialSize="10"
+          removeAbandonedTimeout="120"
+          removeAbandoned="true"
+          logAbandoned="false"
+          minEvictableIdleTimeMillis="30000"
+          jmxEnabled="true"
+          jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;
+            org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
+          driverClassName="oracle.jdbc.OracleDriver"
+          url="jdbc:oracle:thin:@localhost:1521:xe"
+          username="openbizview" password="openbizview" /> 
+	  -->
+  
+
+</Context>

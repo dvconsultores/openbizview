@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- 
+     Copyright (C) 2011 - 2016  DVCONSULTORES
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+	
+	    http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+ --> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if IE 8]> <html lang="en" class="ie8"/> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"/> <![endif]-->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body class="nav-md">
+
+    <div class="container body">
+        <div class="main_container">
+
+         <ui:include src="/WEB-INF/templates/menu.xhtml" />
+            <!-- page content -->
+            <div class="right_col" role="main">
+               <div class="page-title">
+                        <div class="title_left">
+                            <h3>#{msg.bvtcat1tit} &nbsp; </h3>    
+                             <!-- Mensaje -->                                       
+                        </div>                            
+                    </div>
+               <div class="clearfix"></div>
+               <h:form id="formBvtcat1" styleClass="form-horizontal form-label-left">
+               
+               <div class="col-md-12 col-sm-12 col-xs-12">
+                        <p:messages globalOnly="true" id="growl" closable="true" showIcon="true"/> 
+                            <div class="x_panel">
+                                <div class="x_title">
+                                <h2><small>#{msg.htmlload}</small></h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li class="dropdown">
+                                        <a HREF="http://www.openbizview.com/wiki/doku.php?id=categoria1" target="_new" title="Wiki"><i class="fa fa-file-text text-info"></i> #{text.html11}</a>
+                                        </li>
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                <p:panel id="panel" style="border:0">
+                                
+                                   <div class="form-group">
+                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.bvtcat1Cod}</label>
+                                         <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <p:inputText id="codcat" placeholder="#{msg.bvtcat1Cod}" maxlength="10" styleClass="form-control input" value="#{bvtcat1.codcat1}" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}"/>	   
+			                                <p:message for="codcat" styleClass="margin-top-5"/>
+                                         </div>
+                                         
+                                   </div>
+                                   
+                                   <div class="form-group">
+                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.bvtcat1Desc}</label>
+                                         <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <p:inputText id="descat" placeholder="#{msg.bvtcat1Desc}" maxlength="50" styleClass="form-control input"  value="#{bvtcat1.descat1}" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}" />
+			                                <p:message for="descat" styleClass="margin-top-5"/>
+                                         </div>
+                                   </div>
+                                    <h:inputHidden id="vop" value="#{bvtcat1.validarOperacion}"/>
+                                   
+
+                                        <div class="ln_solid"></div>
+                                        <div class="form-group">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <p:commandButton update="panel, tbResult, growl"  id="btnIn" action="#{bvtcat1.guardar}" 
+								                 rendered="#{smnubean.opcbot('1')}" value="#{msg.htmlguardar}" title="#{msg.htmlg}" icon="fa fa-floppy-o" styleClass="btn btn-success btn-md"/>
+								                 <p:commandButton onclick="modalDelete();" 
+								                 rendered="#{smnubean.opcbot('2')}" value="#{msg.htmlborrar}" icon="fa fa-trash" title="#{msg.htmle}" styleClass="btn btn-blue btn-md" />
+								                 <p:commandButton icon="fa fa-refresh" update="panel, tbResult, growl" process="@this" 
+								                 title="#{msg.htmlr}"  styleClass="btn btn-primary btn-sm">  
+								                 <p:resetInput target="panel" /> 
+								                 </p:commandButton> 
+                                            </div>
+                                        </div>   
+                                 </p:panel>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                 <div class="x_panel">
+                   <div class="x_title">
+                   <h2><small>#{msg.htmlfilter}</small></h2>
+                   <ul class="nav navbar-right panel_toolbox">
+                   </ul>
+                  <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                               
+                        <!-- Tabla con el resultado -->
+					<p:dataTable id="tbResult"  styleClass="table table-striped" emptyMessage="#{msg.result}" var="tb"  value="#{bvtcat1.lazyModel}" sortBy="#{tb.codcat1}"  lazy="true" 
+					paginator="true" paginatorAlwaysVisible="false" rows="15" rowsPerPageTemplate="5,10,15,20,50,100,500" paginatorPosition="top"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} &#160;&#160; {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}"
+					currentPageReportTemplate=" {currentPage} - {totalPages} #{msg.html28} #{bvtcat1.rows}"  
+					widgetVar="global" reflow="true">
+					
+					<f:facet name="header"> 			
+		            <p:outputPanel>  
+		                <h:outputText value="#{msg.htmlb}" />&#160;&#160;  
+		                <p:inputText id="globalFilter" onkeyup="PF('global').filter()" style="width:150px;height:35px;" /> 
+		                <p:tooltip for="globalFilter" value="#{msg.html36}" showEffect="fade" hideEffect="fade" />  
+		                <p:watermark for="globalFilter" value="#{msg.html29}" /> &#160;&#160;
+		            </p:outputPanel>         
+		            </f:facet> 
+		            
+		            <p:column  width="40" >  
+		            <f:facet  name="header">
+		            <p:commandLink onclick="fm_check('toDelete',true)"><i class="fa fa-bookmark fa-2x text-info" title="#{msg.borrar}"></i></p:commandLink>
+		            </f:facet>  
+		            <input type="checkbox" name="toDelete" class="squaredThree" value="#{tb.codcat1}"/>
+		            </p:column>  
+		            
+		            <p:column  styleClass="wrap" width="100">  
+		            <f:facet name="header">#{msg.bvtcat1TbCod}</f:facet> 
+		            <h:outputLabel value="#{tb.codcat1}" />  
+		            </p:column>  
+		            
+		            <p:column  styleClass="wrap">  
+		            <f:facet name="header">#{msg.bvtcat1TbDes}</f:facet>  
+		            <h:outputLabel value="#{tb.descat1}" />
+		            </p:column> 
+		            
+		            <p:column width="60" >  
+		            <f:facet name="header">#{msg.bvtcat1TbEnviar}</f:facet>  
+		            <p:commandLink
+		            styleClass="edit"
+		            onclick="enviar('#{tb.codcat1}','#{tb.descat1}','1');" 
+		            title="Enviar"><i class="fa fa-pencil-square-o fa-2x text-info"></i></p:commandLink>
+		            </p:column> 
+		
+		            </p:dataTable> 
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        
+                        
+              <!-- Modal -->
+			<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header panel-heading">
+			        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			        <h4 class="modal-title" id="myModalLabel"><b>#{msg.html32}</b></h4>
+			      </div>
+			      <div class="modal-body">
+			       <center style="font-size: 14px">#{msg.html31}</center>
+			      </div>
+			      <div class="modal-footer">
+			        <p:commandButton  action="#{bvtcat1.delete}"  styleClass="btn btn-blue btn-sm" value="#{msg.htmlborrar}" immediate="true" update="panel, tbResult, growl" accesskey="r" onclick="modalHide()"/>
+			       
+			       </div>
+			    </div>
+			  </div>
+			</div>	
+               </h:form>         
+            </div>
+
+    </div>
+   </div> 
+ 
+<script src="../assets/js/bvtcat1.js" type="text/javascript"></script>
+<ui:include src="/WEB-INF/templates/footer_no_jquery.xhtml" />
+</h:body>
+</html>

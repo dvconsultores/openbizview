@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>#{msgp['title']}</title>
+
+	<c:set var="contextPath"
+		value="#{facesContext.externalContext.requestContextPath}" />
+
+	<link rel="shortcut icon"
+		href="#{resource['pivot4j:images/logo16.png']}" />
+		
+		
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet"/>
+
+ <!-- Custom styling plus plugins -->
+    <link href="../assets/css/custom.min.css" rel="stylesheet"/>
+    <link href="../assets/css/openbizview.css" rel="stylesheet"/>
+    	
+	  <!-- Custom styling plus plugins -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu"
+		rel="stylesheet" />
+	<link href="../assets/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+	<h:outputStylesheet library="primefaces"
+		name="colorpicker/colorpicker.css" />
+	<h:outputStylesheet library="pivot4j" name="css/style.css" />
+
+	<h:outputScript library="primefaces" name="printer/printer.js" />
+	<h:outputScript library="primefaces" name="colorpicker/colorpicker.js" />
+	<h:outputScript library="pivot4j" name="js/colorpicker.js" />
+	<h:outputScript library="pivot4j" name="js/codemirror-mode.js" />
+	<h:outputScript library="pivot4j" name="js/pivot4j.js" />
+
+	<script type="text/javascript">
+		function initLayout() {
+// 			var workbench = PrimeFaces.widgets["workbench"];
+
+// 			if (!workbench.layout) {
+// 				workbench._render();
+
+// 				var cubeList = PrimeFaces.widgets["cubeList"];
+// 				cubeList.render();
+// 			}
+
+// 			var mdxEditor = PrimeFaces.widgets["mdxEditor"];
+
+// 			if (!mdxEditor.getCodeMirrorInstance()) {
+// 				mdxEditor.render();
+// 			}
+		}
+	</script>
+</h:head>
+
+<f:metadata>
+	<f:event type="preRenderView" listener="#{viewHandler.onPreRenderView}" />
+	<f:event type="preRenderView"
+		listener="#{filterHandler.onPreRenderView}" />
+
+</f:metadata>
+
+<h:body id="body" styleClass="report pivot4j">
+
+  <div class="main_container" style="background: #F7F7F7;">
+  <div class="right_col" role="main" >
+  <!-- Top Buttons, adapted for bizview 7, remove old panels, top, west, center, etc, using div bootstrat responsive -->
+	<div class="top_nav pivot4j margin-top-5">
+			<h:form id="toolbar-form">
+				<div class="btn-toolbar" role="toolbar" style="background: #F7F7F7;" aria-label="Toolbar with button groups">
+				
+					<div style="float: left;padding-right:5px; margin-left: 10px">
+					 <a href="#" onclick="view_toggle1()" id="tg1">
+					    <i class="fa fa-caret-square-o-left fa-2x btn-primary" aria-hidden="true" ></i>
+					    </a>
+					    
+					    <a href="#" onclick="view_toggle2()"  id="tg2" style="display: none; margin-right: 3px">
+					    <i class="fa fa-caret-square-o-right fa-2x btn-primary" aria-hidden="true"></i>
+					    </a>
+					  </div>  
+					  
+					   <div class="btn-group mr-2" role="group" aria-label="First group">
+						<p:selectBooleanButton value="#{viewHandler.showParentMembers}"
+							title="#{msgp['toolbar.parent.tooltip']}"
+							onLabel="#{msgp['toolbar.parent.hide']}"
+							offLabel="#{msgp['toolbar.parent.show']}"
+							onIcon="ui-icon-arrowthickstop-1-n"
+							offIcon="ui-icon-arrowthickstop-1-n"
+							disabled="#{!viewHandler.valid}"
+							rendered="#{!pivotStateManager.readOnly and viewHandler.visible}">
+							<p:ajax listener="#{viewHandler.render}" process="@this"
+								update=":grid-form" oncomplete="onViewChanged()" />
+						</p:selectBooleanButton>
+						<p:selectBooleanButton value="#{viewHandler.hideSpans}"
+							title="#{msgp['toolbar.spans.tooltip']}"
+							onLabel="#{msgp['toolbar.spans.show']}"
+							offLabel="#{msgp['toolbar.spans.hide']}"
+							onIcon="ui-icon-circlesmall-minus"
+							offIcon="ui-icon-circlesmall-minus"
+							disabled="#{!viewHandler.valid}"
+							rendered="#{!pivotStateManager.readOnly and viewHandler.visible}">
+							<p:ajax listener="#{viewHandler.render}" process="@this"
+								update=":grid-form" oncomplete="onViewChanged()" />
+						</p:selectBooleanButton>
+						<p:selectBooleanButton value="#{viewHandler.nonEmpty}"
+							title="#{msgp['toolbar.nonEmpty.tooltip']}"
+							onLabel="#{msgp['toolbar.nonEmpty']}"
+							offLabel="#{msgp['toolbar.nonEmpty']}"
+							onIcon="ui-icon-circlesmall-close"
+							offIcon="ui-icon-circlesmall-close"
+							disabled="#{!viewHandler.valid}"
+							rendered="#{!pivotStateManager.readOnly}">
+							<p:ajax listener="#{viewHandler.render}" process="@this"
+								update=":grid-form,:editor-form:mdx-editor,:editor-form:editor-toolbar"
+								oncomplete="onViewChanged()" />
+						</p:selectBooleanButton>
+						<p:selectBooleanButton value="#{viewHandler.swapAxes}"
+							title="#{msgp['toolbar.swap_axes.tooltip']}"
+							onLabel="#{msgp['toolbar.swap_axes']}"
+							offLabel="#{msgp['toolbar.swap_axes']}" onIcon="ui-icon-refresh"
+							offIcon="ui-icon-refresh" disabled="#{!viewHandler.valid}"
+							rendered="#{!pivotStateManager.readOnly}">
+							<p:ajax listener="#{viewHandler.render}" process="@this"
+								update=":grid-form,:editor-form:mdx-editor,:editor-form:editor-toolbar,:target-tree-form"
+								oncomplete="onViewChanged()" />
+						</p:selectBooleanButton>
+						</div>
+					
+					     <div class="btn-group mr-2" role="group" aria-label="Second group">
+						<p:menuButton id="drill-mode" value="#{msgp['toolbar.drill']}"
+							disabled="#{!viewHandler.valid}"
+							rendered="#{!pivotStateManager.readOnly and viewHandler.visible}">
+							<p:menuitem value="#{msgp['toolbar.drill.position']}"
+								title="#{msgp['toolbar.drill.position.tooltip']}"
+								icon="#{viewHandler.drillDownMode=='position'?'ui-icon-check':'ui-icon-none'}"
+								update=":grid-form,drill-mode" action="#{viewHandler.render}"
+								process="@this" oncomplete="onViewChanged()">
+								<f:setPropertyActionListener
+									target="#{viewHandler.drillDownMode}" value="position" />
+							</p:menuitem>
+							<p:menuitem value="#{msgp['toolbar.drill.member']}"
+								title="#{msgp['toolbar.drill.member.tooltip']}"
+								icon="#{viewHandler.drillDownMode=='member'?'ui-icon-check':'ui-icon-none'}"
+								update=":grid-form,drill-mode" action="#{viewHandler.render}"
+								process="@this" oncomplete="onViewChanged()">
+								<f:setPropertyActionListener
+									target="#{viewHandler.drillDownMode}" value="member" />
+							</p:menuitem>
+							<p:menuitem value="#{msgp['toolbar.drill.replace']}"
+								title="#{msgp['toolbar.drill.replace.tooltip']}"
+								icon="#{viewHandler.drillDownMode=='replace'?'ui-icon-check':'ui-icon-none'}"
+								update=":grid-form,drill-mode" action="#{viewHandler.render}"
+								process="@this" oncomplete="onViewChanged()">
+								<f:setPropertyActionListener
+									target="#{viewHandler.drillDownMode}" value="replace" />
+							</p:menuitem>
+						</p:menuButton>
+						<p:selectBooleanButton value="#{viewHandler.drillThrough}"
+							title="#{msgp['toolbar.drill.through.tooltip']}"
+							onLabel="#{msgp['toolbar.drill.through']}"
+							offLabel="#{msgp['toolbar.drill.through']}"
+							disabled="#{!viewHandler.valid or !pivotStateManager.model.cube.drillThroughEnabled}"
+							rendered="#{!pivotStateManager.readOnly and viewHandler.visible}">
+							<p:ajax listener="#{viewHandler.render}" process="@this"
+								update=":grid-form" oncomplete="onViewChanged()" />
+						</p:selectBooleanButton>
+						<p:selectBooleanButton value="#{viewHandler.scenarioEnabled}"
+							title="#{msgp['toolbar.scenario.tooltip']}"
+							onLabel="#{msgp['toolbar.scenario']}"
+							offLabel="#{msgp['toolbar.scenario']}"
+							disabled="#{!viewHandler.valid or !pivotStateManager.model.scenarioSupported}"
+							rendered="#{!pivotStateManager.readOnly and viewHandler.visible}">
+							<p:ajax listener="#{viewHandler.render}" process="@this"
+								update=":grid-form" />
+						</p:selectBooleanButton>
+						</div>
+				
+				        <div class="btn-group" role="group" aria-label="Third group">
+						<p:commandButton value="#{msgp['toolbar.properties']}"
+							title="#{msgp['toolbar.properties.tooltip']}" type="button"
+							icon="ui-icon-gear" disabled="#{!viewHandler.valid}"
+							rendered="#{!pivotStateManager.readOnly and viewHandler.visible}"
+							onclick="PF('propertiesConfig').show(); return false;" />
+						<p:commandButton value="#{msgp['toolbar.aggregation']}"
+							title="#{msgp['toolbar.aggregation.tooltip']}"
+							icon="ui-icon-calculator" update=":aggregation-form"
+							process=":aggregation-form"
+							oncomplete="PF('aggregationConfig').show();"
+							disabled="#{!viewHandler.valid}"
+							rendered="#{!pivotStateManager.readOnly and viewHandler.visible}" />
+						</div>	
+			
+			            <div class="btn-group" role="group" aria-label="Four group">
+						<p:menuButton value="#{msgp['toolbar.export']}"
+							disabled="#{!viewHandler.valid}"
+							styleClass="export-menu hide-on-embed">
+							<p:menuitem id="mi-export-xls"
+								value="#{msgp['toolbar.export.format.xls']}"
+								action="#{pivotExportHandler.exportExcel}" icon="ui-icon-disk"
+								ajax="false">
+								<f:param name="format" value="HSSF" />
+							</p:menuitem>
+							<p:menuitem id="mi-export-xlsx"
+								value="#{msgp['toolbar.export.format.xlsx']}"
+								action="#{pivotExportHandler.exportExcel}" icon="ui-icon-disk"
+								ajax="false">
+								<f:param name="format" value="SXSSF" />
+							</p:menuitem>
+							<p:menuitem id="mi-export-pdf"
+								value="#{msgp['toolbar.export.format.pdf']}" icon="ui-icon-print"
+								onclick="PF('exportConfig').show();" />
+						</p:menuButton>
+						<p:commandButton value="#{msgp['toolbar.print']}"
+							title="#{msgp['toolbar.print.tooltip']}" type="button"
+							icon="ui-icon-print" disabled="#{!viewHandler.valid}"
+							onclick="$('table.pivot-grid:first').jqprint();"
+							styleClass="hide-on-embed" />
+						</div>					
+					
+				</div>
+			</h:form>
+    </div>
+
+<!-- Top Buttons -->     
+ <!-- Center content, two columns of 3 and 9  Left pane-->
+   <!-- Cube Structure -->
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" id="p3c">
+		<p:panel header="#{msgp['header.navigator.olap']}" styleClass="margin-top-5" toggleable="true">		
+		<h:form id="cube-list-form">
+		 <p:outputLabel styleClass="cube-list-label" rendered="false"
+			value="#{msgp['label.cube']}" for="cube-list" />
+		 <p:selectOneMenu id="cube-list" value="#{viewHandler.cubeName}"
+				widgetVar="cubeList">
+				<f:selectItems value="#{viewHandler.cubes}" var="cube"
+					itemLabel="#{cube.itemLabel}" itemValue="#{cube.itemValue}" />
+				<p:ajax event="change" listener="#{viewHandler.onCubeChange}"
+					update=":source-tree-form,:target-tree-form,:toolbar-form,:grid-form,:growl"
+					oncomplete="onViewChanged()" />
+		</p:selectOneMenu>
+		</h:form>
+		</p:panel>
+
+	
+       <p:panel header="#{msgp['header.structure.cube']}" styleClass="margin-top-5" toggleable="true">
+       <p:scrollPanel mode="native" style="height:220px; border:0">
+				<h:form id="source-tree-form">
+					<p:tree id="cube-navigator" styleClass="navigator cube-navigator"
+						value="#{navigatorHandler.cubeNode}" dynamic="true" cache="true"
+						var="node" animate="true" style="width:100%;height:100%;border:0">
+						<p:treeNode type="dimension" icon="ui-icon-dim">
+							<h:outputText id="dimension-node" value="#{node.name}"
+								styleClass="node-dimension" />
+						</p:treeNode>
+
+						<p:treeNode type="hierarchy" icon="ui-icon-hier">
+							<h:outputText id="hierarchy-node" value="#{node.name}"
+								styleClass="node-hierarchy" />
+							<p:draggable for="hierarchy-node"
+								helper="clone', appendTo: 'body" revert="true" />
+						</p:treeNode>
+
+						<p:treeNode type="level" icon="ui-icon-level#{node.depth}">
+							<h:outputText id="level-node" value="#{node.name}"
+								styleClass="node-level" />
+							<!-- workaround for PrimeFaces issue #4748 -->
+							<p:draggable for="level-node" helper="clone', appendTo: 'body"
+								revert="true" />
+						</p:treeNode>
+
+						<p:treeNode type="measure" icon="ui-icon-measure">
+							<h:outputText id="member-node" value="#{node.name}"
+								styleClass="node-member" />
+							<!-- workaround for PrimeFaces issue #4748 -->
+							<p:draggable for="member-node" helper="clone', appendTo: 'body"
+								revert="true" />
+						</p:treeNode>
+					</p:tree>
+					<p:droppable for="cube-navigator"
+						hoverStyleClass="ui-widget-header" tolerance="pointer">
+						<p:ajax listener="#{navigatorHandler.onDrop}"
+							update=":source-tree-form,:target-tree-form,:toolbar-form,:grid-form,:editor-form:mdx-editor,:editor-form:editor-toolbar"
+							oncomplete="onViewChanged()" />
+					</p:droppable>
+				</h:form>
+		 </p:scrollPanel>		
+		</p:panel>		
+			
+		<!-- Pivot structure -->
+			<p:panel header="#{msgp['header.structure.pivot']}" styleClass="margin-top-5" toggleable="true">
+			<p:scrollPanel mode="native" style="height:300px; border:0">
+				<h:form id="target-tree-form">
+					<p:tree id="target-navigator" styleClass="navigator"
+						value="#{navigatorHandler.targetNode}" dynamic="true" cache="true"
+						var="node" animate="true"  style="width:100%;height:100%;border:0"
+						rendered="#{viewHandler.lastError == null}">
+						<p:treeNode type="columns" icon="fa fa-columns text-info">
+							<h:outputText id="columns-node" value="#{msgp['label.columns']}"
+								styleClass="node-axis" />
+							<p:droppable for="columns-node"
+								hoverStyleClass="ui-widget-header" tolerance="pointer">
+								<p:ajax listener="#{navigatorHandler.onDropOnAxis}"
+									update=":source-tree-form,:target-tree-form,:toolbar-form,:grid-form,:editor-form:mdx-editor,:editor-form:editor-toolbar"
+									oncomplete="onViewChanged()" />
+							</p:droppable>
+						</p:treeNode>
+
+						<p:treeNode type="rows" icon="fa fa-bars text-info">
+							<h:outputText id="rows-node" value="#{msgp['label.rows']}"
+								styleClass="node-axis" />
+							<p:droppable for="rows-node" hoverStyleClass="ui-widget-header"
+								tolerance="pointer">
+								<p:ajax listener="#{navigatorHandler.onDropOnAxis}"
+									update=":source-tree-form,:target-tree-form,:toolbar-form,:grid-form,:editor-form:mdx-editor,:editor-form:editor-toolbar"
+									oncomplete="onViewChanged()" />
+							</p:droppable>
+						</p:treeNode>
+
+						<p:treeNode type="hierarchy" icon="ui-icon-hier"
+							tolerance="pointer">
+							<h:outputText id="hierarchy-node" value="#{node.caption}"
+								styleClass="node-hierarchy" />
+							<p:commandButton icon="ui-button-icon-only ui-icon-search"
+								action="#{memberSelectionHandler.show}" update=":hierarchy-form"
+								oncomplete="PF('hierarchyConfig').show();"
+								title="#{msgp['button.hierarchyConfig.tooltip']}">
+								<f:param name="hierarchy" value="#{node.name}" />
+							</p:commandButton>
+							<!-- workaround for PrimeFaces issue #4748 -->
+							<p:draggable for="hierarchy-node"
+								helper="clone', appendTo: 'body" revert="true" />
+							<p:droppable for="hierarchy-node"
+								hoverStyleClass="ui-widget-header" tolerance="pointer">
+								<p:ajax listener="#{navigatorHandler.onDropOnHierarchy}"
+									update=":source-tree-form,:target-tree-form,:toolbar-form,:grid-form,:editor-form:mdx-editor,:editor-form:editor-toolbar"
+									oncomplete="onViewChanged()" />
+							</p:droppable>
+						</p:treeNode>
+
+						<p:treeNode type="level" icon="ui-icon-level#{node.depth}">
+							<h:outputText id="level-node" value="#{node.caption}"
+								styleClass="node-level" />
+							<!-- workaround for PrimeFaces issue #4748 -->
+							<p:draggable for="level-node" helper="clone', appendTo: 'body"
+								revert="true" />
+						</p:treeNode>
+
+						<p:treeNode type="measure" icon="ui-icon-measure">
+							<h:outputText id="member-node" value="#{node.caption}"
+								styleClass="node-member" />
+							<!-- workaround for PrimeFaces issue #4748 -->
+							<p:draggable for="member-node" helper="clone', appendTo: 'body"
+								revert="true" />
+							<p:droppable for="member-node" hoverStyleClass="ui-widget-header"
+								tolerance="pointer">
+								<p:ajax listener="#{navigatorHandler.onDropOnMember}"
+									update=":source-tree-form,:target-tree-form,:toolbar-form,:grid-form,:editor-form:mdx-editor,:editor-form:editor-toolbar"
+									oncomplete="onViewChanged()" />
+							</p:droppable>
+						</p:treeNode>
+					</p:tree>
+
+					<h:outputScript>initNavigatorDroppables();</h:outputScript>
+				</h:form>
+			</p:scrollPanel>	
+		</p:panel>
+	 </div>	
+
+	   <!-- Rigth pane -->
+	<div class="col-lg-9 col-md-9 col-sm-6 col-xs-12 margin-top-5" id="p9c">	
+		
+	<div class="x_panel">
+	  <div class="x_title">
+				<h:form id="filter-items-form">
+					<h:panelGrid id="filter-panel" styleClass="filter-panel"
+						columns="3"
+						columnClasses="ui-widget-header,filter-items,filter-options">
+						<h:outputText value="#{msgp['label.filter']}" />
+						<h:panelGroup layout="block">
+							<h:panelGroup id="filter-items" layout="block"
+								binding="#{filterHandler.filterPanel}">
+							</h:panelGroup>
+							<p:droppable for="filter-items"
+								hoverStyleClass="filter-items-hover">
+								<p:ajax listener="#{filterHandler.onDrop}"
+									update=":filter-items-form,:filter-form" process="@this" />
+							</p:droppable>
+						</h:panelGroup>
+						<p:selectBooleanCheckbox value="#{viewHandler.renderSlicer}"
+							itemLabel="#{msgp['label.filter.show.members']}">
+							<p:ajax listener="#{viewHandler.render}" update=":grid-form"
+								process="@this" oncomplete="onViewChanged()" />
+						</p:selectBooleanCheckbox>
+					</h:panelGrid>
+					<p:growl showDetail="true" sticky="true" />
+				</h:form>
+		</div>		
+        <div class="x_content view_scroll">
+				<h:panelGroup id="filter-dialog" layout="block"
+					rendered="#{!pivotStateManager.readOnly}">
+					<p:overlayPanel widgetVar="filterDialog" hideEffect="fade"
+						for=":filter-items-form:filter-items" dynamic="true"
+						showEvent="none" appendToBody="true"
+						styleClass="ui-dialog filter-dialog" at="left top"
+						my="left bottom" dismissable="false">
+						<h:form id="filter-form">
+						  <div>
+						  <input type="text"  id="textsearch" class="input_search" onkeyup="filterFunction('tree-left')" placeholder="#{msgp['incon.find']}"/>  
+						  </div>
+							<p:tree id="filter-tree" value="#{filterHandler.filterNode}"
+								dynamic="true" cache="true" var="node" selectionMode="checkbox"
+								animate="true" propagateSelectionUp="false"
+								propagateSelectionDown="false" style="width:border:0"
+								selection="#{filterHandler.selection}" styleClass="tree-left">
+								<p:treeNode id="filter-node" type="member" icon="ui-icon-member">
+									<h:outputText value="#{node.name}" styleClass="node-member" />
+								</p:treeNode>
+
+								<p:ajax event="select"
+									listener="#{filterHandler.onNodeSelected}"
+									update=":filter-form:filter-button-bar" process="@this" />
+								<p:ajax event="unselect"
+									listener="#{filterHandler.onNodeUnselected}"
+									update=":filter-form:filter-button-bar" process="@this" />
+							</p:tree>
+
+							<p:messages showDetail="true" closable="true" />
+
+							<h:panelGroup id="filter-button-bar"
+								styleClass="ui-dialog-buttonpane" layout="block">
+								<p:commandButton value="#{msgp['button.ok']}"
+									icon="ui-icon-check" binding="#{filterHandler.buttonApply}"
+									action="#{filterHandler.apply}"
+									update=":filter-items-form,:source-tree-form,:grid-form,:editor-form:mdx-editor,:editor-form:editor-toolbar"
+									oncomplete="onViewChanged(); PF('filterDialog').hide();" />
+								<p:commandButton value="#{msgp['button.close']}"
+									icon="ui-icon-close" action="#{filterHandler.onClose}"
+									process="@this" update=":filter-items-form"
+									oncomplete="PF('filterDialog').hide();" />
+							</h:panelGroup>
+						</h:form>
+					</p:overlayPanel>
+				</h:panelGroup>
+	
+
+
+				<h:form id="grid-form" onkeypress="return event.keyCode != 13;">
+					<h:panelGroup id="pivot-grid" binding="#{viewHandler.component}"
+						layout="block"
+						rendered="#{viewHandler.valid and viewHandler.visible}" />
+
+
+					<h:panelGroup styleClass="filter-info" layout="block"
+						rendered="#{viewHandler.valid and viewHandler.renderer.renderSlicer}">
+
+						<h:outputText class="title" value="#{msgp['label.filter']}" />
+
+						<h:panelGroup id="filter-grid" layout="block"
+							binding="#{viewHandler.filterComponent}" />
+					</h:panelGroup>
+
+					<h:panelGroup styleClass="info-panel" layout="block"
+						rendered="#{!viewHandler.valid and viewHandler.lastError == null}">
+						<h:panelGroup styleClass="ui-icon ui-icon-title ui-icon-info" />
+						<h:outputText value="#{msgp['message.query.blank']}"
+							styleClass="message-warn" />
+					</h:panelGroup>
+
+					<p:growl id="grid-growl" showDetail="true" sticky="true"
+						globalOnly="true" />
+				</h:form>
+		</div>		
+	   </div>
+      </div>
+
+				<f:facet name="header">
+					<h:panelGroup layout="block">
+						<h:panelGroup styleClass="ui-icon ui-icon-title ui-icon-script" />
+						<h:outputText value="#{msgp['header.editor']}" />
+					</h:panelGroup>
+				</f:facet>
+
+				<h:form id="editor-form" style="display:none">
+						<p:toolbar id="editor-toolbar" >
+							<p:toolbarGroup align="left" rendered="false">
+								<p:commandButton value="#{msgp['button.run']}"
+									title="#{msgp['button.run.tooltip']}" icon="ui-icon-play"
+									action="#{viewHandler.executeMdx}"
+									update=":cube-list-form,:source-tree-form,:target-tree-form,:grid-form,:editor-form:mdx-editor,:editor-form:editor-toolbar,:filter-items-form,:toolbar-form"
+									oncomplete="onViewChanged()" />
+								<p:commandButton value="#{msgp['button.reset']}"
+									title="#{msgp['button.reset.tooltip']}"
+									icon="ui-icon-arrowreturnthick-1-w"
+									update=":editor-form:mdx-editor" />
+							</p:toolbarGroup>
+							<p:toolbarGroup align="right" styleClass="query-info"
+								rendered="#{viewHandler.duration != null}">
+								<h:panelGroup styleClass="ui-icon ui-icon-title ui-icon-clock" />
+								<h:outputText value="#{msgp['message.query.elapsed']} : " />
+								<h:outputText value="#{viewHandler.duration}">
+									<f:convertNumber pattern="###,### msec" />
+								</h:outputText>
+							</p:toolbarGroup>
+						</p:toolbar>	
+						<pe:codeMirror id="mdx-editor" mode="text/x-mdx" rendered="false"
+							value="#{viewHandler.currentMdx}" lineNumbers="true"
+							lineWrapping="true" matchBrackets="true"
+							theme="#{settings.editorTheme}" widgetVar="mdxEditor"
+							required="true" label="#{msgp['label.mdx']}"
+							readOnly="#{pivotStateManager.readOnly}" />
+
+					<p:growl id="editor-growl" showDetail="true" sticky="true" />
+				</h:form>
+		
+
+
+
+	<ui:include src="hierarchy.xhtml" />
+	<ui:include src="properties.xhtml" />
+	<ui:include src="aggregation.xhtml" />
+	<ui:include src="export.xhtml" />
+	<ui:include src="drillthrough.xhtml" />
+	<ui:include src="extension.xhtml" />
+
+	<p:ajaxStatus styleClass="ajax-status" onstart="showWaitDialog();"
+		oncomplete="hideWaitDialog();" />
+
+	<pe:blockUI widgetVar="waitDialog" targetSelector="body">
+		<h:panelGrid columns="2">
+			<p:graphicImage library="pivot4j" name="images/loading.gif" />
+			<h:outputText value="#{msgp['message.loading']}" />
+		</h:panelGrid>
+	</pe:blockUI>
+
+	<p:growl id="growl" showDetail="true" sticky="true" />
+
+	<h:form id="poll-form">
+		<p:poll interval="#{viewStateHolder.keepAliveInterval}" async="true"
+			listener="#{pivotStateManager.keepAlive}" process="@this"
+			global="false" />   
+	</h:form>
+	</div>
+	</div>
+
+	<!-- footer content -->
+        <footer>
+        <h:form>
+        <div class="pull-right">
+        <h:panelGroup styleClass="ui-icon ui-icon-title ui-icon-clock" />
+		<h:outputText value="#{msgp['message.query.elapsed']} : " style="font-weight:bold"/>
+        <h:outputText value="#{viewHandler.duration}">
+		<f:convertNumber pattern="###,### msec" />
+		</h:outputText>
+		</div>
+        </h:form>
+          <div class="pull-right" style="background-color: white;">
+            OpenBizview 7
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+    
+    <!-- Bootstrap -->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="../assets/js/custom.min.js"></script>
+    <script src="../assets/js/load.js"></script>
+</h:body>
+</html>

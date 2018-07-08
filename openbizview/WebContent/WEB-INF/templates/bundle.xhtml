@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- 
+     Copyright (C) 2015 DVCONSULTORES
+ -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if IE 8]> <html lang="en" class="ie8"/> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"/> <![endif]-->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<h:head>
+	<link rel="shortcut icon" href="../assets/images/favicon.ico"/>
+	</h:head>
+<c:choose>
+    <c:when test="#{bd.getBundle()}">
+        <f:loadBundle basename="org.openbizview.util.MessagesBundle_es_VEN" var="msg"/>
+    </c:when>
+    <c:otherwise>
+        <f:loadBundle basename="org.openbizview.util.MessagesBundle_en_US" var="msg"/>
+    </c:otherwise>
+</c:choose>
+
+</html>

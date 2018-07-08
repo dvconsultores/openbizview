@@ -1,0 +1,215 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- 
+     Copyright (C) 2017 GLOBAL FORGE
+ -->  
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+
+ <ui:include src="/WEB-INF/templates/top.xhtml" />
+ <ui:include src="/WEB-INF/templates/bundle.xhtml" />
+ <ui:include src="/WEB-INF/templates/timeout.xhtml" />
+</h:head>
+
+<div class="navbar-fixed-top">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+
+                    <div class="navbar nav_title" style="border: 0; margin-top: 3px">
+                    <a href="../ct/openbizview" class="site_title">
+                    <img src="../assets/images/obv.png" alt="..." class="profile_img" height="60"/>
+                    
+                    <span>OpenBizview 7</span>
+                    </a>
+                    </div>
+                    
+                         <div style="float: right; margin-right: 5px; height: 10px">    
+					     <p:ajaxStatus >  
+					       <f:facet name="start">  
+					        <i class="fa fa-refresh fa-spin fa-2x fa-fw icon-blue"></i>
+					       </f:facet>       
+					       <f:facet name="complete">  
+					        <h:outputText value="" />  
+					       </f:facet>  
+					      </p:ajaxStatus>
+					     </div> 
+					 
+					<div class="clearfix"></div>
+
+
+                    <br />   <br />   
+                   
+                    <!-- sidebar menu -->
+                    <c:if test="#{smnubean.listMenu.size() > 0}">
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu" style="margin-top: -35px">
+
+                        <div class="menu_section">
+                            <h3>&#160;</h3>
+                            <h:outputLabel style="width:100%" rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M01')).vistaMenu=='0'}">
+                            <ul class="nav side-menu">
+                                <li><a href="#"><i class="fa fa-tasks"></i> #{msg.globalBasico} <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                       <!-- Menú configuraciones -->
+								        <li>
+								           <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M02')).vistaMenu=='0'}" value="bvtcat1">#{msg.bas1}</h:outputLink>
+								        </li>
+								        <li>
+								           <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M03')).vistaMenu=='0'}" value="bvtcat2">#{msg.bas2}</h:outputLink>
+								        </li>
+								        <li>
+								           <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M04')).vistaMenu=='0'}" value="bvtcat3">#{msg.bas3}</h:outputLink>
+								        </li>
+								        <li>
+								           <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M05')).vistaMenu=='0'}" value="bvtcat4">#{msg.bas4}</h:outputLink>
+								        </li> 
+                                    </ul>
+                                </li>
+                            </ul>
+                            </h:outputLabel>
+                            <h:outputLabel style="width:100%" rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M06')).vistaMenu=='0'}">
+                            <ul class="nav side-menu">
+                                <li><a href="#"><i class="fa fa-cogs"></i> #{msg.globalAdmin} <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                       <!-- Administración -->
+								        <li>
+								            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M08')).vistaMenu=='0'}" value="bvt006">#{msg.adm2}</h:outputLink>
+								        </li>
+								        <li>
+								            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M01')).vistaMenu=='0'}" value="biaudit">#{msg.adm3}</h:outputLink>
+								        </li> 
+                                    </ul>
+                                </li>
+                            </ul>
+                            </h:outputLabel>
+                            <h:outputLabel style="width:100%" rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M10')).vistaMenu=='0'}">
+                            <ul class="nav side-menu">
+                                <li><a href="#"><i class="fa fa-key"></i> #{msg.globalSeguridad} <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <!-- Seguridad -->
+								        <li>
+								            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M11')).vistaMenu=='0'}" value="instancias">#{msg.instancias}</h:outputLink>
+								        </li>
+								        <li>
+								            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M12')).vistaMenu=='0'}" value="bvt003">#{msg.seg01}</h:outputLink>
+								        </li>
+								        <li>
+								            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M13')).vistaMenu=='0'}" value="bvtmenu">#{msg.seg02}</h:outputLink>
+								        </li>
+								        <li>
+								            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M14')).vistaMenu=='0'}" value="bvt002">#{msg.seg03}</h:outputLink>
+								        </li>
+								        <li>
+								            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M15')).vistaMenu=='0'}" value="bvt007">#{msg.seg08}</h:outputLink>
+								        </li>
+								        <li>
+								            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M16')).vistaMenu=='0'}" value="bvt005">#{msg.seg09}</h:outputLink>
+								        </li>
+								        
+								        <li>
+								            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M17')).vistaMenu=='0'}" value="acccat1">#{msg.seg04}</h:outputLink>
+								        </li>
+								        <li>
+								            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M18')).vistaMenu=='0'}" value="acccat2">#{msg.seg05}</h:outputLink>
+								        </li>
+								        <li>
+								            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M19')).vistaMenu=='0'}" value="acccat3">#{msg.seg06}</h:outputLink>
+								        </li>
+								        <li>
+								            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M20')).vistaMenu=='0'}" value="acccat4">#{msg.seg07}</h:outputLink>
+								        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            </h:outputLabel>
+                            <h:outputLabel style="width:100%" rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M21')).vistaMenu=='0'}">
+                            <ul class="nav side-menu">
+                                <li><a href="#"><i class="fa fa-clock-o"></i> #{msg.globalMail} <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <!-- Tareas -->
+								        <li>
+								            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M22')).vistaMenu=='0'}" value="mailgrupos">#{msg.mail02}</h:outputLink>
+								        </li>
+								        <li>
+								            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M23')).vistaMenu=='0'}" value="maillista">#{msg.mail03}</h:outputLink>
+								        </li>
+								        <li>
+								            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M24')).vistaMenu=='0'}" value="mailtarea">#{msg.mail04}</h:outputLink>
+								        </li>
+								        <li>
+								            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M25')).vistaMenu=='0'}" value="etl">#{msg.mail05}</h:outputLink>
+								        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            </h:outputLabel>
+                            <h:outputLabel style="width:100%" rendered="#{smnubean.listMenu.get(smnubean.opcmnu('R02')).vistaMenu=='0'}">
+                            <ul class="nav side-menu">
+                                <li><a href="#"><i class="fa fa-cubes"></i> #{msg.cube} <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <!-- Reportes -->
+								        <li>
+								            <h:outputLink  rendered="#{smnubean.listMenu.get(smnubean.opcmnu('R03')).vistaMenu=='0'}" value="uploadpivot.xhtml">#{msg.cube1}</h:outputLink>
+								        </li>
+								        <li>
+								            <h:outputLink  rendered="#{smnubean.listMenu.get(smnubean.opcmnu('R04')).vistaMenu=='0'}" value="../pivot/index.xhtml" target="_blank">#{msg.cube2}</h:outputLink>
+								        </li>
+								        <li>
+								            <h:outputLink  rendered="#{smnubean.listMenu.get(smnubean.opcmnu('R04')).vistaMenu=='0'}" value="sharepivot.xhtml">#{msg.cube3}</h:outputLink>
+								        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            </h:outputLabel>
+                            <h:outputLabel style="width:100%" rendered="#{smnubean.listMenu.get(smnubean.opcmnu('R05')).vistaMenu=='0'}">
+                            <ul class="nav side-menu">
+                                <li><a href="#"><i class="fa fa-tachometer"></i> #{msg.dashboard} <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <!-- Reportes -->
+								        <li>
+								            <h:outputLink  rendered="#{smnubean.listMenu.get(smnubean.opcmnu('R06')).vistaMenu=='0'}" value="uploaddashboard.xhtml">#{msg.dashboard1}</h:outputLink>
+								        </li>
+								        <li>
+								            <h:outputLink  rendered="#{smnubean.listMenu.get(smnubean.opcmnu('R07')).vistaMenu=='0'}" value="dashboard.xhtml" >#{msg.dashboard2}</h:outputLink>
+								        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            </h:outputLabel>
+                             <h:outputLabel style="width:100%" rendered="#{smnubean.listMenu.get(smnubean.opcmnu('R01')).vistaMenu=='0'}">
+                            <ul class="nav side-menu">
+                                <li><a href="#"><i class="fa fa-print"></i> #{msg.globalRep} <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <!-- Reportes -->
+                                         <li>
+								            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M07')).vistaMenu=='0'}" value="uploadreport">#{msg.adm1}</h:outputLink>
+								        </li>
+								        <li>
+								            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('R01')).vistaMenu=='0'}" value="bvt001a">#{msg.rep01}</h:outputLink>
+								        </li>
+								        <li>
+								            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('R01')).vistaMenu=='0'}" value="bvt001">#{msg.rep}</h:outputLink>
+								        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            </h:outputLabel>
+                        </div>
+   
+
+                    </div>
+                    </c:if>
+                    <!-- /sidebar menu -->
+
+                </div>
+            </div>
+</div>
+            <!-- top navigation -->
+            <ui:include src="/WEB-INF/templates/topbar.xhtml" />
+            
+</html>

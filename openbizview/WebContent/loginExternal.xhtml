@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- 
+     Copyright (C) 2011  ANDRES DOMINGUEZ
+
+    Este programa es software libre: usted puede redistribuirlo y/o modificarlo 
+    bajo los términos de la Licencia Pública General GNU publicada 
+    por la Fundación para el Software Libre, ya sea la versión 3 
+    de la Licencia, o (a su elección) cualquier versión posterior.
+
+    Este programa se distribuye con la esperanza de que sea útil, pero 
+    SIN GARANTÍA ALGUNA; ni siquiera la garantía implícita 
+    MERCANTIL o de APTITUD PARA UN PROPÓSITO DETERMINADO. 
+    Consulte los detalles de la Licencia Pública General GNU para obtener 
+    una información más detallada. 
+
+    Debería haber recibido una copia de la Licencia Pública General GNU 
+    junto a este programa. 
+    En caso contrario, consulte <http://www.gnu.org/licenses/>.
+ -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:include src="/WEB-INF/templates/bundle.xhtml" />
+<h:head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<!-- Meta, title, CSS, favicons, etc. -->
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="assets/images/favicon.ico" />
+	<link rel="icon" href="assets/images/favicon.ico"/>
+
+
+	<title>OpenBizview</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+
+	<!-- Font Awesome -->
+	<link href="assets/font-awesome-4.7.0/css/font-awesome.min.css"
+		rel="stylesheet" />
+
+	<!-- Custom styling plus plugins -->
+	<link href="assets/css/custom.css" rel="stylesheet" />
+	<link href="assets/css/openbizview.css" rel="stylesheet" />
+
+
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu"
+		rel="stylesheet" />
+	<!--[if lt IE 9]>
+        <script src="../assets/js/ie8-responsive-file-warning.js"></script>
+        <![endif]-->
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+</h:head>
+<h:body>
+	
+	<o:form useRequestURI="true" id="formLoginExternal"><!--Uso de omnifaces para incluir el request url parameters automaticamente cada vez que se carga la página para validar el método validate que redirecciona -->
+	<!--<h:outputText value="#{msg.idioma}"/>&#160;
+			           <h:selectOneMenu value="#{listBean.langSelected}">
+		               <f:selectItems value="#{listBean.lang}"/>
+		               </h:selectOneMenu><br/> -->
+	<f:metadata>
+    <f:viewParam name="key" value="#{loginBeanExternal.key}"/>
+    <f:event type="preRenderView" listener="#{loginBeanExternal.loginExternal}" />
+    </f:metadata>	
+    
+    <p:dialog header="Alerta"  resizable="false" closable="false"
+		widgetVar="alerta" modal="true" responsive="true" fitViewport="true">
+		<h4>#{msg.noreg1}</h4>
+	</p:dialog>
+
+ 
+    </o:form>
+</h:body>
+</html>

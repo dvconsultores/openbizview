@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- 
+     Copyright (C) 2011 - 2016  DVCONSULTORES
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+	
+	    http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+ -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+
+	<h:form id="formmailconfig">
+		<f:view>
+			<div id="content">  
+			<!-- Div para mensajes -->
+				<div id="msj"><div id="loader"><ui:include src="common/loader.xhtml"/></div>  
+				</div>
+				<!-- Div para colocar botones -->
+				<div id="botonera">              
+				<p:toolbar>  
+                 <f:facet name="left"> 
+                  <p:commandButton update="tbResult, panel, growl" accesskey="i" id="btnIn" action="#{mailconfig.guardar}" 
+                  rendered="#{smnubean.opcbot('1')}" value="#{msg.htmlguardar}" title="#{msg.htmlg}" icon="fa fa-floppy-o text-info" styleClass="botonera"/>
+                  <p:commandButton update="tbResult, growl" accesskey="r" id="btnEl" onclick="borrar();"  action="#{mailconfig.delete}" 
+                  rendered="#{smnubean.opcbot('2')}" value="#{msg.htmlborrar}" icon="fa fa-trash text-info" title="#{msg.htmle}" styleClass="botonera" />
+                  <p:separator/>  
+                  <p:commandButton update="tbResult" icon="fa fa-refresh text-info"  onclick="limpiar();"  
+                  title="#{msg.htmlr}"  styleClass="botonera" accesskey="l" />                            
+                 </f:facet>   
+                </p:toolbar>  
+				</div>
+                
+				<p:growl id="growl" life="30000" />  
+	
+				<!-- Panel -->
+			<div id="etiqueta">
+		         <p:panel id="panel"  header="#{msg.mailconfigtit}">	  	         
+		         <h:panelGrid width="70%"  columns="2" cellpadding="2" columnClasses="col1,col2">	         
+			     <h:outputText value="#{msg.mailconfigUsuario}" />
+			     <p:inputText id="usuario" maxlength="50"  value="#{mailconfig.usuario}" style="width: 65%"  required="true"  requiredMessage="#{bd.getMessage('mailconfigUsuarioG')}"/>  
+			     <h:outputText value="#{msg.mailconfigContraseña}" />
+			     <p:password id="clave" maxlength="50"  value="#{mailconfig.clave}"  style="width: 65%"  required="true"  requiredMessage="#{bd.getMessage('mailconfigContraseñaG')}"/>  	
+			     <h:outputText value="#{msg.mailconfigStarttls}" />
+			     <p:inputText id="starttlsenable" maxlength="4"  value="#{mailconfig.starttlsenable}"  style="width: 65%"  required="true"  requiredMessage="#{bd.getMessage('mailconfigStarttlsG')}"/>  	
+			     <h:outputText value="#{msg.mailconfigauth}" />
+			     <p:inputText id="auth" maxlength="4"  value="#{mailconfig.auth}"  style="width: 65%"  required="true"  requiredMessage="#{bd.getMessage('mailconfigauthG')}"/>  	
+			     <h:outputText value="#{msg.mailconfigHost}" />
+			     <p:inputText id="host" maxlength="50"  value="#{mailconfig.host}"  style="width: 65%"  required="true"  requiredMessage="#{bd.getMessage('mailconfigHostG')}"/>  	
+			     <h:outputText value="#{msg.mailconfigPuerto}" />
+			     <p:inputText id="puerto" maxlength="20"  value="#{mailconfig.puerto}"  style="width: 65%"  required="true"  requiredMessage="#{bd.getMessage('mailconfigPuertoG')}"/>  	
+		         </h:panelGrid>
+		         <h:inputHidden id="vop"     value="#{mailconfig.validarOperacion}" />		
+	             </p:panel>
+				</div>
+			 </div>	
+			
+
+			<!-- Tabla con el resultado -->
+			<div id="tablaresult">
+			<p:dataTable id="tbResult" emptyMessage="#{msg.result}" var="tb"  value="#{mailconfig.list}"  sortBy="#{tb.vusuario}"
+			paginator="true" paginatorAlwaysVisible="false" rows="15" rowsPerPageTemplate="5,10,15,20,50,100,500" paginatorPosition="top"
+			paginatorTemplate="{FirstPageLink} {PreviousPageLink} &#160;&#160; {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}"
+			currentPageReportTemplate=" {currentPage} - {totalPages} #{msg.html28} #{mailconfig.rows}"  
+			widgetVar="global">
+			
+			<f:facet name="header"> 			
+            <p:outputPanel>  
+                <h:outputText value="#{msg.htmlb}" />&#160;&#160;  
+                <p:inputText id="globalFilter" onkeyup="PF('global').filter()" style="width:150px" /> 
+                <p:tooltip for="globalFilter" value="#{msg.html36}" showEffect="fade" hideEffect="fade" />  
+                <p:watermark for="globalFilter" value="#{msg.html29}" /> &#160;&#160;
+            </p:outputPanel>         
+            </f:facet> 
+            
+            <p:column style="width:10px" >  
+            <f:facet  name="header">
+            <p:commandLink onclick="fm_check('toDelete',true)"><i class="fa fa-trash fa-2x" title="#{msg.borrar}"></i></p:commandLink>
+            </f:facet>  
+            <input type="checkbox" name="toDelete" class="chk" value="#{tb.vusuario}"/>
+            </p:column>  
+
+            <p:column styleClass="wrap">  
+            <f:facet name="header">#{msg.mailconfigTbUser}</f:facet> 
+            <h:outputLabel value="#{tb.vusuario}"  onclick="enviar('#{tb.vusuario}','#{tb.vclave}','#{tb.vstarttlsenable}','#{tb.vauth}','#{tb.vhost}','#{tb.vpuerto}','1')"/>  
+            </p:column>  
+            
+            <p:column styleClass="wrap">  
+            <f:facet name="header">#{msg.mailconfigTbSTARTTLSENABLE}</f:facet>  
+            <h:outputLabel value="#{tb.vstarttlsenable}" onclick="enviar('#{tb.vusuario}','#{tb.vclave}','#{tb.vstarttlsenable}','#{tb.vauth}','#{tb.vhost}','#{tb.vpuerto}','1')" />
+            </p:column> 
+            
+            <p:column styleClass="wrap">  
+            <f:facet name="header">#{msg.bvt01mailconfigTbAuth}</f:facet>  
+            <h:outputLabel value="#{tb.vauth}" onclick="enviar('#{tb.vusuario}','#{tb.vclave}','#{tb.vstarttlsenable}','#{tb.vauth}','#{tb.vhost}','#{tb.vpuerto}','1')"/>
+            </p:column> 
+            
+            <p:column styleClass="wrap">  
+            <f:facet name="header">#{msg.mailconfigTbHost}</f:facet>  
+            <h:outputLabel value="#{tb.vhost}" onclick="enviar('#{tb.vusuario}','#{tb.vclave}','#{tb.vstarttlsenable}','#{tb.vauth}','#{tb.vhost}','#{tb.vpuerto}','1')" />
+            </p:column> 
+            
+            <p:column styleClass="wrap">  
+            <f:facet name="header">#{msg.mailconfigTbPuerto}</f:facet>  
+            <h:outputLabel value="#{tb.vpuerto}" onclick="enviar('#{tb.vusuario}','#{tb.vclave}','#{tb.vstarttlsenable}','#{tb.vauth}','#{tb.vhost}','#{tb.vpuerto}','1')"/>
+            </p:column> 
+            
+            
+            <p:column style="width:10px" >  
+            <f:facet name="header">#{msg.bvt001TbEnviar}</f:facet>  
+            <h:graphicImage value="../resources/img/update.png" onmouseout="uncursor()" 
+            onmouseover="cursor()" onclick="enviar('#{tb.vusuario}','#{tb.vclave}','#{tb.vstarttlsenable}','#{tb.vauth}','#{tb.vhost}','#{tb.vpuerto}','1')" class="chk"  title="Enviar" alt="" />  
+            </p:column> 
+            
+            
+            <f:facet name="footer">
+             #{msg.rows} #{mailconfig.rows} 
+            </f:facet> 
+            </p:dataTable>  
+           </div>
+          
+		</f:view>
+	</h:form>
+</h:body>
+</html>

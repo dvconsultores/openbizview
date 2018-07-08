@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- 
+     Copyright (C) 2011 - 2016  DVCONSULTORES, CHRISTIAN DÍAZ
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+	
+	    http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+ -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+
+<!-- Mensajes de validación Javascript para internazionalización -->
+<h:inputHidden id="msnProc" value="#{msg.pntexUp}"/>
+<!-- Mensajes de validación Javascript para internazionalización -->
+
+	<h:form id="formAutoext" enctype="multipart/form-data" >
+		<f:view>
+			<div id="content">
+            <!-- Div para mensajes -->
+				<p:growl id="mensaje"/>
+           <!-- Div para colocar botones -->
+				<div id="botonera">              
+				<p:toolbar>  
+                 <f:facet name="left"> 
+                  <p:commandButton update="mensaje"  id="btnProc" onclick="procesar();" action="#{fileUploadController.procAutos02}" 
+                  value="#{msg.autos02Proc}" title="#{msg.html19}" icon="ui-icon-gear" styleClass="botonera"/>  
+                  <p:separator/>   
+                  <p:commandButton update="mensaje" icon="fa fa-refresh text-info"  title="#{msg.htmlr}" onclick="limpiar();" styleClass="botonera" accesskey="l" />                         
+                 </f:facet>   
+                </p:toolbar>  
+				</div>
+			<!-- Panel -->
+			<div id="etiqueta">
+			<p:panel id="panelUp"  header="#{msg.autos02tit}">
+			<h:panelGrid  columns="2" >	         
+			     <h:outputText value="#{msg.pntexOpc}" style="margin-right:10px"/>
+			     <h:selectOneMenu id="lista" value="#{fileUploadController.opc}" styleClass="listPag">
+                 <f:selectItems  value="#{listBean.opcext}"/>
+                 </h:selectOneMenu>	  
+		    </h:panelGrid>
+		    
+            
+           </p:panel><br/>
+           
+           <p:fileUpload fileUploadListener="#{fileUploadController.handleFileUpload}" 
+            mode="advanced"
+            update="mensaje" 
+            multiple="true"
+            cancelLabel="#{msg.autos02Cancel}"
+            label="#{msg.autos02Sel}"
+            uploadLabel="#{msg.autos02Up}">	
+            </p:fileUpload>
+				</div>
+			</div>							
+		</f:view>
+	</h:form>
+</h:body>
+</html>

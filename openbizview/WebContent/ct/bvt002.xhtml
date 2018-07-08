@@ -1,0 +1,303 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- 
+     Copyright (C) 2011 - 2016  DVCONSULTORES
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+	
+	    http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+ --> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if IE 8]> <html lang="en" class="ie8"/> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"/> <![endif]-->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body class="nav-md">
+
+    <div class="container body">
+        <div class="main_container">
+
+         <ui:include src="/WEB-INF/templates/menu.xhtml" />
+            <!-- page content -->
+            <div class="right_col" role="main">
+               <div class="page-title">
+                        <div class="title_left">
+                            <h3>#{msg.bvt002tit} &nbsp; </h3>    
+                             <!-- Mensaje -->                                       
+                        </div>                            
+                    </div>
+               <div class="clearfix"></div>
+               <h:form id="formBvt002" styleClass="form-horizontal form-label-left">
+               
+               <div class="col-md-12 col-sm-12 col-xs-12">
+                        <p:messages globalOnly="true" id="growl" closable="true" showIcon="true"/> 
+                            <div class="x_panel">
+                                <div class="x_title">
+                                <h2><small>#{msg.htmlload}</small></h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li class="dropdown">
+                                        <a HREF="http://www.openbizview.com/wiki/doku.php?id=usuarios" target="_new" title="Wiki"><i class="fa fa-file-text text-info"></i> #{text.html11}</a>
+                                        </li>
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                  <div class="x_content">
+                   <p:panel id="panel" style="border:0">
+                   <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                      <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">#{msg.bvt002Tab1}</a>
+                          </li>
+                        <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab"  aria-expanded="false">#{msg.bvt002Tab2}</a>
+                           </li>  
+                       </ul>
+                     <div id="myTabContent" class="tab-content">
+                     
+                       <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+                        
+                        <div class="form-group"> 	 
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.bvt002Cod}</label>
+                         <div class="col-md-9 col-sm-9 col-xs-12">
+				         <p:inputText id="coduser" maxlength="10" placeholder="#{msg.bvt002Cod}"  styleClass="form-control input" value="#{bvt002.coduser}"  required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}"/>
+			             <p:message for="coduser" styleClass="margin-top-5"/>
+			             </div>
+			            </div> 
+			             
+			            <div class="form-group">  
+			            <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.bvt002Desc}</label>
+			             <div class="col-md-9 col-sm-9 col-xs-12">
+		                 <p:inputText id="desuser"  maxlength="50" placeholder="#{msg.bvt002Desc}" styleClass="form-control input" value="#{bvt002.desuser}" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}"/> 
+                         <p:message for="desuser" styleClass="margin-top-5"/>
+			             </div>
+			            </div>
+			            
+			            <div class="form-group">  
+			            <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.bvt002Cl}</label>
+			             <div class="col-md-9 col-sm-9 col-xs-12">
+		                 <p:password id="cluser" maxlength="150" placeholder="#{msg.bvt002Cl}" feedback="true" promptLabel="#{msg.html52}" weakLabel="#{msg.html53}"
+                         goodLabel="#{msg.html54}" strongLabel="#{msg.html55}" validatorMessage="#{msg.html56}" styleClass="form-control input" value="#{bvt002.cluser}" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}"/>
+			             <p:message for="cluser"/>
+			             </div>
+			            </div>
+			            
+			             
+                       </div>
+                       
+                       <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                         
+                         <div class="form-group"> 	 
+                         <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.bvt002mail}</label>
+                         <div class="col-md-9 col-sm-9 col-xs-12">				         
+		                 <p:inputText id="mail" maxlength="150" placeholder="#{msg.bvt002mail}" style="margin-bottom:5px" styleClass="form-control input" value="#{bvt002.mail}" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}" validatorMessage="#{bd.getMessage('confmailIngMail')}">  
+					     <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+					     </p:inputText>
+					     <p:message for="mail" styleClass="margin-top-5"/>
+		                 </div>
+			             </div>
+			             
+			             
+			            <div class="form-group">  
+			            <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.bvt002Rol}</label>
+			             <div class="col-md-9 col-sm-9 col-xs-12">
+		                 <p:autoComplete id="rol" value="#{bvt002.b_codrol}" placeholder="&nbsp;&nbsp;#{msg.bvt002Rol}" completeMethod="#{autocomplete.completeRol}"  dropdown="true" scrollHeight="250" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}"/>
+		                 <p:message for="rol" styleClass="margin-top-5"/>
+			             </div>
+			            </div>
+			            
+			            
+			            
+			            <div class="form-group">  
+			            <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.bvt002Instancia} *</label>
+			             <div class="col-md-9 col-sm-9 col-xs-12">
+		                 <p:autoComplete id="instancia" placeholder="&nbsp;&nbsp;#{msg.bvt002Instancia} *" value="#{bvt002.instancia}" onchange="guardar()"  completeMethod="#{autocomplete.completeInstancias}" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}" dropdown="true" scrollHeight="250" />
+			             <p:message for="instancia" styleClass="margin-top-5"/>
+			             </div>
+			            </div>
+			                                     
+                       </div>
+                     <h:inputHidden id="vop" value="#{bvt002.validarOperacion}"/>
+                     </div>
+                     <div class="ln_solid"></div>
+                     <div class="form-group">
+                     <div class="col-md-12 col-sm-12 col-xs-12">
+                     <p:commandButton update="panel, tbResult, growl"  id="btnIn" action="#{bvt002.guardar}" onclick="guardar()"
+					    rendered="#{smnubean.opcbot('1')}" value="#{msg.htmlguardar}" title="#{msg.htmlg}" icon="fa fa-floppy-o" styleClass="btn btn-success btn-md"/>
+					 <p:commandButton onclick="modalDelete();" 
+					    rendered="#{smnubean.opcbot('2')}" value="#{msg.htmlborrar}" icon="fa fa-trash" title="#{msg.htmle}" 
+					    styleClass="btn btn-blue btn-md"/>
+				     <p:commandButton icon="fa fa-plus-circle" styleClass="btn btn-success btn-md" immediate="true"
+			         value="#{msg.bvt002RolAdd}" update="panelRoles" actionListener="#{bvt002.selectRoles()}"   oncomplete="PF('dlg1').show();"/>
+				     <p:commandButton icon="fa fa-refresh" update="panel, tbResult, growl" process="@this" 
+				        title="#{msg.htmlr}"  styleClass="btn btn-primary btn-sm">  
+				     <p:resetInput target="panel" /> 
+				     </p:commandButton> 
+                   </div>
+                 </div>   
+               </div>
+               </p:panel>
+             </div>
+                </div>
+                 </div>
+                        
+                        
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                 <div class="x_panel">
+                   <div class="x_title">
+                   <h2><small>#{msg.htmlfilter}</small></h2>
+                   <ul class="nav navbar-right panel_toolbox">
+                   </ul>
+                  <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                               
+                    <!-- Tabla con el resultado -->
+					<p:dataTable id="tbResult" styleClass="table table-striped" emptyMessage="#{msg.result}" var="tb"  value="#{bvt002.lazyModel}"   lazy="true" sortBy="#{tb.coduser}" 
+					paginator="true" paginatorAlwaysVisible="false" rows="15" rowsPerPageTemplate="5,10,15,20,50,100,500" paginatorPosition="top"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} &#160;&#160; {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}"
+					currentPageReportTemplate=" {currentPage} - {totalPages} #{msg.html28} #{bvt002.rows}"  
+					 widgetVar="global" reflow="true">
+					
+					<f:facet name="header"> 			
+		            <p:outputPanel>  
+		                <h:outputText value="#{msg.htmlb}" />&#160;&#160;  
+		                <p:inputText id="globalFilter" onkeyup="PF('global').filter()" style="width:150px;height:35px;" /> 
+		                <p:tooltip for="globalFilter" value="#{msg.html36}" showEffect="fade" hideEffect="fade" />  
+		                <p:watermark for="globalFilter" value="#{msg.html29}" />
+		            </p:outputPanel>         
+		            </f:facet> 
+		            
+		            <p:column width="40" >  
+		            <f:facet  name="header">
+		            <p:commandLink onclick="fm_check('toDelete',true)"><i class="fa fa-bookmark fa-2x text-info" title="#{msg.borrar}"></i></p:commandLink>
+		            </f:facet>
+		            <input type="checkbox" name="toDelete" class="chk" value="#{tb.coduser}"/>
+		            </p:column>  
+		            
+		            <p:column width="170">  
+		            <f:facet name="header">#{msg.bvt002TbCod}</f:facet> 
+		            <h:outputLabel value="#{tb.coduser}"  />  
+		            </p:column>  
+		            
+		            <p:column>  
+		            <f:facet name="header">#{msg.bvt002TbDes}</f:facet>  
+		            <h:outputLabel value="#{tb.desuser}"  />
+		            </p:column> 
+		            
+		            <p:column width="150">  
+		            <f:facet name="header">#{msg.bvt002TbDesrol}</f:facet>  
+		            <h:outputLabel value="#{tb.desrol}"  />
+		            </p:column> 
+		            
+		            <p:column>  
+		            <f:facet name="header">#{msg.bvt002TbMail}</f:facet>  
+		            <h:outputLabel value="#{tb.mail}"  />
+		            </p:column> 
+		                        
+		            <p:column width="60" >  
+		            <f:facet name="header">#{msg.enviar}</f:facet>   
+		            <p:commandLink  styleClass="edit" onclick="enviar('#{tb.coduser}','#{tb.desuser}','#{tb.cluser}','#{tb.b_codrol}','1', '#{tb.mail}', '#{tb.instancia}')" 
+		            title="Enviar"><i class="fa fa-pencil-square-o fa-2x text-info"></i></p:commandLink>
+		            </p:column> 
+		            
+		             </p:dataTable>  
+
+                                </div>
+                            </div>
+                        </div>
+            
+            
+            <!-- Panel roles adicionales-->
+	        <p:dialog header="#{msg.bvt002RolAdicionales}" position="top" style="font-family: 'Ubuntu', serif;font-size: 11px; margin-top:40px"   widgetVar="dlg1" responsive="true">	        				
+               <p:panel id="panelroles" style="border:0">
+               <p:messages globalOnly="true" id="msgroles" closable="true" showIcon="true"/>
+              <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.bvt006User}</label>
+              <div class="col-md-9 col-sm-9 col-xs-12">
+               <p:autoComplete id="roladic"  placeholder="&nbsp;&nbsp;#{msg.bvt006User}*" value="#{bvt002.vusuario}"  completeMethod="#{autocomplete.completeUserCod}" dropdown="true" scrollHeight="250" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}">
+               <p:ajax event="itemSelect" update=":formBvt002:panelRoles" listener="#{bvt002.updatetbfilter1(bvt002.vusuario)}" />	
+               </p:autoComplete>
+             </div>
+             <br/><br/>
+             <div class="form-group">  
+			  <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.seg01}</label>
+			    <div class="col-md-9 col-sm-9 col-xs-12">
+		        <p:autoComplete id="rolfilter" value="#{bvt002.rolfilter}" placeholder="&nbsp;&nbsp;#{msg.seg01}" completeMethod="#{autocomplete.completeRol}"  dropdown="true" scrollHeight="250">
+		        <p:ajax event="itemSelect" update=":formBvt002:panelRoles" listener="#{bvt002.updatetbfilter}" />	
+		        </p:autoComplete>
+			    </div>
+			    </div>			    
+			    
+			  <div class="ln_solid"></div>
+              <div class="form-group">
+              <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: -17px">
+               <p:commandButton icon="fa fa-refresh" update="panelroles, panelRoles, msgroles" process="@this" 
+				title="#{msg.htmlr}"  styleClass="btn btn-primary btn-sm" action="#{bvt002.reset()}">
+				<f:actionListener binding="#{bvt002.setRolfilter('')}"/>   
+				  <p:resetInput target="panelroles" /> 
+				</p:commandButton> 
+               </div>
+              </div>       
+             </div>
+             </p:panel>
+
+     			   <!-- Tabla con el resultado -->
+     			   <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: -27px">
+					<p:dataGrid value="#{bvt002.listRoles}" id="panelRoles" var="rol"  columns="1" layout="grid" style="font-family: 'Ubuntu', serif;font-size: 11px;" 
+					paginator="true" paginatorAlwaysVisible="false" rows="3" rowsPerPageTemplate="3,5,10,15,20,50,100,500" paginatorPosition="top"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} &#160;&#160; {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}"
+					currentPageReportTemplate=" {currentPage} - {totalPages} #{msg.html28} {totalRecords}" rowIndexVar="rowId">			
+		            <p:panel header="#{rol.vcodrol} - #{rol.vdesrol}" style="text-align:left; font-family: 'Ubuntu', serif;font-size: 11px;">        	
+		            <h:panelGrid columns="3"  style="width:100%" >
+		            <i class="#{bvt002.isRol(rol.vcodrol)}" ></i>
+		            <p:commandButton icon="fa fa-plus-circle" immediate="true" update=":formBvt002:msgroles, panelRoles, :formBvt002:rolfilter" value="#{msg.html50}" action="#{bvt002.insert(rol.vcodrol)}"/>
+		            <p:commandButton icon="fa fa-minus-circle" immediate="true" update=":formBvt002:msgroles, panelRoles, :formBvt002:rolfilter" value="#{msg.html51}" action="#{bvt002.delete(rol.vcodrol)}"/>
+		            </h:panelGrid>
+		            </p:panel>
+					</p:dataGrid>  
+		           </div>   
+			</p:dialog>            
+                        
+                        
+                        
+                        
+              <!-- Modal -->
+			<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header panel-heading">
+			        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			        <h4 class="modal-title" id="myModalLabel"><b>#{msg.html32}</b></h4>
+			      </div>
+			      <div class="modal-body">
+			       <center style="font-size: 14px">#{msg.html31}</center>
+			      </div>
+			      <div class="modal-footer">
+			        <p:commandButton  action="#{bvt002.delete}"  styleClass="btn btn-blue btn-sm" value="#{msg.htmlborrar}" immediate="true" update="panel, tbResult, growl" accesskey="r" onclick="modalHide()"/>
+			       
+			       </div>
+			    </div>
+			  </div>
+			</div>	
+               </h:form>         
+            </div>
+
+    </div>
+   </div> 
+ 
+<script src="../assets/js/bvt002.js" type="text/javascript"></script>
+<ui:include src="/WEB-INF/templates/footer_no_jquery.xhtml" />
+</h:body>
+</html>
