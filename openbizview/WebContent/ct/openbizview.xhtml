@@ -13,7 +13,7 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <link rel="shortcut icon" href="../assets/images/favicon.ico"/>
-<h:body class="nav-md">
+<h:body class="nav-md" onload="modalHelp();">
     <div class="container body">
       <div class="main_container">
       <ui:include src="/WEB-INF/templates/menu.xhtml" />
@@ -42,19 +42,6 @@
                             <div class="count">#{db.r2}</div>
                             <span class="count_bottom">
                             <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M22')).vistaMenu=='0'}" value="mailtarea">	
-                            <i class="fa fa-arrow-circle-right"></i>																
-							#{msg.dashVerDetalle}
-							</h:outputLink>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="animated flipInY col-md-2 col-sm-2 col-xs-6 tile_stats_count">
-                        <div class="left"></div>
-                        <div class="right">
-                            <span class="count_top"><i class="fa fa-cogs"></i> #{msg.dashEtl}</span>
-                            <div class="count">#{db.r2}</div>
-                            <span class="count_bottom">
-                            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M25')).vistaMenu=='0'}" value="etl">	
                             <i class="fa fa-arrow-circle-right"></i>																
 							#{msg.dashVerDetalle}
 							</h:outputLink>
@@ -118,6 +105,27 @@
         </div>
         <!-- /page content -->
       </div>
+      
+         <!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header panel-heading">
+			        <h4 class="modal-title" id="myModalLabel"><b>Estamos para servirles</b></h4>
+			      </div>
+			      <div class="modal-body">
+			       <p>Para brindar un mejor servicio ponemos a su disposición nuestros contactos directos</p>
+			       <ul>
+					  <li><b>Extensión:</b> 8028</li>
+					  <li><b>Maria Gutierrez - Cel: </b> 0414-4820335</li>
+   					  <li><b>Giovanni Fuentes - Cel:</b> 0424-4517604</li>
+					  <li><b>Jorge Cuaro - Cel:     </b> 0412-5064041</li>
+					  <li><b>Andrés Dominguez - Cel:</b> 0414-1290562</li>
+					</ul>
+			      </div>
+			    </div>
+			  </div>
+			</div>	
       
     </div>
 

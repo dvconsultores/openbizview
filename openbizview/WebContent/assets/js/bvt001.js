@@ -119,6 +119,13 @@
 	}
 	}
 	
+	function modalHelp(){
+		alert('hola');
+		$( document ).ready( function() {
+		    $( '#myModal' ).modal( 'toggle' );
+		});
+	}
+	
 	
 	function dismissModal(){
 		$( document ).ready( function() {
