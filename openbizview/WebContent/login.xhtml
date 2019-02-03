@@ -1,0 +1,165 @@
+
+<!-- 
+     Copyright (C) 2015 DVCONSULTORES
+ -->
+<!DOCTYPE html >
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+
+	<!-- Required meta tags -->
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <title>OpenBizview</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css"/>
+   <!-- plugin css for this page -->
+  <link rel="stylesheet" href="assets/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="assets/vendors/iconfonts/puse-icons-feather/feather.css"/>
+  <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css"/>
+  <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.addons.css"/>
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="assets/css/style.css"/>
+  <link rel="stylesheet" href="assets/css/styleCustom.css" />
+  <!-- endinject -->
+
+  <link rel="shortcut icon" href="assets/images/favicon.ico" />
+
+</h:head>
+
+
+<h:body>
+<ui:include src="/WEB-INF/templates/bundle.xhtml" />
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
+      <div class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
+        <div class="row w-100">
+          <div class="col-lg-4 mx-auto">
+            <div class="auto-form-wrapper">
+            <center>
+            <img width="90" style="margin-top: -10px" src="assets/images/obv1.png" alt=""/>
+            </center><br/>
+              <h:form id="loginform">
+                <div class="form-group">
+                  <label class="label">#{msg['logUsuario']}</label>
+                  <div class="input-group">
+                   <h:inputText id="usuario" styleClass="form-control input_lg #{not component.valid ? 'ui-input-invalid' : ''}" 
+					maxlength="150" required="true" pt:placeholder="#{msg['logUsuario']} *"
+					requiredMessage="Requerido"
+					value="#{loginBean.usuario}">
+				   </h:inputText>
+                   <div class="input-group-append">
+                      <span class="input-group-text">
+                        <i class="mdi mdi-check-circle-outline"></i>
+                      </span>
+                    </div>                   
+                  </div>
+                  <h:message for="usuario"  styleClass="message"  />
+                </div>
+                <div class="form-group">
+                  <label class="label">#{msg['logClave']}</label>
+                  <div class="input-group">
+                    <h:inputSecret id="clave" 
+					styleClass="form-control input_lg #{not component.valid ? 'ui-input-invalid' : ''}" maxlength="150"
+					required="true" requiredMessage="Requerido"
+					pt:placeholder="#{msg['logClave']} *" value="#{loginBean.clave}" />							
+                    <div class="input-group-append">
+                      <span class="input-group-text">
+                        <i class="mdi mdi-check-circle-outline"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <h:message for="clave"  styleClass="message" />
+                </div>
+                <div class="form-group">
+                <p:ajaxStatus id="ajaxStatusPanel"><br />
+				  <f:facet name="default">
+					<h:commandButton styleClass="btn btn-primary submit-btn btn-block" value="Login" action="#{loginBean.login}" >
+                      <f:ajax  execute="@form" render="@form" />
+                    </h:commandButton>
+				  </f:facet>
+					<f:facet name="start">
+					 <center>
+					  <i class="fa fa-cog fa-spin fa-2x text-success"></i>
+					 </center>
+				  </f:facet>
+				   <f:facet name="complete">
+				    <h:commandButton styleClass="btn btn-primary submit-btn btn-block" value="Login" action="#{loginBean.login}" >
+                     <f:ajax  execute="@form" render="@form" />
+                    </h:commandButton>
+				 </f:facet>
+				</p:ajaxStatus>
+									
+									
+                  
+                </div>
+                <div class="form-group d-flex justify-content-between"> 
+                <a href="chgpass" class="text-small forgot-password text-black">#{msg['olvidocl']}</a>
+                                
+                <ul class="navbar-nav" style="margin-top: -9px">
+	             <li class="nav-item dropdown d-none d-xl-inline-block">
+	            <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+	              <img  height="20px" src="assets/images/flags/earth.png" alt="flag"/>
+	            </a>
+	            <div class="dropdown-menu" aria-labelledby="UserDropdown">
+	                <h:commandLink styleClass="dropdown-item  ve" onclick="setLanguage('es')" immediate="true" value="#{msg['htmles']}"/>
+	                <h:commandLink styleClass="dropdown-item  us" onclick="setLanguage('en')"  immediate="true" value="#{msg['htmlin']}"/>
+	            </div>
+	            </li>
+	            </ul>	                
+                </div>
+				
+				
+				                
+                <!-- Mensaje -->
+				<div class="p-t-15">				
+				<h:messages globalOnly="true" id="growl"  styleClass="message"  />
+				</div>
+									
+             </h:form>
+            </div>
+            <ul class="auth-footer">
+              <li>
+                <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">#{msg['gnu']}</a>
+              </li>
+            </ul>
+            <p class="footer-text text-center">copyright © 2018 Dvconsultores. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="assets/vendors/js/vendor.bundle.base.js"></script>
+  <script src="assets/vendors/js/vendor.bundle.addons.js"></script>
+  <!-- endinject -->
+  <!-- inject:js -->
+  <script src="assets/js/off-canvas.js"></script>
+  <script src="assets/js/hoverable-collapse.js"></script>
+  <script src="assets/js/misc.js"></script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Jquery plugin -->
+  <script src="assets/js/jquery.min.js" />
+  <!-- Cookies -->
+  <script src="assets/js/jquery.cookie.js"></script>
+  <script src="assets/js/load.js" />
+  <script type="text/javascript">
+		$(getLanguage());
+  </script>
+</h:body>
+</html>

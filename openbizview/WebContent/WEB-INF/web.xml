@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+<display-name>OPEN-BIZVIEW</display-name>
+  <welcome-file-list>
+    <welcome-file>login.xhtml</welcome-file>
+  </welcome-file-list>
+  <session-config>
+    <session-timeout>120</session-timeout>
+  </session-config>
+
+
+	<!-- JSF standard parameters -->
+	<context-param>
+		<description>
+            If this parameter is set to true and the submitted value of a component is
+            the empty string, the submitted value will be set to null
+        </description>
+		<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<description>Define the state method to be used. There are two different options 
+            defined by the specification: 'client' and 'server' state.</description>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>client</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.PARTIAL_STATE_SAVING</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	
+	 <context-param>
+    <param-name>JNDI_BD</param-name>
+    <param-value>java:comp/env/jdbc/orabiz</param-value>
+  </context-param>
+  <context-param>
+    <param-name>JNDI_MAIL</param-name>
+    <param-value>java:comp/env/mail/recibos</param-value>
+  </context-param>
+  
+  <context-param>
+    <param-name>MAIL_ACCOUNT</param-name>
+    <param-value>info@mail.com</param-value>
+  </context-param>
+    
+     
+     <servlet>
+    <servlet-name>QuartzInitializer</servlet-name>
+    <servlet-class>org.quartz.ee.servlet.QuartzInitializerServlet</servlet-class>
+    <init-param>
+      <param-name>shutdown-on-unload</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>config-file</param-name>
+      <param-value>../../WEB-INF/quartz.properties</param-value>
+    </init-param>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  
+    
+   <error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/templates/error-404.html</location>
+  </error-page> 
+  
+
+	<!-- Faces Servlet -->
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<context-param>
+    <param-name>org.omnifaces.FACES_VIEWS_SCAN_PATHS</param-name>
+    <param-value>/*.xhtml</param-value>
+    </context-param>
+
+	<!-- Faces Servlet Mapping -->
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>/faces/*</url-pattern>
+	</servlet-mapping>
+	
+
+</web-app>

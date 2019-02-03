@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- 
+     Copyright (C) 2017 GLOBAL FORGE
+ -->  
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+        <a class="navbar-brand brand-logo" href="openbizview.xhtml">
+          <img src="../assets/images/logo.svg" alt="logo" />
+        </a>
+        <a class="navbar-brand brand-logo-mini" href="index.html">
+          <img src="../assets/images/logo-mini.svg" alt="logo" />
+        </a>
+      </div>
+      
+      <div class="navbar-menu-wrapper d-flex align-items-center">
+        <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
+          <li class="nav-item">
+            <a href="#" class="nav-link">Etl
+              <span class="badge badge-primary ml-1">New</span>
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a href="#" class="nav-link">
+              <i class="mdi mdi-elevation-rise"></i>Reports</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="mdi mdi-calendar-multiple-check"></i>Schedule</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav navbar-nav-right">
+            
+            
+          <li class="nav-item dropdown d-none d-xl-inline-block">
+            <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+              <span class="profile-text">#{msg['saludo']}  #{loginBean.getLoggedUsr()}</span>
+              <img class="img-xs rounded-circle" src="../assets/images/faces/admin.jpg" alt="Profile image"/>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+              <a class="dropdown-item mt-2" href="http://www.openbizview.com/wiki/doku.php?id=start" target="_new">
+                Wiki
+              </a>
+              <a class="dropdown-item" href="chgpwd">
+                #{msg['html20']}
+              </a>
+              <h:commandLink class="dropdown-item" action="#{loginBean.logout}">
+                #{msg['salir']}
+              </h:commandLink>
+            </div>
+          </li>
+        </ul>
+        <button type="button" id="sidebarCollapse" class="btn btn-sm btn-icons btn-rounded btn-primary d-lg-none">
+            <i class="fa fa-bars"></i>
+        </button>
+      </div>      
+</nav>
+
+</html>
