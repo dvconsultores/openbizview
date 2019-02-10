@@ -129,12 +129,12 @@ public class LoginBean {
 				opcseg.opcmnu(); // Acceso a menú
 
 				// Recuperar trigger
-				try {
-					new Programacion().recuperarTriggers("0");
-				} catch (SchedulerException | NamingException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+//				try {
+//					new Programacion().recuperarTriggers("0");
+//				} catch (SchedulerException | NamingException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 
 				try {
 					FacesContext.getCurrentInstance().getExternalContext().redirect(baseURL + "ct/openbizview.xhtml");

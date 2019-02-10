@@ -13,15 +13,23 @@
 
  <ui:include src="/WEB-INF/templates/bundle.xhtml" />
  <!-- partial:partials/_sidebar.html -->
- <c:if test="#{smnubean.listMenu.size() > 0}">
-      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+       <nav class="sidebar sidebar-offcanvas" id="sidebar">
+       <c:if test="#{smnubean.listMenu.size() > 0}">
         <ul class="nav">
-        <!-- Reportes -->
-          <li class="nav-item active">
-            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('R01')).vistaMenu=='0'}" styleClass="nav-link" value="bvt001a">
-              <i class="menu-icon mdi mdi-printer"></i>
-              <span class="menu-title">#{msg['rep']}</span>
-            </h:outputLink>
+        <li class="nav-item nav-profile">
+            <div class="nav-link">
+              <div class="user-wrapper">
+                <div class="profile-image">
+                  <img src="../assets/images/faces/male.png" alt="profile image"/>
+                </div>
+                <div class="text-wrapper">
+                  <p class="profile-name">#{loginBean.getLoggedUsr()}</p>
+                </div>
+              </div>
+              <h:outputLink class="btn btn-success btn-block" rendered="#{smnubean.listMenu.get(smnubean.opcmnu('R01')).vistaMenu=='0'}" value="bvt001a">#{msg['rep']}
+                &#160;&#160;<i class="mdi mdi-printer"></i>
+              </h:outputLink>
+            </div>
           </li>
           
           <!-- Básicos -->
@@ -184,8 +192,9 @@
           </li>
           </h:outputLabel>
         </ul>
+        </c:if>    
       </nav> 
-  </c:if>       
+     
       <!-- partial -->
             
 </html>
