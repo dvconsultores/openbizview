@@ -33,162 +33,65 @@
           </li>
           
           <!-- Básicos -->
+          
           <h:outputLabel  rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M01')).vistaMenu=='0'}" styleClass="mtmbmenu">
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" href="submenu1.xhtml">
               <i class="menu-icon mdi mdi-content-copy"></i>
               <span class="menu-title">#{msg['globalBasico']}</span>
-              <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M02')).vistaMenu=='0'}">
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat1">#{msg['bas1']}</a>
-                </li>
-              </h:outputLink>
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M03')).vistaMenu=='0'}">  
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat2">#{msg['bas2']}</a>
-                </li>
-              </h:outputLink>
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M04')).vistaMenu=='0'}">  
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat3">#{msg['bas3']}</a>
-                </li>
-              </h:outputLink>  
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M05')).vistaMenu=='0'}">
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat4">#{msg['bas4']}</a>
-                </li>
-              </h:outputLink>  
-              </ul>
-            </div>
           </li>
           </h:outputLabel>
           
           <!-- Auditar -->
           <h:outputLabel  rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M06')).vistaMenu=='0'}" styleClass="mtmbmenu">
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-audit" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" href="submenu2.xhtml">
               <i class="menu-icon mdi mdi-source-fork"></i>
               <span class="menu-title">#{msg['globalAdmin']}</span>
-              <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-audit">
-              <ul class="nav flex-column sub-menu">
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M08')).vistaMenu=='0'}">
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat1">#{msg['adm2']}</a>
-                </li>
-              </h:outputLink>
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M01')).vistaMenu=='0'}">  
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat2">#{msg['adm3']}</a>
-                </li>
-              </h:outputLink>
-              </ul>
-            </div>
           </li>
           </h:outputLabel>
+
+          <!-- Tareas -->
+          <h:outputLabel  rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M21')).vistaMenu=='0'}" styleClass="mtmbmenu">
+          <li class="nav-item">
+            <a class="nav-link" href="submenu3.xhtml">
+              <i class="menu-icon mdi mdi-alarm"></i>
+              <span class="menu-title">#{msg['globalMail']}</span>
+            </a>
+          </li>
+          </h:outputLabel>
+          
+          <!-- Dashboard -->
+          <h:outputLabel  rendered="#{smnubean.listMenu.get(smnubean.opcmnu('R05')).vistaMenu=='0'}" styleClass="mtmbmenu"> 
+          <li class="nav-item">
+            <a class="nav-link" href="submenu4.xhtml">
+              <i class="menu-icon mdi mdi-chart-bar"></i>
+              <span class="menu-title">#{msg['dashboard']}</span>
+            </a>
+          </li>
+          </h:outputLabel>
+          
+          
+          <!-- Cubos -->
+          <h:outputLabel  rendered="#{smnubean.listMenu.get(smnubean.opcmnu('R02')).vistaMenu=='0'}" styleClass="mtmbmenu"> 
+          <li class="nav-item">
+            <a class="nav-link" href="submenu5.xhtml">
+              <i class="menu-icon mdi mdi-cube-outline"></i>
+              <span class="menu-title">#{msg['cube']}</span>
+            </a>
+          </li>
+          </h:outputLabel>
+          
           
           <!-- Seguridad -->
           <h:outputLabel  rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M10')).vistaMenu=='0'}"  styleClass="mtmbmenu">
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-security" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" href="submenu6.xhtml">
               <i class="menu-icon mdi mdi-key-variant"></i>
               <span class="menu-title">#{msg['globalSeguridad']}</span>
-              <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-security">
-              <ul class="nav flex-column sub-menu">
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M11')).vistaMenu=='0'}">
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat1">#{msg['instancias']}</a>
-                </li>
-              </h:outputLink>
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M12')).vistaMenu=='0'}">
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat1">#{msg['seg01']}</a>
-                </li>
-              </h:outputLink>
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M13')).vistaMenu=='0'}">  
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat2">#{msg['seg02']}</a>
-                </li>
-              </h:outputLink>
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M14')).vistaMenu=='0'}">  
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat2">#{msg['seg03']}</a>
-                </li>
-              </h:outputLink>
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M15')).vistaMenu=='0'}">  
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat2">#{msg['seg08']}</a>
-                </li>
-              </h:outputLink>
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M16')).vistaMenu=='0'}">  
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat2">#{msg['seg09']}</a>
-                </li>
-              </h:outputLink>
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M17')).vistaMenu=='0'}">  
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat2">#{msg['seg04']}</a>
-                </li>
-              </h:outputLink>
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M18')).vistaMenu=='0'}">  
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat2">#{msg['seg05']}</a>
-                </li>
-              </h:outputLink>
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M19')).vistaMenu=='0'}">  
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat2">#{msg['seg06']}</a>
-                </li>
-              </h:outputLink>
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M20')).vistaMenu=='0'}">  
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat2">#{msg['seg07']}</a>
-                </li>
-              </h:outputLink>
-              </ul>
-            </div>
-          </li>
-          </h:outputLabel>
-          
-          <!-- Tareas -->
-          <h:outputLabel  rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M21')).vistaMenu=='0'}" styleClass="mtmbmenu">
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-task" aria-expanded="false" aria-controls="ui-basic">
-              <i class="menu-icon mdi mdi-alarm"></i>
-              <span class="menu-title">#{msg['globalMail']}</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-task">
-              <ul class="nav flex-column sub-menu">
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M22')).vistaMenu=='0'}">
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat1">#{msg['mail02']}</a>
-                </li>
-              </h:outputLink>
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M23')).vistaMenu=='0'}">  
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat2">#{msg['mail03']}</a>
-                </li>
-              </h:outputLink>
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M24')).vistaMenu=='0'}">  
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat2">#{msg['mail04']}</a>
-                </li>
-              </h:outputLink>
-              <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M25')).vistaMenu=='0'}">  
-                <li class="nav-item">
-                  <a class="nav-link" href="bvtcat2">#{msg['mail05']}</a>
-                </li>
-              </h:outputLink>
-              </ul>
-            </div>
           </li>
           </h:outputLabel>
         </ul>
