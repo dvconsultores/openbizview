@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- 
+     Copyright (C) 2011 - 2016  DVCONSULTORES
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+	
+	    http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+ --> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if IE 8]> <html lang="en" class="ie8"/> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"/> <![endif]-->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body class="nav-md">
+
+    <div class="container body">
+        <div class="main_container">
+
+         <ui:include src="/WEB-INF/templates/menu.xhtml" />
+            <!-- page content -->
+            <div class="right_col" role="main">
+               <div class="page-title">
+                        <div class="title_left">
+                            <h3>#{msg.dashboardtitulo1} &nbsp; </h3>    
+                             <!-- Mensaje -->                                       
+                        </div>                            
+                    </div>
+               <div class="clearfix"></div>
+               <h:form id="formBvtDashboard" styleClass="form-horizontal form-label-left">
+               
+               <div class="col-md-12 col-sm-12 col-xs-12">
+                        <p:messages globalOnly="true" id="growl" closable="true" showIcon="true"/> 
+                            <div class="x_panel">
+                                <div class="x_title">
+                                <h2><small>#{msg.htmlload}</small></h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li class="dropdown">
+                                        <a HREF="http://www.openbizview.com/wiki/doku.php?id=dashboardprint" target="_new" title="Wiki"><i class="fa fa-file-text text-info"></i> #{text.html11}</a>
+                                        </li>
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                <p:panel id="panel" style="border:0">
+                                
+                                   <div class="form-group">
+                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.dashboardgrupo}</label>
+                                         <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <p:autoComplete id="grupo" placeholder="&#160;&#160;#{msg.bvt001Grp}" value="#{bvt001C.codgrup}"  emptyMessage="#{msg.html138}" completeMethod="#{autocomplete.completeGrupo}"  required="true"  requiredMessage="#{bd.getMessage('htmlvalidate')}" valueChangeListener="#{bd.setCodgrup(bvt001.codgrup)}" maxResults="500" dropdown="true" scrollHeight="250">
+										    <p:ajax event="itemSelect" update="tbResult" listener="#{bd.setCodgrup(bvt001C.codgrup)}" />	     
+										    </p:autoComplete> 
+										    <p:message for="grupo" styleClass="margin-top-5"/>   
+                                         </div>
+                                         
+                                   </div>   
+                                   
+                                    <div class="ln_solid"></div>
+                                        <div class="form-group">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+								                 <p:commandButton icon="fa fa-refresh" update="panel, tbResult, growl" process="@this" 
+								                 title="#{msg.htmlr}"  styleClass="btn btn-primary btn-sm">  
+								                 <p:resetInput target="panel" /> 
+								                 <f:actionListener binding="#{bd.setCodgrup('')}"/> 
+								                 </p:commandButton> 
+								             </div>
+                                        </div>                                     
+                                 </p:panel>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                 <div class="x_panel">
+                   <div class="x_title">
+                   <h2><small>#{msg.htmlfilter}</small></h2>
+                   <ul class="nav navbar-right panel_toolbox">
+                   </ul>
+                  <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                               
+                        <!-- Tabla con el resultado -->
+					<p:dataTable id="tbResult" styleClass="table table-striped" emptyMessage="#{msg.result}" var="tb"  value="#{bvt001C.lazyModel}"  lazy="true" sortBy="a.context"
+					paginator="true" paginatorAlwaysVisible="false" rows="15" rowsPerPageTemplate="5,10,15,20,50,100,500" paginatorPosition="top"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} &#160;&#160; {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}"
+					currentPageReportTemplate=" {currentPage} - {totalPages} #{msg.html28} #{bvt001C.rows}"  
+					widgetVar="global" reflow="true">
+					
+					<f:facet name="header"> 			
+		            <p:outputPanel>  
+		                <h:outputText value="#{msg.htmlb}" />&#160;&#160;  
+		                <p:inputText id="globalFilter" onkeyup="PF('global').filter()" style="width:150px;height:35px;" /> 
+		                <p:tooltip for="globalFilter" value="#{msg.html36}" showEffect="fade" hideEffect="fade" />  
+		                <p:watermark for="globalFilter" value="#{msg.html29}" /> 
+		            </p:outputPanel>         
+		            </f:facet> 
+					
+					<p:column  width="200">  
+		            <f:facet name="header">#{msg.bvt001TbCod}</f:facet> 
+		            <h:outputLabel value="#{tb.context}"  />  
+		            </p:column>  
+		            
+		            <p:column  >  
+		            <f:facet name="header">#{msg.bvt001TbDes}</f:facet>  
+		            <h:outputLabel value="#{tb.descripcion}"  />  
+		            </p:column> 		            
+		                        
+		            <p:column width="60" >  
+		            <f:facet name="header">#{msg.bvt001TbPrint}</f:facet>  
+		            <p:commandLink styleClass="edit"  onclick="enviar('#{tb.context}','#{tb.indexName}');PF('public').show()" 
+		            immediate="true"
+		            title="Enviar"><i class="fa fa-tachometer fa-2x text-info"></i></p:commandLink>
+					</p:column>
+					
+		
+		            </p:dataTable>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                </h:form>   
+                <h:form id="formBvtDashboardPublic" styleClass="form-horizontal form-label-left">
+                <p:dialog  position="north center" header="#{msg.dashboardPublicar}" widgetVar="public" id="publicar">
+                    <p:inputText type="hidden" id="folder" value="#{handleDashboard.context}"/>
+                    <p:inputText type="hidden" id="index" value="#{handleDashboard.index}"/>
+                    
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.dashboarddias}:</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                     <p:inputText value="#{handleDashboard.dias}" id="dias" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}"/>
+					 <p:message for="dias" styleClass="margin-top-5"/>   
+                    </div>
+                    <br/>
+                    <div class="pull-right">
+                    <p:commandButton update=":formBvtDashboardPublic:publicar" action="#{handleDashboard.startDb()}" 
+					value="#{msg.html155}" title="#{msg.html155}" icon="fa fa-tachometer" styleClass="btn btn-success btn-md"/>
+					</div>
+                 </p:dialog>   
+                </h:form>          
+            </div>
+
+    </div>
+   </div> 
+ 
+<script src="../assets/js/dashboard.js" type="text/javascript"></script>
+<ui:include src="/WEB-INF/templates/footer_no_jquery.xhtml" />
+</h:body>
+</html>

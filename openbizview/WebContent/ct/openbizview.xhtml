@@ -1,150 +1,172 @@
-
+<?xml version='1.0' encoding='UTF-8' ?>
 <!-- 
-     Copyright (C) 2015 DVCONSULTORES
- -->
-<!DOCTYPE html >
+     Copyright (C) 2017 GLOBAL FORGE
+ -->  
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if IE 8]> <html lang="en" class="ie8"/> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"/> <![endif]-->
 
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<link rel="shortcut icon" href="../assets/images/favicon.ico"/>
+<h:body class="nav-md" onload="modalHelp();">
+    <div class="container body">
+      <div class="main_container">
+      <ui:include src="/WEB-INF/templates/menu.xhtml" />
 
-<h:head>
-<ui:include src="/WEB-INF/templates/top.xhtml" />
-</h:head>
+        <!-- page content -->
+        <div class="right_col" role="main">
+         <c:if test="#{smnubean.listMenu.size() > 0}">
+                 <div class="row tile_count">
+                    <div class="animated flipInY col-md-2 col-sm-2 col-xs-6 tile_stats_count">
+                        <div class="left"></div>
+                        <div class="right">
+                            <span class="count_top"><i class="fa fa-bar-chart"></i> #{msg.dashRep}</span>
+                            <div class="count">#{db.r1}</div>
+                            <span class="count_bottom">
+                            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('R01')).vistaMenu=='0'}" value="bvt001">	
+                            <i class="fa fa-arrow-circle-right"></i>																
+							#{msg.dashVerDetalle}
+							</h:outputLink>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="animated flipInY col-md-2 col-sm-2 col-xs-6 tile_stats_count">
+                        <div class="left"></div>
+                        <div class="right">
+                            <span class="count_top"><i class="fa fa-tasks"></i> #{msg.dashTareas}</span>
+                            <div class="count">#{db.r2}</div>
+                            <span class="count_bottom">
+                            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M22')).vistaMenu=='0'}" value="mailtarea">	
+                            <i class="fa fa-arrow-circle-right"></i>																
+							#{msg.dashVerDetalle}
+							</h:outputLink>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="animated flipInY col-md-2 col-sm-2 col-xs-6 tile_stats_count">
+                        <div class="left"></div>
+                        <div class="right">
+                            <span class="count_top"><i class="fa fa-user"></i> #{msg.dashUser}</span>
+                            <div class="count green">#{db.r3}</div>
+                            <span class="count_bottom">
+                            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M14')).vistaMenu=='0'}" value="bvt002">	
+                            <i class="fa fa-arrow-circle-right"></i>																
+							#{msg.dashVerDetalle}
+							</h:outputLink>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="animated flipInY col-md-2 col-sm-2 col-xs-6 tile_stats_count">
+                        <div class="left"></div>
+                        <div class="right">
+                            <span class="count_top"><i class="fa fa-print"></i> #{msg.dashRepImpr}</span>
+                            <div class="count">#{db.r4}</div>
+                            <span class="count_bottom">
+                            <h:outputLink rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M06')).vistaMenu=='0'}" value="bvt006">	
+                            <i class="fa fa-arrow-circle-right"></i>																
+							#{msg.dashVerDetalle}
+							</h:outputLink>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="row">				
+					 <div class="col-md-12 col-sm-12 col-xs-12">
+					 <center><a href="http://www.openbizview.com/?post_type=product" target="_blank"><img src="../assets/images/banner.jpg" alt="..." height="70"/></a></center>
+					 </div>
+				</div>	 <br/>
+                
+
+                <div class="row">				
+					 <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel fixed_height_390">
+                                <div class="x_title">
+                                    <h2><i class="fa fa-tachometer green"></i>&nbsp;&nbsp;#{msg.dashRepTop}</h2>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                 <canvas id="myChart" width="200" height="58"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                  </div>      
+                <!-- /top tiles -->
 
 
-<h:body>
-  <div class="container-scroller">
-  <h:form id="loginform">
-    <!-- partial:partials/_navbar.html -->
-     <ui:include src="/WEB-INF/templates/topbar.xhtml" />
-    <!-- partial -->
-    
-    <div class="container-fluid page-body-wrapper">
-    <!-- partial:partials/_sidebar.html -->
-     <ui:include src="/WEB-INF/templates/menu.xhtml" />
-     <!-- partial -->
-     
-      <div class="main-panel">
-        <div class="content-wrapper">
-          <div class="row">
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
-              <div class="card card-statistics">
-                <div class="card-body">
-                  <div class="clearfix">
-                    <div class="float-left">
-                      <i class="mdi mdi-cube text-danger icon-lg"></i>
-                    </div>
-                    <div class="float-right">
-                      <p class="mb-0 text-right">Total Revenue</p>
-                      <div class="fluid-container">
-                        <h3 class="font-weight-medium text-right mb-0">$65,650</h3>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> 65% lower growth
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
-              <div class="card card-statistics">
-                <div class="card-body">
-                  <div class="clearfix">
-                    <div class="float-left">
-                      <i class="mdi mdi-receipt text-warning icon-lg"></i>
-                    </div>
-                    <div class="float-right">
-                      <p class="mb-0 text-right">Orders</p>
-                      <div class="fluid-container">
-                        <h3 class="font-weight-medium text-right mb-0">3455</h3>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i> Product-wise sales
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
-              <div class="card card-statistics">
-                <div class="card-body">
-                  <div class="clearfix">
-                    <div class="float-left">
-                      <i class="mdi mdi-poll-box text-success icon-lg"></i>
-                    </div>
-                    <div class="float-right">
-                      <p class="mb-0 text-right">Sales</p>
-                      <div class="fluid-container">
-                        <h3 class="font-weight-medium text-right mb-0">5693</h3>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-calendar mr-1" aria-hidden="true"></i> Weekly Sales
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
-              <div class="card card-statistics">
-                <div class="card-body">
-                  <div class="clearfix">
-                    <div class="float-left">
-                      <i class="mdi mdi-account-location text-info icon-lg"></i>
-                    </div>
-                    <div class="float-right">
-                      <p class="mb-0 text-right">Employees</p>
-                      <div class="fluid-container">
-                        <h3 class="font-weight-medium text-right mb-0">246</h3>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-reload mr-1" aria-hidden="true"></i> Product-wise sales
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+
+        </c:if>
         </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:partials/_footer.html -->
-        <ui:include src="/WEB-INF/templates/footer.xhtml" />
-        <!-- partial -->
+        <!-- /page content -->
       </div>
-      <!-- main-panel ends -->
+      
+         <!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header panel-heading">
+			        <h4 class="modal-title" id="myModalLabel"><b>Estamos para servirles</b></h4>
+			      </div>
+			      <div class="modal-body">
+			       <p>Para brindar un mejor servicio ponemos a su disposición nuestros contactos directos</p>
+			       <ul>
+					  <li><b>Extensión:</b> 8028</li>
+					  <li><b>Maria Gutierrez - Cel: </b> 0414-4820335</li>
+   					  <li><b>Giovanni Fuentes - Cel:</b> 0424-4517604</li>
+					  <li><b>Jorge Cuaro - Cel:     </b> 0412-5064041</li>
+					  <li><b>Andrés Dominguez - Cel:</b> 0414-1290562</li>
+					</ul>
+			      </div>
+			    </div>
+			  </div>
+			</div>	
+      
     </div>
-    <!-- page-body-wrapper ends -->
-    </h:form>
-  </div>
-  <!-- container-scroller -->
-    <!-- plugins:js -->
-  <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
-  <script src="../assets/vendors/js/vendor.bundle.addons.js"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page-->
-  <!-- End plugin js for this page-->
-  <!-- inject:js -->
-  <script src="../assets/js/off-canvas.js"></script>
-  <script src="../assets/js/misc.js"></script>
-   <!-- Jquery plugin -->
-  <script src="../assets/js/jquery.min.js" />
-  <!-- endinject -->
-  <!-- Custom js for this page-->
-  <script src="../assets/js/dashboard.js"></script>
-  <!-- End custom js for this page-->
-   <script type="text/javascript">
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-            });
-        });
-    </script>
-</h:body>
+
+    <ui:include src="/WEB-INF/templates/footer.xhtml" />
+    <script src="../assets/js/bvt001.js"></script>
+	<script>
+	var ctx = document.getElementById("myChart").getContext('2d');
+	var myChart = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels: ["#{db.get1RepDesc()}", "#{db.get2RepDesc()}", "#{db.get3RepDesc()}", "#{db.get4RepDesc()}", "#{db.get5RepDesc()}"],
+	        datasets: [{
+	            label: '#{msg.html57}',
+	            data: [#{db.get1Rep()}, #{db.get2Rep()},#{db.get3Rep()}, #{db.get4Rep()}, #{db.get5Rep()}],
+	            backgroundColor: [
+	                'rgba(102, 186, 113, 0.2)',
+	                'rgba(52, 152, 219, 0.2)',
+	                'rgba(255, 223, 100, 0.2)',
+	                'rgba(182, 198, 192, 0.2)',
+	                'rgba(255, 99,  132, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(102, 186, 113, 1)',
+	                'rrgba(52, 152, 219, 1)',
+	                'rgba(255, 223, 100, 1)',
+	                'rgba(182, 198, 192, 1)',
+	                'rgba(255, 99,  132, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero:true
+	                }
+	            }]
+	        }
+	    }
+	});
+	</script>
+  </h:body>
 </html>

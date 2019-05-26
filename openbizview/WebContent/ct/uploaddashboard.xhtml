@@ -1,0 +1,369 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- 
+     Copyright (C) 2011 - 2016  DVCONSULTORES
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+	
+	    http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+ --> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if IE 8]> <html lang="en" class="ie8"/> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"/> <![endif]-->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body class="nav-md">
+
+    <div class="container body">
+        <div class="main_container">
+
+         <ui:include src="/WEB-INF/templates/menu.xhtml" />
+            <!-- page content -->
+            <div class="right_col" role="main">
+               <div class="page-title">
+                        <div class="title_left">
+                            <h3>#{msg.dashboardtitulo} &nbsp; </h3>    
+                             <!-- Mensaje -->                                       
+                        </div>                            
+                    </div>
+               <div class="clearfix"></div>
+               <f:event listener="#{fileUploadPivotController.init}" type="preRenderView" /> 
+               <p:messages globalOnly="true" id="growl" closable="true" showIcon="true"/>
+               <!-- Subir dashboard -->
+                      <p:dialog position="center top" responsive="true" widgetVar="uploaddb">
+                         <h:form id="formPivotUpload" enctype="multipart/form-data" styleClass="form-horizontal form-label-left">                
+                                <p:panel id="panelup"  header="Zip/Jar">                              
+                                <p:commandButton icon="fa fa-folder-open" update="panelup" rendered="false" styleClass="btn btn-success btn-md"
+								process="@this" title="#{msg.html30}" value="#{msg.html30}">
+								<p:resetInput target="panelup" />
+							</p:commandButton>
+							<br />
+				            <p:selectOneRadio id="console" value="#{bvt001B.opciones}">
+					             <f:selectItem itemLabel="Zip" itemValue="Zip" />
+				                 <f:selectItem itemLabel="Jar" itemValue="Jar" />
+				                 <p:ajax event="change" update="formPivotUpload" listener="#{bvt001B.setOpciones(bvt001B.opciones)}"/>
+					        </p:selectOneRadio>
+				            <br />
+							<div id="upload">		
+								<p:fileUpload
+									fileUploadListener="#{bvt001B.handleZip}"
+									style="padding-top:10px" 
+									mode="advanced" 
+									update="growl, console"
+									auto="true"
+									multiple="true" 
+									cancelLabel="#{msg.autos02Cancel}"
+									label="#{msg.autos02Sel}" 
+									uploadLabel="#{msg.autos02Up}"
+									allowTypes="/(\.|\/)(jar|zip)$/"
+									invalidFileMessage="#{msg.dashboardonlyjar}"
+									oncomplete="PF('uploaddb').hide()">
+								</p:fileUpload>
+								</div>                                 
+                                 </p:panel>                         
+                         </h:form> 
+                        </p:dialog>
+               <!-- Definir pivot -->         
+               <h:form id="formPivotDef"  styleClass="form-horizontal form-label-left">             
+               <div class="col-md-6 col-sm-12 col-xs-12">
+                         
+                            <div class="x_panel">
+                                <div class="x_title">
+                                <h2><small>#{msg.pivotdefinicion}</small></h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                     <li class="dropdown">
+                                        <a HREF="http://www.openbizview.com/wiki/doku.php?id=uploaddashboard" target="_new" title="Wiki"><i class="fa fa-file-text text-info"></i> #{text.html11}</a>
+                                        </li>
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                <p:panel id="panel" style="border:0">
+                                
+                                <div class="form-group">
+                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.dashboardGrupo}</label>
+                                         <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <p:autoComplete id="grupo" placeholder="&#160;&#160;#{msg.dashboardGrupo}" value="#{bvt001B.codgrup}"  emptyMessage="#{msg.html138}" completeMethod="#{autocomplete.completeGrupo}"  required="true"  requiredMessage="#{bd.getMessage('htmlvalidate')}" valueChangeListener="#{bd.setCodgrup(bvt001.codgrup)}" maxResults="500" dropdown="true" scrollHeight="250">
+										    <p:ajax event="itemSelect" update="tbResult" listener="#{bd.setCodgrup(bvt001B.codgrup)}" />	     
+										    </p:autoComplete> 
+										    <p:message for="grupo" styleClass="margin-top-5"/>   
+                                         </div>
+                                         
+                                   </div>
+                                
+                                  <div class="form-group">
+                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.dashboarddefName}</label>
+                                         <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <p:inputText id="context" maxlength="20" placeholder="#{msg.dashboarddefName}" styleClass="form-control input" value="#{bvt001B.context}" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}"/>			     
+			                                 <p:message for="context" styleClass="margin-top-5"/>
+                                         </div>
+                                         
+                                   </div>
+                                   
+                                   <div class="form-group">
+                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.dashboarddefdesc}</label>
+                                         <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <p:inputText id="desc" maxlength="150" placeholder="#{msg.dashboarddefdesc}" styleClass="form-control input" value="#{bvt001B.descripcion}" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}"/>			     
+			                                 <p:message for="desc" styleClass="margin-top-5"/>
+                                         </div>
+                                   </div>
+                                   
+                                   <div class="form-group">
+                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.dashboarddefjar}</label>
+                                         <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <p:inputText id="jar" maxlength="20" placeholder="#{msg.dashboarddefjar}" styleClass="form-control input" value="#{bvt001B.jar}" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}"/>			     
+			                                 <p:message for="jar" styleClass="margin-top-5"/>
+                                         </div>
+                                   </div>
+                                   
+                                   <div class="form-group">
+                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.dashboarddefindex}</label>
+                                         <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <p:inputText id="index" maxlength="20" placeholder="#{msg.dashboarddefindex}" styleClass="form-control input" value="#{bvt001B.indexName}" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}"/>			     
+			                                 <p:message for="index" styleClass="margin-top-5"/>
+                                         </div>
+                                   </div>
+
+                                   
+                                    <h:inputHidden id="vop" value="#{bvt001B.validarOperacion}"/>
+                                   
+
+                                        <div class="ln_solid"></div>
+                                        <div class="form-group">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <p:commandButton update=":formPivotDef:panel, :formPivotDef:tbResult, :formAccPivot:tbResultAccPivot,  growl"  id="btnIn" action="#{bvt001B.guardar}" 
+								                 rendered="#{smnubean.opcbot('1')}" value="#{msg.htmlguardar}" title="#{msg.htmlg}" icon="fa fa-floppy-o" styleClass="btn btn-success btn-md"/>
+								                 <p:commandButton onclick="modalDelete();" 
+								                 rendered="#{smnubean.opcbot('2')}" value="#{msg.htmlborrar}" icon="fa fa-trash" title="#{msg.htmle}" styleClass="btn btn-blue btn-md" />
+								                 <p:commandButton icon="fa fa-refresh" process="@this" action="#{bvt001B.reset()}"
+								                 immediate="true" update=":formPivotDef:panel, :formPivotDef:tbResult, growl" 
+								                 title="#{msg.htmlr}"  styleClass="btn btn-primary btn-md"> 
+								                 <p:resetInput target=":formPivotDef:panel"  /> 
+								                 <f:actionListener binding="#{bvt001B.setContext('')}"/>
+								                 <f:actionListener binding="#{bvt001B.setJar('')}"/>
+								                 </p:commandButton> 
+                                            </div>
+                                        </div>  
+                                 
+                                 </p:panel>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+               <div class="col-md-6 col-sm-12 col-xs-12">
+                 <div class="x_panel">
+                   <div class="x_title">
+                   <h2><small>#{msg.htmlfilter}</small></h2>
+                   <ul class="nav navbar-right panel_toolbox">
+                   </ul>
+                  <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                               
+                    <!-- Tabla con el resultado -->
+					<p:dataTable id="tbResult" styleClass="table table-striped" emptyMessage="#{msg.result}" var="tb"  value="#{bvt001B.lazyModel}"   lazy="true" sortBy="#{tb.context}"
+					paginator="true" paginatorAlwaysVisible="false" rows="8" rowsPerPageTemplate="5,10,15,20,50,100,500" paginatorPosition="top"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} &#160;&#160; {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}"
+					currentPageReportTemplate=" {currentPage} - {totalPages} #{msg.html28} #{bvt001B.rows}"  
+					widgetVar="global" reflow="true">
+					
+					<f:facet name="header"> 			
+		            <p:outputPanel>  
+		                <h:outputText value="#{msg.htmlb}" />&#160;&#160;  
+		                <p:inputText id="globalFilter" onkeyup="PF('global').filter()" style="width:150px;height:35px;" /> 
+		                <p:tooltip for="globalFilter" value="#{msg.html36}" showEffect="fade" hideEffect="fade" />  
+		                <p:watermark for="globalFilter" value="#{msg.html29}" /> &#160;&#160;
+		            </p:outputPanel>         
+		            </f:facet>   
+
+		            <p:column width="40" > 
+		            <f:facet  name="header"> 
+		            <p:commandLink ><i class="fa fa-bookmark fa-2x text-info" title="#{msg.borrar}"></i></p:commandLink>
+		            </f:facet>   
+		            <p:commandLink styleClass="edit" onclick="enviar('#{tb.codgrup} - #{tb.desgrup}', '#{tb.context}', '#{tb.descripcion}', '#{tb.jar}' ,'#{tb.indexName}','1'); modalDelete(); "
+		            title="Enviar"><i class="fa fa-trash fa-2x text-info"></i></p:commandLink>
+		            </p:column>
+		            
+		            <p:column >  
+		            <f:facet name="header">#{msg.mailgrupoCodigoTb}</f:facet> 
+		            <h:outputLabel value="#{tb.context}" />  
+		            </p:column>  
+		            
+		            <p:column width="100" >  
+		            <f:facet name="header">#{msg.dashboardsubir}</f:facet>  
+		            <p:commandLink styleClass="edit" 
+		            onclick="enviar('#{tb.codgrup} - #{tb.desgrup}', '#{tb.context}', '#{tb.descripcion}', '#{tb.jar}' ,'#{tb.indexName}','0') "
+		            oncomplete="PF('uploaddb').show()"
+		            action="#{bvt001B.setContext(tb.context)}" 
+		            title="Enviar"><i class="fa fa-upload fa-2x text-info"></i></p:commandLink>
+		            </p:column>
+		            		            
+		                       
+		            <p:column width="60" >  
+		            <f:facet name="header">#{msg.enviar}</f:facet>  
+		            <p:commandLink styleClass="edit" onclick="enviar('#{tb.codgrup} - #{tb.desgrup}', '#{tb.context}', '#{tb.descripcion}', '#{tb.jar}' ,'#{tb.indexName}','1') "
+		            title="Enviar"><i class="fa fa-pencil-square-o fa-2x text-info"></i></p:commandLink>
+		            </p:column>
+		             
+		
+		        </p:dataTable>    
+
+                                </div>
+                            </div>
+                        </div> 
+                        
+
+			
+			 <!-- Modal -->
+			<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header panel-heading">
+			        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			        <h4 class="modal-title" id="myModalLabel"><b>#{msg.html32}</b></h4>
+			      </div>
+			      <div class="modal-body">
+			       <center style="font-size: 14px">#{msg.html31}</center>
+			      </div>
+			      <div class="modal-footer">
+			       <p:commandButton  action="#{bvt001B.delete}"  styleClass="btn btn-blue btn-sm" value="#{msg.htmlborrar}"  update=":formPivotDef:panel, :formPivotDef:tbResult, :formAccPivot:tbResultAccPivot, growl" accesskey="r" onclick="modalHide()"/>
+			        </div>
+			    </div>
+			  </div>
+			</div>	
+
+               </h:form>  
+               <!-- Definir pivot -->       
+               
+               
+                <!-- Panel Acceso -->
+                <h:form id="formAccPivot"  styleClass="form-horizontal form-label-left">
+                       <div class="col-md-6 col-sm-12 col-xs-12">  
+                         <div class="x_panel">
+                                <div class="x_title">
+                                <h2><small>#{msg.htmlload}</small></h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                <p:panel id="panelAccPivot" style="border:0">
+                                
+                                   <div class="form-group">
+                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.bvtmenurol}</label>
+                                         <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <p:autoComplete id="rol" value="#{bvt001C.b_codrol}" placeholder="#{msg.acccat1rol}"   completeMethod="#{autocomplete.completeRol}"  dropdown="true" scrollHeight="250" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}">
+										    <p:ajax event="itemSelect" update="formAccPivot:tbResultAccPivot"  listener="#{bvt001C.updatetbfilter(bvt001C.b_codrol)}" />
+										     </p:autoComplete>
+										     <p:message for="rol" styleClass="margin-top-5"/> 
+                                         </div>
+                                         
+                                   </div>
+                                   
+
+                                        <div class="ln_solid"></div>
+                                        <div class="form-group">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                             <p:commandButton update=":formAccPivot:tbResultAccPivot, :formAccPivot:panelAccPivot, growl" accesskey="i" id="btnInAccPivot" action="#{bvt001C.guardar}"  
+                                              rendered="#{smnubean.opcbot('1')}" value="#{msg.htmlguardar}" title="#{msg.htmlg}" icon="fa fa-floppy-o" styleClass="btn btn-success btn-md"/>                                         
+                                                <p:commandButton icon="fa fa-refresh" update=":formAccPivot:panelAccPivot, :formAccPivot:tbResultAccPivot, growl" process="@this"  action="#{bvt001C.reset()}"
+								                 title="#{msg.htmlr}"  styleClass="btn btn-primary btn-sm">  
+								                 <p:resetInput target="panelAccPivot" /> 
+								                 <f:actionListener binding="#{bd.setRol('')}"/>
+								                 </p:commandButton> 
+                                            </div>
+                                        </div>   
+                                 </p:panel>
+
+                                </div>
+                            </div>
+                       
+                        </div>
+                        
+             <div class="col-md-6 col-sm-12 col-xs-12">
+                 <div class="x_panel">
+                   <div class="x_title">
+                   <h2><small>#{msg.htmlfilter}</small></h2>
+                   <ul class="nav navbar-right panel_toolbox">
+                   </ul>
+                  <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                               
+                   <!-- Tabla con el resultado -->
+					<p:dataTable id="tbResultAccPivot" styleClass="table table-striped" emptyMessage="#{msg.result}" var="tb"  value="#{bvt001C.lazyModel}"   lazy="true" sortBy="a.CONTEXT"  
+					paginator="true" paginatorAlwaysVisible="false" rows="8" rowsPerPageTemplate="5,10,15,20,50,100,500" paginatorPosition="top"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} &#160;&#160; {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}"
+					currentPageReportTemplate=" {currentPage} - {totalPages} #{msg.html28} #{bvt001C.rows}"   rowIndexVar="rowid"
+					 widgetVar="global1" reflow="true">
+					
+					<f:facet name="header"> 			
+		            <p:outputPanel>  
+		                <h:outputText value="#{msg.htmlb}" />&#160;&#160;  
+		                <p:inputText id="globalFilter" onkeyup="PF('global1').filter()" style="width:150px;height:35px;" /> 
+		                <p:tooltip for="globalFilter" value="#{msg.html36}" showEffect="fade" hideEffect="fade" />  
+		                <p:watermark for="globalFilter" value="#{msg.html29}" />
+		            </p:outputPanel>         
+		            </f:facet> 
+		            
+		            <p:column  headerText="#{msg.acccat1TbCod}">   
+		            <h:outputLabel value="#{tb.context}" />
+		            </p:column> 
+		             
+		            
+		            <p:column width="68" >  
+		            <f:facet  name="header">
+		            <p:commandLink value="#{msg.bvtmenuTbAcc}" onclick="fm_check('toAcc',true)" />
+		            </f:facet>  
+		            <input type="checkbox" name="toAcc"   value="#{tb.context}" />
+		            </p:column>
+		            
+		            <p:column width="60" >  
+		            <f:facet  name="header">
+		            <p:commandLink value="#{msg.bvtmenuTbNegAcc}" styleClass="order" onclick="fm_check('toDacc',true)" />
+		            </f:facet>  
+		            <input type="checkbox" name="toDacc"  value="#{tb.context}" />
+		            </p:column>
+		            
+		            <p:column  width="40">  
+		            <center>
+		            <i class="#{bvt001C.isBvt001C(tb.context)}" ></i>
+		            </center>
+		            </p:column> 
+		
+		          </p:dataTable>   
+
+                                </div>
+                            </div>
+                       </div>
+	
+                       </h:form>  
+             
+                       
+                       <!-- Panel Acceso  --> 
+            </div>
+
+    </div>
+   </div> 
+ 
+<script src="../assets/js/bvt001b.js" type="text/javascript"></script>
+<ui:include src="/WEB-INF/templates/footer_no_jquery.xhtml" />
+</h:body>
+</html>

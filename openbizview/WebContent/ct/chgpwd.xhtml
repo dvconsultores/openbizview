@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- 
+     Copyright (C) 2011 - 2016  DVCONSULTORES
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+	
+	    http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+ --> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if IE 8]> <html lang="en" class="ie8"/> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"/> <![endif]-->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body class="nav-md">
+
+    <div class="container body">
+        <div class="main_container">
+
+         <ui:include src="/WEB-INF/templates/menu.xhtml" />
+            <!-- page content -->
+            <div class="right_col" role="main">
+               <div class="page-title">
+                        <div class="title_left">
+                            <h3>#{msg.bvt001atit} &nbsp; </h3>    
+                             <!-- Mensaje -->                                       
+                        </div>                            
+                    </div>
+               <div class="clearfix"></div>
+               <h:form id="formBvt001A" styleClass="form-horizontal form-label-left">
+               
+               <div class="col-md-12 col-sm-12 col-xs-12">
+                        <p:messages globalOnly="true" id="growl" closable="true" showIcon="true"/> 
+                            <div class="x_panel">
+                                <div class="x_title">
+                                <h2><small>#{msg.bvt002tita}</small></h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li class="dropdown">
+                                        <a HREF="http://www.openbizview.com/wiki/doku.php?id=cambiarclave" target="_new" title="Wiki"><i class="fa fa-file-text text-info"></i> #{text.html11}</a>
+                                        </li>
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                <p:panel id="panel" style="border:0">
+                                
+                                   <div class="form-group">
+                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.bvt002Cl}</label>
+                                         <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <p:password id="clave" feedback="true" placeholder="#{msg.bvt002Cl}" promptLabel="#{msg.html52}" weakLabel="#{msg.html53}"
+                                             goodLabel="#{msg.html54}" strongLabel="#{msg.html55}" validatorMessage="#{msg.html56}"  maxlength="15" styleClass="form-control input"  value="#{chgpwg.cluser}" required="true" requiredMessage="#{bd.getMessage('bvt002IngCl')}"/>	           
+	                                        <p:message for="clave" styleClass="margin-top-5"/>
+                                         </div>
+                                         
+                                   </div>
+                                   
+                                   <div class="form-group">
+                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.bvt002Cl}</label>
+                                         <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <p:password id="clave1" feedback="true" placeholder="#{msg.bvt002Cl}" promptLabel="#{msg.html52}" weakLabel="#{msg.html53}"
+                                            goodLabel="#{msg.html54}" strongLabel="#{msg.html55}" validatorMessage="#{msg.html56}" maxlength="15"  styleClass="form-control input"  value="#{chgpwg.cluser1}" required="true" requiredMessage="#{bd.getMessage('bvt002IngCl')}"/>
+	                                     <p:message for="clave1" styleClass="margin-top-5"/>
+                                         </div>
+                                   </div>
+                                              
+
+                                        <div class="ln_solid"></div>
+                                        <div class="form-group">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <p:commandButton value="#{msg.chgpwdButtonCL}" action="#{chgpwg.updatea()}" 
+								            update="growl, panel"  icon="fa fa-floppy-o" styleClass="btn btn-success btn-md"/>
+								            <p:commandButton value="#{msg.chgpwdButtonL}"  process="@this"  icon="fa fa-refresh" styleClass="btn btn-primary btn-sm">
+								            <p:resetInput target="panel" /> 
+								            </p:commandButton>
+                                            </div>
+                                        </div>   
+                                 </p:panel>                    
+                                </div>
+                            </div>
+                           <h3>Nota: Su nueva contraseña no puede ser igual a ninguna de las anteriores.</h3>
+                        </div>                        
+                        
+                        
+			        <p:dialog header="#{msg.logClave}" resizable="false" closable="false"
+					widgetVar="idleDialog" modal="true" width="400" responsive="true">
+					<h:outputText value="#{msg.bvt002up}" />
+					<br />
+					<br />
+					<h:form>
+						<center>
+							<p:commandButton value="OPEN-BIZVIEW - LOGIN" icon=""
+								action="#{loginBean.logout}" />
+						</center>
+					</h:form>
+				    </p:dialog>	
+               </h:form>         
+            </div>
+
+    </div>
+   </div> 
+ 
+<script src="../assets/js/bvt001a.js" type="text/javascript"></script>
+<ui:include src="/WEB-INF/templates/footer_no_jquery.xhtml" />
+</h:body>
+</html>
