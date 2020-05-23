@@ -294,6 +294,7 @@ public class SeguridadMenuBean extends Bd implements Serializable{
 	 * @return true o false
 	 */
 	public String opcbot(String opc)  {
+		if(listBoton!=null) {
 		IntStream streamBoton = IntStream.range(0,listBoton.size());
 		//Recorrer opciones de seguridad y salir si no tiene acceso
 		//Recorre todo el menú de la lista de sesión y por opción verifica
@@ -303,7 +304,9 @@ public class SeguridadMenuBean extends Bd implements Serializable{
 		 }
 		});
 		streamBoton.close();
+		}
 		return rendered;
+		
 	}
 
 		

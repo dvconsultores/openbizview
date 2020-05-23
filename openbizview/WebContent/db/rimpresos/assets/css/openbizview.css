@@ -1,0 +1,185 @@
+
+body {
+    color: #73879C;
+
+    /*#ECF0F1; #FCFCFC*/
+    width: 98%;
+    font-family: 'ubuntu', Roboto, Arial,sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+
+	
+	.input_lg{
+		height: 45px;
+	}
+	
+	.panel-login{
+		border-color: #3498db !important;
+	}
+	
+	.panel-heading{
+		background-color: #ffdf64 !important;
+		border: #ffdf64 !important; 
+	}
+	
+	.panel-login-heading{
+		background-color: #3498db !important;
+		border: #3498db !important; 
+	}
+	
+	
+	.panel-delete-warning{
+		background-color: #ffdf64 !important;
+		border: #ffdf64 !important; 
+	}
+
+
+     .icon-blue{
+       color: #3498db !important;
+     }
+     
+     
+      .icon-green{
+       color: #66ba71 !important;
+     }
+ 
+     
+     .icon-red{
+       color: #e2423b !important;
+     }
+     
+     .icon-white{
+       color: white !important;     
+     }
+     
+     
+    .col1{ padding-top: 2px;}
+	.colmsg{padding-left:30px;}
+	
+	
+	/**Se usa en bvt001 para mostrar detalle de los reportes*/
+	.detalleTarea{
+	font-weight: bold;
+	font-style: italic;
+   }
+	 
+
+   /*
+   Tabla resultado
+	*/
+	   /***Sobrecarga el estilo de primefaces en el datatable************/
+	.ui-datatable tr.ui-datatable-odd:hover {
+	background: #D7E6EA !important;
+	}
+	
+	.ui-datatable tr.ui-datatable-even:hover {
+		background: #D7E6EA !important;
+	}
+	
+	.ui-datatable tr.ui-datatable-even {
+		font-size: 11px;
+		font-family: 'Ubuntu', sans-serif !important;
+		height: 40px;
+		border-color: rgba(111, 111, 111, 0.2) transparent !important;
+	}
+	
+	.ui-datatable tr.ui-datatable-odd {
+		font-size: 11px;
+		font-family: 'Ubuntu', sans-serif !important;
+		height: 40px;
+		border-color: rgba(111, 111, 111, 0.2) transparent !important;
+		background-color: white !important;
+	}
+	
+	/***Sobrecarga el estilo de primefaces en el header y footer de un datatable************/
+	.ui-datatable .ui-datatable-header,
+	.ui-datatable .ui-datatable-footer {
+	    text-align:left !important;
+	}
+	
+	.ui-datatable tbody td.wrap {
+	    table-layout: fixed;
+	    white-space:normal !important;
+	    word-wrap: break-word;
+	}
+	.ui-paginator {
+	text-align: left ! important
+	}
+
+	.btn-primary,
+	.btn-primary:hover,
+	.btn-primary:active,
+	.btn-primary:visited,
+	.btn-primary:focus {
+	    background-color: #ffdf64 !important;
+	    border-color: #ffdf64 !important;
+	}
+	
+	
+	.btn-success,
+	.btn-success:hover,
+	.btn-success:active,
+	.btn-success:visited,
+	.btn-success:focus {
+	    background-color: #66ba71 !important;
+	    border-color: #66ba71 !important;
+	}
+	
+	.btn-blue,
+	.btn-blue:hover,
+	.btn-blue:active,
+	.btn-blue:visited,
+	.btn-blue:focus {
+	    background-color: #3498db !important;
+	    border-color: #3498db !important;
+	}
+	
+	.margin-top-5{
+	 margin-top: 5px;
+	}
+	
+	.fs12{
+	  font-size: 12px !important;
+	}
+	
+	.ui-autocomplete-input{
+	   width: 90% !important;
+	 }
+	
+	
+	.ui-autocomplete-panel .ui-autocomplete-list-item {
+	  white-space: nowrap;
+	  font-size: 12px;	  
+	}
+
+ /* Componentes del cubo pivot4j */
+  
+    .pivot4j {
+    background-color: #ffff !important;
+    font-family: 'ubuntu', Roboto, Arial,sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    margin-left: 0 !important;
+    background: #F7F7F7;
+    }
+    
+    
+     .view_scroll{
+      overflow-y: hidden;
+      overflow-x: scroll;
+     }
+   
+
+	.input_search {
+	  margin-left: -5px;
+	  width: 290px;
+	  padding: 5px;
+	  border: solid 1px #dcdcdc;
+	  transition: box-shadow 0.3s, border 0.3s;
+	}
+	
+
+ 
+   

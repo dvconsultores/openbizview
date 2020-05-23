@@ -21,13 +21,15 @@
 	}
 	
 	function enviar(vT0,vT1,vT2,vT3,vT4){
-		  document.getElementById("formBvt001:codrep").value= rTrim(vT0);
-		  document.getElementById("formBvt001:desrep").value= rTrim(vT1);
-		  document.getElementById("formBvt001:comrep").value= rTrim(vT2);
-		  document.getElementById("formBvt001:vop").value= rTrim(vT3);
-		  document.getElementById("formBvt001:grupo_input").value= rTrim(vT4);
-		  updateInput('formBvt001:codrep', '#b6c6c0');
-		}
+		  document.getElementById("combo").value= rTrim(vT0);
+		  document.getElementById("codrep").value= rTrim(vT1);
+		  document.getElementById("desrep").value= rTrim(vT2);
+		  document.getElementById("comrep").value= rTrim(vT3);
+		  document.getElementById("vop").value= rTrim(vT4);
+		  
+		  updateInput('codrep', '#b6c6c0');
+		  $('#myModalForm').modal(); 
+	}
 	
 	function imprimir(rep, usuario, rol, descripcion, instancia, locale){
 		//alert(locale);
@@ -111,67 +113,5 @@
 		$("#txt_det_4").text(vT3);
 	}
 	
-	function modal(vT0){
-		if(vT0=="1"){
-		$( document ).ready( function() {
-		    $( '#myModal' ).modal( 'toggle' );
-		});
-	}
-	}
-	
-	function modalHelp(){
-		alert('hola');
-		$( document ).ready( function() {
-		    $( '#myModal' ).modal( 'toggle' );
-		});
-	}
 	
 	
-	function dismissModal(){
-		$( document ).ready( function() {
-		    $( '#myModal' ).modal( 'hide' );
-		});
-	}
-	
-	
-		//Morris charts snippet - js
-		function chart(vT0,vT1,vT2,vT3,vT4, vT5, vT6, vT7, vT8, vT9, vT10){	
-			a
-			var ctx = document.getElementById("myChart").getContext('2d');
-			var myChart = new Chart(ctx, {
-		    type: 'bar',
-		    data: {
-		        labels: [vT5, vT6, vT7, vT8, vT9],
-		        datasets: [{
-		            label: vT10,
-		            data: [vT0, vT1, vT2, vT3, vT4],
-		            backgroundColor: [
-		                'rgba(102, 186, 113, 0.2)',
-		                'rgba(52, 152, 219, 0.2)',
-		                'rgba(255, 223, 100, 0.2)',
-		                'rgba(182, 198, 192, 0.2)',
-		                'rgba(255, 99,  132, 0.2)'
-		            ],
-		            borderColor: [
-		                'rgba(102, 186, 113, 1)',
-		                'rrgba(52, 152, 219, 1)',
-		                'rgba(255, 223, 100, 1)',
-		                'rgba(182, 198, 192, 1)',
-		                'rgba(255, 99,  132, 1)'
-		            ],
-		            borderWidth: 1
-		        }]
-		    },
-		    options: {
-		        scales: {
-		            yAxes: [{
-		                ticks: {
-		                    beginAtZero:true
-		                }
-		            }]
-		        }
-		    }
-		    
-		});
-	
-		}

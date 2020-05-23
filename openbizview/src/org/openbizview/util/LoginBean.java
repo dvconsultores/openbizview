@@ -20,24 +20,23 @@ import java.io.IOException;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 
 import org.quartz.SchedulerException;
 
 @ManagedBean
-@ViewScoped
-public class LoginBean {
+@SessionScoped
+public class LoginBean extends Bd {
 
 	private String usuario;
 	private String clave;
 	FacesMessage msj = null;
 	HttpSession sesionOk;
 	HttpServletRequest rq = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+	private String sessionId;
 	StringMD md = new StringMD(); // Objeto encriptador
 	String logged = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
 	String loggedUsr = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("desuser");
@@ -61,6 +60,20 @@ public class LoginBean {
 		this.clave = clave;
 	}
 
+	/**
+	 * @return the sessionId
+	 */
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	/**
+	 * @param sessionId
+	 *            the sessionId to set
+	 */
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
 
 	/**
 	 * Leer Datos de Usuarios
@@ -80,11 +93,11 @@ public class LoginBean {
 		query += " FROM BVT002";
 		query += " where coduser = '" + usuario.toUpperCase() + "' order by ?";
 
-		consulta.selectGenerica(query, Bd.JNDI);
+		consulta.selectGenerica(query, JNDI);
 		rows = consulta.getData().get(0).size();
 
 		if (rows == 0) {
-			msj = new FacesMessage(FacesMessage.SEVERITY_ERROR, Bd.getMessage("noreg"), "");
+			msj = new FacesMessage(FacesMessage.SEVERITY_ERROR, getMessage("noreg"), "");
 			FacesContext.getCurrentInstance().addMessage(null, msj);
 			usuario = "";
 		}
@@ -102,7 +115,7 @@ public class LoginBean {
 			// variable de session
 			if (usuario.equals(vLusuario) && !md.getStringMessageDigest(clave, StringMD.SHA256).equals(vLclave)) {
 				// System.out.println(getMessage("logCl"));
-				msj = new FacesMessage(FacesMessage.SEVERITY_ERROR, Bd.getMessage("logCl"), "");
+				msj = new FacesMessage(FacesMessage.SEVERITY_ERROR, getMessage("logCl"), "");
 				FacesContext.getCurrentInstance().addMessage(null, msj);
 
 			} else if (usuario.equals(vLusuario) && md.getStringMessageDigest(clave, StringMD.SHA256).equals(vLclave)) {
@@ -111,7 +124,8 @@ public class LoginBean {
 				// Creando la variable de session
 				sesionOk = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 				sesionOk.setAttribute("usuario", usuario);
-
+				// sesionOk.setMaxInactiveInterval(getSession());
+				sessionId = sesionOk.getId();
 				// FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario",
 				// usuario);
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("login",
@@ -120,6 +134,10 @@ public class LoginBean {
 						consulta.getData().get(2).get(0));
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("desuser",
 						consulta.getData().get(3).get(0));
+				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("session", sessionId);
+
+				// Se genera opción de logout
+				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("logoutEstandart", "0");
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("instancia",
 						consulta.getData().get(5).get(0));
 
@@ -128,7 +146,7 @@ public class LoginBean {
 				opcseg.opcbot(); // Acceso a botones
 				opcseg.opcmnu(); // Acceso a menú
 
-				// Recuperar trigger
+//				// Recuperar trigger
 //				try {
 //					new Programacion().recuperarTriggers("0");
 //				} catch (SchedulerException | NamingException e1) {
@@ -148,6 +166,19 @@ public class LoginBean {
 		} // Fin if valida que sema mayor a cero (0)
 	}
 
+	/**
+	 * Define la instancia seleccionada y redirecciona
+	 */
+	public void grupos(String grupo) {
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("instancia", grupo.split(" - ")[0]);
+		// System.out.println("Grupo de usuario: " + grupo.split(" - ")[0]);
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/openbizview/ct/openbizview.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Invalida la session y sale de la aplicación
@@ -160,12 +191,36 @@ public class LoginBean {
 		if (sesionOk != null) {
 			sesionOk.invalidate();
 		}
+		
 		try {
-		 FacesContext.getCurrentInstance().getExternalContext().redirect(baseURL + "/login.xhtml");
+			FacesContext.getCurrentInstance().getExternalContext().redirect(baseURL + "/login.xhtml");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-		e.printStackTrace();
+			e.printStackTrace();
 		}
+		
+	}
+	
+	
+	/**
+	 * Invalida la session y sale de la aplicación
+	 * 
+	 * @return String
+	 */
+	public void logout2() {
+		// Invalida la session
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		if (sesionOk != null) {
+			sesionOk.invalidate();
+		}
+		
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect(baseURL + "/logout.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**
@@ -177,8 +232,7 @@ public class LoginBean {
 	public String getLogged() { // System.out.println("Usuario Logeado:" + logged);
 		if (!rq.isRequestedSessionIdValid() || logged == null) {
 			// rq.getCurrentInstance().execute("PF('yourdialogid').show()");
-			// RequestContext.getCurrentInstance().execute("PF('idleDialog').show()");
-			logout();
+			// new LoginBean().logout();
 			return null;
 		} else {
 			return logged.toLowerCase();
@@ -194,8 +248,7 @@ public class LoginBean {
 	public String getLoggedUsr() throws IOException { // System.out.println("Usuario Logeado:" + login);
 		if (!rq.isRequestedSessionIdValid() || logged == null) {
 			// rq.getCurrentInstance().execute("PF('yourdialogid').show()");
-			// RequestContext.getCurrentInstance().execute("PF('idleDialog').show()");
-			logout();
+			// new LoginBean().logout();
 			return null;
 		} else {
 			return loggedUsr.toUpperCase();

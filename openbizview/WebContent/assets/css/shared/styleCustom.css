@@ -1,0 +1,42 @@
+/*------------------------------------------------------------------
+ [Custom Stylesheet]
+
+
+-------------------------------------------------------------------*/
+
+	.message{
+		color: red;
+		font-size: 12px;
+	}
+	
+	.invalid{
+	  border-left-color: red;
+	  border-left-width: 4px;
+	}
+	
+	
+	 .ve {
+	  background: url('../../assets/images/flags/VE.png') no-repeat 0;
+	}
+	
+	 .us {
+	  background: url('../../assets/images/flags/US.png') no-repeat 0;
+	}
+	
+	.mtmbmenu{
+	  margin-top: -5px;
+	  margin-bottom: -5px;
+	}
+	
+	
+	table,  td {	
+	  font-size: 13px !important;
+	  padding-top: 5px !important;
+	  padding-bottom: 5px !important;
+	}
+	
+	.detalleTarea{
+	font-weight: bold;
+	font-style: italic;
+   }
+	

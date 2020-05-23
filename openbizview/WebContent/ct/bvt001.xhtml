@@ -1,4 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- 
      Copyright (C) 2011 - 2016  DVCONSULTORES
 
@@ -14,248 +15,282 @@
 	See the License for the specific language governing permissions and
 	limitations under the License.
  --> 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!--[if IE 8]> <html lang="en" class="ie8"/> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9"/> <![endif]-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:p="http://primefaces.org/ui"
+   xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+   template="/WEB-INF/templates/template.xhtml">
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-<h:body class="nav-md">
-
-    <div class="container body">
-        <div class="main_container">
-
-         <ui:include src="/WEB-INF/templates/menu.xhtml" />
-            <!-- page content -->
-            <div class="right_col" role="main">
-               <div class="page-title">
-                        <div class="title_left">
-                            <h3>#{msg.bvt001tit} &nbsp; </h3>    
-                             <!-- Mensaje -->                                       
-                        </div>                            
-                    </div>
-               <div class="clearfix"></div>
-               <h:form id="formBvt001" styleClass="form-horizontal form-label-left">
-               
-               <div class="col-md-12 col-sm-12 col-xs-12">
-                        <p:messages globalOnly="true" id="growl" closable="true" showIcon="true"/> 
-                            <div class="x_panel">
-                                <div class="x_title">
-                                <h2><small>#{msg.htmlload}</small></h2>
-                                    <ul class="nav navbar-right panel_toolbox">
-                                        <li class="dropdown">
-                                        <a HREF="http://www.openbizview.com/wiki/doku.php?id=reportes" target="_new" title="Wiki"><i class="fa fa-file-text text-info"></i> #{text.html11}</a>
-                                        </li>
-                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                        </li>
-                                    </ul>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="x_content">
-                                <p:panel id="panel" style="border:0">
-                                
-                                   <div class="form-group">
-                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.bvt001Grp}</label>
-                                         <div class="col-md-9 col-sm-9 col-xs-12">
-                                            <p:autoComplete id="grupo" placeholder="&#160;&#160;#{msg.bvt001Grp}" value="#{bvt001.codgrup}"  emptyMessage="#{msg.html138}" completeMethod="#{autocomplete.completeGrupo}"  required="true"  requiredMessage="#{bd.getMessage('htmlvalidate')}" valueChangeListener="#{bd.setCodgrup(bvt001.codgrup)}" maxResults="500" dropdown="true" scrollHeight="250">
-										    <p:ajax event="itemSelect" update="tbResult" listener="#{bd.setCodgrup(bvt001.codgrup)}" />	     
-										    </p:autoComplete> 
-										    <p:message for="grupo" styleClass="margin-top-5"/>   
-                                         </div>
-                                         
-                                   </div>
-                                   
-                                   <div class="form-group">
-                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.bvt001Cod}</label>
-                                         <div class="col-md-9 col-sm-9 col-xs-12">
-                                             <p:inputText id="codrep" placeholder="#{msg.bvt001Cod}" styleClass="form-control input" maxlength="15" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}" value="#{bvt001.codrep}"/>
-	                                         <p:message for="codrep" styleClass="margin-top-5"/> 
-                                         </div>
-                                   </div>
-                                   
-                                   <div class="form-group">
-                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.bvt001Desc}</label>
-                                         <div class="col-md-9 col-sm-9 col-xs-12">
-                                             <p:inputText id="desrep" placeholder="#{msg.bvt001Desc}" styleClass="form-control input" maxlength="50" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}" value="#{bvt001.desrep}" />
-	                                         <p:message for="desrep" styleClass="margin-top-5"/>
-                                         </div>
-                                   </div>
-                                   
-                                   
-                                   <div class="form-group">
-                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{msg.bvt001Com}</label>
-                                         <div class="col-md-9 col-sm-9 col-xs-12">
-                                             <p:inputText id="comrep" placeholder="#{msg.bvt001Com}"  styleClass="form-control input" maxlength="50" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}" value="#{bvt001.comrep}" /> 	
-	                                         <p:message for="comrep" styleClass="margin-top-5"/>
-                                         </div>
-                                   </div>
-                                    <h:inputHidden id="vop" value="#{bvt001.validarOperacion}"/>
-                                   
-
-                                        <div class="ln_solid"></div>
-                                        <div class="form-group">
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <p:commandButton update="panel, tbResult, growl"  id="btnIn" action="#{bvt001.guardar}" 
-								                 rendered="#{smnubean.opcbot('1')}" value="#{msg.htmlguardar}" title="#{msg.htmlg}" icon="fa fa-floppy-o" styleClass="btn btn-success btn-md"/>
-								                 <p:commandButton onclick="modalDelete();" 
-								                 rendered="#{smnubean.opcbot('2')}" value="#{msg.htmlborrar}" icon="fa fa-trash" title="#{msg.htmle}" styleClass="btn btn-blue btn-md" />
-								                 <p:commandButton icon="fa fa-refresh" update="panel, tbResult, growl" process="@this" 
-								                 title="#{msg.htmlr}"  styleClass="btn btn-primary btn-sm">  
-								                 <p:resetInput target="panel" /> 
-								                 <f:actionListener binding="#{bd.setCodgrup('')}"/> 
-								                 </p:commandButton> 
-								             </div>
-                                        </div>   
-                                 </p:panel>
-
-                                </div>
+   <ui:define name="content">
+    
+			<div class="row">
+				<div class="col-lg-12 grid-margin card card-body">
+                  <h:messages globalOnly="true"  id="growl"/>
+					<div class="d-flex justify-content-between">
+						<h3 class="pb-3">
+							<i class="fa fa-print pr-2"></i>#{msg.bvt001tit}
+						</h3>
+						
+					</div>
+					
+					<div class="form-group row pb-2">
+                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label">#{msg.htmlfilter}</label>
+                            <div class="col-sm-9">
+		                      <h:selectOneMenu value="#{bvt001.codgrup}" styleClass="form-control" > 
+								   <f:selectItem itemLabel="#{msg.bvt001Grp}" itemValue="%" />
+								   <f:selectItems value="#{bvt001.listgrupos}"  itemValue="#{bvt001.codgrup}" />
+								   <f:ajax listener="#{bvt001.buscar}"  render="@all"  event="change" onevent="monitor"/>
+							  </h:selectOneMenu> 		
                             </div>
-                        </div>
-                        
-                        
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                 <div class="x_panel">
-                   <div class="x_title">
-                   <h2><small>#{msg.htmlfilter}</small></h2>
-                   <ul class="nav navbar-right panel_toolbox">
-                   </ul>
-                  <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                               
-                        <!-- Tabla con el resultado -->
-					<p:dataTable id="tbResult" styleClass="table table-striped" emptyMessage="#{msg.result}" var="tb"  value="#{bvt001.lazyModel}"  lazy="true" sortBy="#{tb.codrep}"
-					paginator="true" paginatorAlwaysVisible="false" rows="15" rowsPerPageTemplate="5,10,15,20,50,100,500" paginatorPosition="top"
-					paginatorTemplate="{FirstPageLink} {PreviousPageLink} &#160;&#160; {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}"
-					currentPageReportTemplate=" {currentPage} - {totalPages} #{msg.html28} #{bvt001.rows}"  
-					widgetVar="global" reflow="true">
-					
-					<f:facet name="header"> 			
-		            <p:outputPanel>  
-		                <h:outputText value="#{msg.htmlb}" />&#160;&#160;  
-		                <p:inputText id="globalFilter" onkeyup="PF('global').filter()" style="width:150px;height:35px;" /> 
-		                <p:tooltip for="globalFilter" value="#{msg.html36}" showEffect="fade" hideEffect="fade" />  
-		                <p:watermark for="globalFilter" value="#{msg.html29}" /> 
-		            </p:outputPanel>         
-		            </f:facet> 
-		            
-		         
-		            
-		            <p:column width="40" >  
-		            <f:facet  name="header">
-		            <p:commandLink onclick="fm_check('toDelete',true)"><i class="fa fa-bookmark fa-2x text-info" title="#{msg.borrar}"></i></p:commandLink>
-		            </f:facet>            
-		            <input type="checkbox" name="toDelete" class="chk" value="#{tb.codrep}"/>
-		            </p:column>  
-					
-					<p:column  width="200">  
-		            <f:facet name="header">#{msg.bvt001TbCod}</f:facet> 
-		            <h:outputLabel value="#{tb.codrep}"  />  
-		            </p:column>  
-		            
-		            <p:column  >  
-		            <f:facet name="header">#{msg.bvt001TbDes}</f:facet>  
-		            <h:outputLabel value="#{tb.desrep}"  />  
-		            </p:column> 
-		           
-		            
-		            <p:column width="100">  
-		            <f:facet name="header">#{msg.maildetalle}</f:facet>  
-		            <center>
-		            <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal"
-		            onclick="detalle('#{tb.codrep}','#{tb.desrep}','#{tb.comrep}','#{tb.vgrupodesgrupo}') ;">
-		            <i class="fa fa-search fa-2x"></i>
-		            </button>
-		            </center>
-		            </p:column>
-		
-		            
-		            <p:column width="60" >  
-		            <f:facet name="header">#{msg.bvt001TbEnviar}</f:facet>   
-		             <p:commandLink styleClass="edit" onclick="enviar('#{tb.codrep}','#{tb.desrep}','#{tb.comrep}','1', '#{tb.vgrupo} - #{tb.vgrupodesgrupo}')" 
-		            title="Enviar"><i class="fa fa-pencil-square-o fa-2x text-info"></i></p:commandLink>
-		            </p:column> 
-		            
-		                        
-		            <p:column width="60" >  
-		            <f:facet name="header">#{msg.bvt001TbPrint}</f:facet>  
-		            <p:commandLink styleClass="edit"  
-		            onclick="imprimir('#{tb.codrep}','#{bvt001.getLogin()}', '#{bvt001.getVlRol()}', '#{tb.desrep}', '#{tb.vinstancia}', '#{bd.getOpenbizviewLocale()}');" 
-		            immediate="true"
-		            title="Enviar"><i class="fa fa-print fa-2x"></i></p:commandLink>
-					</p:column>
-					
-		
-		            </p:dataTable>
+                            
+                      <div class="ml-3 float-rigth mt-2">           
+                          <h:commandLink id="btnIn"  rendered="#{smnubean.opcbot('1')}" onclick="$('#myModalForm').modal()"
+                          title="#{msg.htmln}" styleClass="btn btn-icons btn-rounded btn-primary">
+                          <i class="fa fa-plus"></i>
+                           <f:ajax   onevent="monitor" />
+                          </h:commandLink>
+                          
+                          <h:commandLink id="btnEl"  rendered="#{smnubean.opcbot('2')}"  onclick="modalDelete();" 
+                          title="#{msg.htmlborrar}" styleClass="btn btn-icons btn-rounded btn-warning ml-2">
+                          <i class="fa fa-trash"></i>
+                          <f:ajax   onevent="monitor" />
+                          </h:commandLink>
+                          
+                          <h:commandLink  rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M07')).vistaMenu=='0'}" 
+                          title="#{msg.adm1}" styleClass="btn btn-icons btn-rounded btn-info ml-2">
+                          <i class="fa fa-upload"></i>
+                          </h:commandLink>
+                          
+                          <h:commandLink  rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M15')).vistaMenu=='0'}" 
+                          title="#{msg.seg08}" styleClass="btn btn-icons btn-rounded btn-primary ml-2">
+                          <i class="fa fa-lock"></i>
+                          </h:commandLink>
+                          
+                          <h:commandLink id="btnRefresh"  action="#{bvt001.reset}" immediate="true"
+                          title="#{msg.htmlr}" styleClass="btn btn-icons btn-rounded btn-success ml-2">
+                          <i class="fa fa-refresh"></i> 
+                          <f:ajax   />                   
+                          <f:ajax  render="@all" onevent="monitor" />
+                          </h:commandLink>
 
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-                        
-                        
-                        
-              <!-- Modal -->
-			<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			  <div class="modal-dialog">
+                      </div> 
+                   </div>
+					
+					<h:dataTable id="tbResult" var="tb" value="#{bvt001.list}"
+						styleClass="table table-hover" style="width:100%">
+
+
+						<h:column>
+							<f:facet name="header">
+								<i class="fa fa-trash ml-0 text-warning fa-2x"
+									title="#{msg.borrar}" onclick="fm_check('toDelete',true)"></i>
+							</f:facet>
+							<input type="checkbox" name="toDelete" class="chk"
+								value="#{tb.codrep}" />
+						</h:column>
+
+
+						<h:column>
+							<f:facet name="header">#{msg.bvt001TbCod}</f:facet> 
+				             #{tb.codrep}  
+				            </h:column>
+
+						<h:column>
+							<f:facet name="header">#{msg.bvt001TbDes}</f:facet>  
+				              #{tb.desrep}  
+				            </h:column>
+
+
+						<h:column>
+							<f:facet name="header">#{msg.maildetalle}</f:facet>
+							<button type="button"
+								class="btn btn-icons btn-rounded btn-success"
+								data-toggle="modal" data-target="#myModal"
+								onclick="detalle('#{tb.codrep}','#{tb.desrep}','#{tb.comrep}','#{tb.vgrupodesgrupo}') ;">
+								<i class="fa fa-search"></i>
+							</button>
+						</h:column>
+
+
+						<h:column>
+							<f:facet name="header">#{msg.bvt001TbEnviar}</f:facet>
+							<h:commandLink immediate="true"
+								styleClass="btn btn-icons btn-rounded btn-primary" title="Enviar"
+								onclick="enviar('#{tb.vgrupo}', '#{tb.codrep}','#{tb.desrep}','#{tb.comrep}', '1')">
+								<i class="fa fa-pencil-square-o"></i>
+								<f:ajax   onevent="monitor" />
+							</h:commandLink>
+						</h:column>
+
+
+						<h:column>
+							<f:facet name="header">#{msg.bvt001TbPrint}</f:facet>
+							<button type="button"
+								class="btn btn-icons btn-rounded btn-secondary" title="Imprimir"
+								onclick="imprimir('#{tb.codrep}','#{bvt001.getLogin()}', '#{bvt001.getVlRol()}', '#{tb.desrep}', '#{tb.vinstancia}', '#{bd.getOpenbizviewLocale()}');">
+								<i class="fa fa-print"></i>
+							</button>
+						</h:column>
+
+					</h:dataTable>
+
+
+				</div>
+			</div>
+			
+			
+			
+			
+			<!-- The Modal -->
+			<div class="modal fade" id="myModalForm" data-backdrop="static" data-keyboard="false">
+			  <div class="modal-dialog modal-lg">
 			    <div class="modal-content">
-			      <div class="modal-header panel-heading">
-			        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-			        <h4 class="modal-title" id="myModalLabel"><b>#{msg.html32}</b></h4>
+			
+			      <!-- Modal Header -->
+			      <div class="modal-header">
+			        <h4 class="modal-title">#{msg.bvt001tit}</h4>
 			      </div>
+			
+			      <!-- Modal body -->
 			      <div class="modal-body">
-			       <center style="font-size: 14px">#{msg.html31}</center>
-			      </div>
-			      <div class="modal-footer">
-			        <p:commandButton  action="#{bvt001.delete}"  styleClass="btn btn-blue btn-sm" value="#{msg.htmlborrar}" immediate="true" update="panel, tbResult, growl" accesskey="r" onclick="modalHide()"/>
-			       
-			       </div>
+			         <div class="row">
+                   <div class="col-12 stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                      <h:panelGroup id="panel">
+                       <h:messages globalOnly="true"  id="growl1"/>
+                          <div class="form-group row">
+                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label">#{msg.bvt001Grp}</label>
+                            <div class="col-sm-9">
+		                      <h:selectOneMenu id="combo" value="#{bvt001.codgrup}" styleClass="form-control #{not component.valid ? 'border border-danger' : ''}" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}"> 
+								   <f:selectItem itemLabel="#{msg.bvt001Grp}" itemValue="" />
+								   <f:selectItems value="#{bvt001.listgrupos}"  itemValue="#{bvt001.codgrup}" />
+								   <f:ajax  render="tbResult" onevent="monitor" />
+							  </h:selectOneMenu> 
+							  <h:message for="combo" styleClass="message"/> 
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="exampleInputPassword2" class="col-sm-3 col-form-label">#{msg.bvt001Cod}</label>
+                            <div class="col-sm-9">
+                              <h:inputText id="codrep" pt:placeholder="#{msg.bvt001Cod}" styleClass="form-control input #{not component.valid ? 'border border-danger' : ''}" maxlength="15" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}" value="#{bvt001.codrep}"/>
+	                          <h:message for="codrep" styleClass="message"/> 
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="exampleInputPassword2" class="col-sm-3 col-form-label">#{msg.bvt001Desc}</label>
+                            <div class="col-sm-9">
+                              <h:inputText id="desrep" pt:placeholder="#{msg.bvt001Desc}" styleClass="form-control input #{not component.valid ? 'border border-danger' : ''}" maxlength="50" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}" value="#{bvt001.desrep}" />
+	                          <h:message for="desrep" styleClass="message"/>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="exampleInputPassword2" class="col-sm-3 col-form-label">#{msg.bvt001Com}</label>
+                            <div class="col-sm-9">
+                              <h:inputText id="comrep" pt:placeholder="#{msg.bvt001Com}"  styleClass="form-control input #{not component.valid ? 'border border-danger' : ''}" maxlength="50" required="true" requiredMessage="#{bd.getMessage('htmlvalidate')}" value="#{bvt001.comrep}" /> 	
+	                          <h:message for="comrep" styleClass="message"/>
+                            </div>
+                          </div>
+                          
+                          <h:inputHidden id="vop" value="#{bvt001.validarOperacion}"/>
+                                        
+                         
+                          <h:commandLink rendered="#{smnubean.opcbot('1')}" action="#{bvt001.guardar}"
+                          title="#{msg.htmln}" styleClass="btn btn-icons btn-rounded btn-primary">
+                          <i class="fa fa-save"></i>                
+                          <f:ajax  execute="panel" render="tbResult growl1 panel" onevent="monitor" />
+                          </h:commandLink>	
+                          
+                          <h:commandLink rendered="#{smnubean.opcbot('2')}" action="#{bvt001.reset}" 
+                          title="#{msg.htmlr}" styleClass="btn btn-icons btn-rounded btn-success ml-2">
+                          <i class="fa fa-refresh"></i> 
+                          <f:ajax   />                   
+                          <f:ajax execute="@this" render="panel" />
+                          <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                          </h:commandLink>		
+                          
+                          <h:commandLink  immediate="true" onclick="$('#myModalForm').modal('hide');"
+                          title="#{msg.html48}" styleClass="btn btn-icons btn-rounded btn-danger ml-2">
+                          <i class="fa fa-close"></i>                  
+                          <f:ajax  render="@all" onevent="monitor" />
+                          </h:commandLink>			  
+						 
+                           </h:panelGroup>
+                      </div>
+                    </div>
+                  </div>
+                </div>  
 			    </div>
 			  </div>
-			</div>	
+			 </div> 
+			</div>
 			
 			
-			 <!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header panel-heading">
-	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	        <h4 class="modal-title" id="myModalLabel">#{msg.bvt001Det}</h4>
-	      </div>
-	      <div class="modal-body">
-	  <div class="list-group">
-	  <div class="panel" >
-	        <div class="panel-body"> 	       
-	        <h:panelGrid columns="2" columnClasses="col1,colmsg">
-	        <h:outputText value="#{msg.bvt001TbCod}:"/>
-	        <span id="txt_det_1" class="detalleTarea"></span>
-	        <h:outputText value="#{msg.bvt001TbDes}:"/>
-	        <span id="txt_det_2" class="detalleTarea"></span>
-	        <h:outputText value="#{msg.bvt001TbCom}:"/>
-	        <span id="txt_det_3" class="detalleTarea"></span>
-	        <h:outputText value="#{msg.bvt001tbGrp}:"/>
-	        <span id="txt_det_4" class="detalleTarea"></span>  
-			</h:panelGrid>	     
-	        </div>
-	        </div>    	   
-	  </div>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-               </h:form>         
-            </div>
+			<!-- The Modal -->
+			<div class="modal fade" id="myModal">
+			  <div class="modal-dialog modal-lg">
+			    <div class="modal-content">
+			
+			      <!-- Modal Header -->
+			      <div class="modal-header">
+			        <h4 class="modal-title">#{msg.bvt001Det}</h4>
+			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			      </div>
+			
+			      <!-- Modal body -->
+			      <div class="modal-body">
+			        <label class="col-sm-3 col-form-label">#{msg.bvt001TbCod}:</label>
+		            <span id="txt_det_1" class="col-sm-9 detalleTarea"></span><br/>
+		            <label class="col-sm-3 col-form-label">#{msg.bvt001TbDes}:</label>
+			        <span id="txt_det_2" class="col-sm-9 detalleTarea"></span><br/>
+			        <label class="col-sm-3 col-form-label">#{msg.bvt001TbCom}:</label>
+			        <span id="txt_det_3" class="col-sm-9 detalleTarea"></span><br/>
+			        <label class="col-sm-3 col-form-label">#{msg.bvt001tbGrp}:</label>
+			        <span id="txt_det_4" class="col-sm-9 detalleTarea"></span>  
+			    </div>
+			  </div>
+			 </div> 
+			</div>
+			
+			
+		
+			
+			
+			
+			<!-- The Modal -->
+			<div class="modal fade" id="myModalDelete">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			
+			      <!-- Modal Header -->
+			      <div class="modal-header bg-danger">
+			        <h4 class="modal-title text-white">#{msg.html32}</h4>
+			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			      </div>
+			
+			      <!-- Modal body -->
+			      <div class="modal-body">
+			        <center style="font-size: 14px">#{msg.html31}</center> 
+			    </div>
+			    
+			    <div class="modal-footer">
+			        <h:commandButton  action="#{bvt001.delete}"  styleClass="btn btn-danger btn-fw" value="#{msg.htmlborrar}" immediate="true" accesskey="r" onclick="modalHide()">
+			        <f:ajax   />
+			        <f:ajax execute="@form" render="@form" onevent="monitor" />
+			        </h:commandButton>   
+			    </div>
+			  </div>
+			 </div> 
+			</div>
+			
 
-    </div>
-   </div> 
- 
-<script src="../assets/js/bvt001.js" type="text/javascript"></script>
-<ui:include src="/WEB-INF/templates/footer_no_jquery.xhtml" />
-</h:body>
-</html>
+			
+			
+		
+				
+                   
+   </ui:define>
+    
+</ui:composition>

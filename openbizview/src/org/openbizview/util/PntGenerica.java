@@ -33,12 +33,166 @@ import javax.sql.DataSource;
 /**
  * datos de cualquier tabla pasada por parametro
  *  */
-public class PntGenerica implements Serializable {
+public class PntGenerica extends Bd implements Serializable {
 /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 //Variables serán utilizadas para capturar mensajes de errores de Oracle
+	
+	//Variables para select
+	private int columns;
+	private String[][] arr;
+	private int rows;
+	
+	
+	
+	 /**
+		 * Leer datos de cualquier tabla pasada por parametro
+		 **/
+
+	    public void  selectPntGenerica(String strCadena, String pool) throws  NamingException {
+	        //Pool de conecciones JNDI
+	        Context initContext = new InitialContext();
+	        DataSource ds = (DataSource) initContext.lookup(pool);
+	        try {
+	            Statement stmt;
+	            ResultSet rs = null;
+	            Connection con = ds.getConnection();
+
+	            //Class.forName(getDriver());
+	            //con = DriverManager.getConnection(
+	            //        getUrl(), getUsuario(), getClave());
+	            stmt = con.createStatement(
+	               		ResultSet.TYPE_SCROLL_INSENSITIVE,
+	                    ResultSet.CONCUR_READ_ONLY);
+
+				////System.out.println(strCadena);
+	            try{
+	            rs = stmt.executeQuery(strCadena);
+	            rows = 1;
+			    rs.last();
+			    rows = rs.getRow();
+	            ////System.out.println(rows);
+
+	            ResultSetMetaData rsmd = rs.getMetaData();
+	        	columns = rsmd.getColumnCount();
+			    ////System.out.println(columns);
+	        	arr = new String[rows][columns];
+
+	            int i = 0;
+			    rs.beforeFirst();
+	            while (rs.next()){
+	                for (int j = 0; j < columns; j++)
+					arr [i][j] = rs.getString(j+1);
+					i++;
+	               }
+	                } catch (SQLException e) {
+	                }
+	            stmt.close();
+	            con.close(); 
+	            rs.close();
+
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
+	    /**
+	   	 * Leer datos de cualquier tabla pasada por parametro
+	   	 * @param strCadena query para oracle
+	   	 * @param strCadena1 query para postgres
+	   	 * @param strCadena2 query para sqlserver
+	   	 **/
+
+	       public void  selectPntGenericaMDB(String strCadena, String strCadena1, String strCadena2, String pool) throws  NamingException {
+	           //Pool de conecciones JNDI
+	           Context initContext = new InitialContext();
+	           DataSource ds = (DataSource) initContext.lookup(pool);
+	           try {
+	               Statement stmt;
+	               ResultSet rs = null;
+	               Connection con = ds.getConnection();
+	             //Reconoce la base de datos de conección para ejecutar el query correspondiente a cada uno
+	        		DatabaseMetaData databaseMetaData = con.getMetaData();
+	        		productName    = databaseMetaData.getDatabaseProductName();//Identifica la base de datos de conección
+	               //Class.forName(getDriver());
+	               //con = DriverManager.getConnection(
+	               //        getUrl(), getUsuario(), getClave());
+	               stmt = con.createStatement(
+	                  		ResultSet.TYPE_SCROLL_INSENSITIVE,
+	                       ResultSet.CONCUR_READ_ONLY);
+
+	   			 //System.out.println(strCadena);
+	               try{
+	               	switch ( productName ) {
+	                   case "Oracle":
+	                   	rs = stmt.executeQuery(strCadena);
+	                        break;
+	                   case "PostgreSQL":
+	                   	rs = stmt.executeQuery(strCadena1);
+	                        break;
+	                   case "Microsoft SQL Server":
+	                   	rs = stmt.executeQuery(strCadena2);
+	                        break;     
+	                   }
+	               
+	               rows = 1;
+	   		    rs.last();
+	   		    rows = rs.getRow();
+	               ////System.out.println(rows);
+
+	               ResultSetMetaData rsmd = rs.getMetaData();
+	           	columns = rsmd.getColumnCount();
+	   		    ////System.out.println(columns);
+	           	arr = new String[rows][columns];
+
+	               int i = 0;
+	   		    rs.beforeFirst();
+	               while (rs.next()){
+	                   for (int j = 0; j < columns; j++)
+	   				arr [i][j] = rs.getString(j+1);
+	   				i++;
+	                  }
+	                   } catch (SQLException e) {
+	                   }
+	               stmt.close();
+	               con.close(); 
+	               rs.close();
+
+	           } catch (Exception e) {
+	               e.printStackTrace();
+	           }
+	       }
+	       
+	       
+	       
+	       
+	       
+	       
+	       
+
+
+
+	 /**
+	 * @return Retorna el arreglo
+	 **/
+	public String[][] getArray(){
+		return arr;
+	}
+
+	/**
+	 * @return Retorna número de filas
+	 **/
+	public int getRows(){
+		return rows;
+	}
+	/**
+	 * @return Retorna número de columnas
+	 **/
+	public int getColumns(){
+		return columns;
+	}
 
 	
 	
@@ -205,12 +359,12 @@ public class PntGenerica implements Serializable {
 		 		con = ds.getConnection();	
 		 		//Reconoce la base de datos de conección para ejecutar el query correspondiente a cada uno
         		DatabaseMetaData databaseMetaData = con.getMetaData();
-        		Bd.productName    = databaseMetaData.getDatabaseProductName();//Identifica la base de datos de conección
+        		productName    = databaseMetaData.getDatabaseProductName();//Identifica la base de datos de conección
 		 		
 		 		ResultSet r;
 		 			 		
 		 		
-		 		switch ( Bd.productName ) {
+		 		switch ( productName ) {
                 case "Oracle":
                 	pstmt = con.prepareStatement(strOra);
                      break;
@@ -278,12 +432,12 @@ public class PntGenerica implements Serializable {
 		 		con = ds.getConnection();	
 		 		//Reconoce la base de datos de conección para ejecutar el query correspondiente a cada uno
         		DatabaseMetaData databaseMetaData = con.getMetaData();
-        		Bd.productName    = databaseMetaData.getDatabaseProductName();//Identifica la base de datos de conección
+        		productName    = databaseMetaData.getDatabaseProductName();//Identifica la base de datos de conección
 		 		
 		 		ResultSet r;
 		 			 		
 		 		
-		 		switch ( Bd.productName ) {
+		 		switch ( productName ) {
                 case "Oracle":
                 	pstmt = con.prepareStatement(strOra);
                      break;

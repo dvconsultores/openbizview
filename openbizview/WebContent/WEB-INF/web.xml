@@ -4,19 +4,11 @@
     <welcome-file>login.xhtml</welcome-file>
   </welcome-file-list>
   <session-config>
-    <session-timeout>120</session-timeout>
+    <session-timeout>25</session-timeout>
   </session-config>
 
 
-	<!-- JSF standard parameters -->
-	<context-param>
-		<description>
-            If this parameter is set to true and the submitted value of a component is
-            the empty string, the submitted value will be set to null
-        </description>
-		<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
-		<param-value>true</param-value>
-	</context-param>
+
 	<context-param>
 		<description>Define the state method to be used. There are two different options 
             defined by the specification: 'client' and 'server' state.</description>
@@ -32,6 +24,7 @@
     <param-name>JNDI_BD</param-name>
     <param-value>java:comp/env/jdbc/orabiz</param-value>
   </context-param>
+  
   <context-param>
     <param-name>JNDI_MAIL</param-name>
     <param-value>java:comp/env/mail/recibos</param-value>
@@ -41,7 +34,12 @@
     <param-name>MAIL_ACCOUNT</param-name>
     <param-value>info@mail.com</param-value>
   </context-param>
-    
+  
+ 
+    <context-param>
+     <param-name>primefaces.THEME</param-name>
+     <param-value>omega</param-value>
+     </context-param>
      
      <servlet>
     <servlet-name>QuartzInitializer</servlet-name>
@@ -57,14 +55,14 @@
     <load-on-startup>2</load-on-startup>
   </servlet>
   
-    
+  
    <error-page>
     <error-code>404</error-code>
     <location>/WEB-INF/templates/error-404.html</location>
-  </error-page> 
+  </error-page>
   
-
-	<!-- Faces Servlet -->
+  
+ 	<!-- Faces Servlet -->
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -82,9 +80,47 @@
 		<url-pattern>/faces/*</url-pattern>
 	</servlet-mapping>
 	
-	 <context-param>
-     <param-name>primefaces.THEME</param-name>
-     <param-value>omega</param-value>
-     </context-param>
+	<filter>
+		<filter-name>ClickjackFilterDeny</filter-name>
+		<filter-class>org.openbizview.filters.ClickjackFilter</filter-class>
+		<init-param>
+			<param-name>mode</param-name>
+			<param-value>DENY</param-value>
+		</init-param>
+	</filter>
+	
+	<filter>
+		<filter-name>ClickjackFilterSameOrigin</filter-name>
+		<filter-class>org.openbizview.filters.ClickjackFilter</filter-class>
+		<init-param>
+			<param-name>mode</param-name>
+			<param-value>SAMEORIGIN</param-value>
+		</init-param>
+	</filter>
+	
+	<filter>
+		<filter-name>XContentTypeOptionsFilter</filter-name>
+		<filter-class>org.openbizview.filters.XContentTypeOptionsFilter</filter-class>
+		<init-param>
+			<param-name>mode</param-name>
+			<param-value>nosniff</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>ClickjackFilterDeny</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>ClickjackFilterSameOrigin</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>CrossSiteScriptingXSSFilter</filter-name>
+		<filter-class>org.openbizview.filters.CrossSiteScriptingXSSFilter</filter-class>
+	</filter>
+
 
 </web-app>

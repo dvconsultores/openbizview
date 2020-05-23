@@ -1,204 +1,369 @@
 <?xml version='1.0' encoding='UTF-8' ?>
+
 <!-- 
      Copyright (C) 2017 GLOBAL FORGE
  -->  
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <!--[if IE 8]> <html lang="en" class="ie8"/> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9"/> <![endif]-->
 
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<h:body class="nav-md">
-
-    <div class="container body">
-        <div class="main_container">
-
-         <ui:include src="/WEB-INF/templates/menu.xhtml" />
-            <!-- page content -->
-            <div class="right_col" role="main">
-               <div class="page-title">
-                        <div class="title_left">
-                            <h3>#{text.adminBankTitleP9} &nbsp; </h3>    
-                             <!-- Mensaje -->
-                         <p:messages globalOnly="true" id="growl" closable="true" showIcon="true"/>                   
-                        </div>
-                    </div>
-               <div class="clearfix"></div>
-               <h:form id="formAdmin1" styleClass="form-horizontal form-label-left">
-               <div class="col-md-6 col-sm-6 col-xs-12">
-                 <div class="x_panel">
-                   <div class="x_title">
-                 <h2><small>#{text.adminBankTitleP10}</small></h2>
-                   <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                   </ul>
-                  <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                               
-                                 <!-- Tabla con el resultado -->
-						<p:dataTable id="tbResult"  emptyMessage="#{text.html7}" var="tb"   value="#{ta00007.list}" lazy="true"  
-						paginator="true" paginatorAlwaysVisible="false" rows="15" rowsPerPageTemplate="5,10,15,20,50,100,500" paginatorPosition="top"
-						paginatorTemplate="{FirstPageLink} {PreviousPageLink} &#160;&#160; {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}"
-						currentPageReportTemplate=" {currentPage} - {totalPages} #{msg.html28} #{ta00007.rows}"  
-						filteredValue="#{ta00007.filtered}" widgetVar="global" reflow="true" >
-						
-						<f:facet name="header"> 			
-			            <p:outputPanel>  
-			                <p:inputText id="globalFilter" placeholder="#{text.html6}" onkeyup="PF('global').filter()" style="width:150px;" /> 
-			            </p:outputPanel>         
-			            </f:facet> 
-			            
-			            <p:column width="40" headerText="">  
-			            <f:facet  name="header">
-			            <p:commandLink onclick="fm_check('toDelete',true)"><i class="fa fa-bookmark fa-2x" title="#{msg.borrar}"></i></p:commandLink>
-			            </f:facet>  
-			            <input type="checkbox" name="toDelete" class="chk" value="#{tb.id}"/>
-			            </p:column>
-			            
-			            
-			            <p:column headerText="#{text.adminBankAccount}">
-                        <h:outputLabel value="#{tb.name}"  />
-                        </p:column>
-			                  
-			            <p:column width="70" headerText="#{text.html4}" >    
-			            <p:commandLink  
-			            process="@this"
-			            update="@form"
-			            action="#{ta00007.editar(tb.name,tb.mail,tb.phone_number,tb.id)}"
-			            title="Enviar"><i class="fa fa-pencil-square-o fa-2x "></i></p:commandLink>  
-			            </p:column> 
-            
-						</p:dataTable>	
-
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <div class="x_panel">
-                                <div class="x_title">
-                                    <h2><small>#{text.adminBankTitleP11}</small></h2>
-                                    <ul class="nav navbar-right panel_toolbox">
-                                    <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i> #{text.html11}</a>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="adminTypeAccount_Ta">#{text.adminBankLabel2}</a>
-                                                </li>
-                                                <li><a href="adminOffice_Ta">#{text.adminBankLabel8}</a>
-                                                </li>
-                                                <li><a href="adminBankContact_Ta">#{text.adminBankLabel9}</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                        </li>
-                                    </ul>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="x_content">
-                                <p:panel id="panel" style="border:0">
-                                
-                                   <div class="form-group">
-                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{text.adminBankLabel12_A}</label>
-                                         <div class="col-md-9 col-sm-9 col-xs-12">
-                                            <p:inputText id="name" styleClass="form-control" placeholder="#{text.adminBankLabel12}" value="#{ta00007.name}" required="true" requiredMessage="#{text.html8}"/>
-                                            <p:message for="name" styleClass="margin-top-5"/>
-                                         </div>
-                                         
-                                   </div>
-                                   
-                                   <div class="form-group">
-                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{text.adminBankLabel13}</label>
-                                         <div class="col-md-9 col-sm-9 col-xs-12">
-                                            <p:inputText id="mail" styleClass="form-control" placeholder="#{text.adminBankLabel13}" validatorMessage="#{text.login4}" value="#{ta00007.mail}" required="true" requiredMessage="#{text.html8}">
-                                            <f:validateRegex
-												pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
-											</p:inputText>	
-                                            <p:message for="mail" styleClass="margin-top-5"/>
-                                         </div>
-                                   </div>
-                                   
-                                   <div class="form-group">
-                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">#{text.adminBankLabel14}</label>
-                                         <div class="col-md-9 col-sm-9 col-xs-12">
-                                            <p:inputMask id="pn" mask="(999) 999-9999" styleClass="form-control" placeholder="#{text.adminBankLabel14}" value="#{ta00007.phone_number}" required="true" requiredMessage="#{text.html8}"/>
-                                            <p:message for="pn" styleClass="margin-top-5"/>
-                                         </div>
-                                   </div>
-                                   
-                                   
-
-                                        <div class="ln_solid"></div>
-                                        <div class="form-group" style="margin-left: -160px">
-                                            <div class="col-md-12 col-sm-9 col-xs-12 col-md-offset-3">
-                                                <p:commandButton value="#{text.html13}" styleClass="btn btn-primary btn-sm" update="@form" action="#{ta00007.guardar}"/>
-                                                <p:commandButton value="#{text.html14}" styleClass="btn btn-success btn-sm" immediate="true" onclick="modalDelete();"/>
-                                                <p:commandButton icon="fa fa-refresh" update="@form" process="@this" 
-                                                styleClass="btn btn-primary btn-sm"
-								                 title="#{text.htmlr}">  
-								                 <p:resetInput target="panel" />
-								                 </p:commandButton>   
-                                            </div>
-                                        </div>   
-                                 </p:panel>
-
-                                </div>
-                            </div>
-                            <a href="admin1" title="#{text.adminBankTitle}">
-                            <h2>
-                            <i class="fa fa-step-backward icon-blue" aria-hidden="true"></i>  
-                            &nbsp;
-                            #{text.adminBankTitle}
-                            </h2>                         
-                            </a> 
-                        </div>
-                        
-                        
-                        <!-- Modal -->
-			<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			  <div class="modal-dialog">
-			    <div class="modal-content">
-			      <div class="modal-header panel-heading">
-			        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-			        <h4 class="modal-title" id="myModalLabel"><b>#{text.html32}</b></h4>
-			      </div>
-			      <div class="modal-body">
-			       <center style="font-size: 14px">#{text.html31}</center>
-			      </div>
-			      <div class="modal-footer">
-			        <p:commandLink  action="#{ta00007.delete}" styleClass="btn btn-primary btn-sm" value="#{text.html14}" immediate="true" update="tbResult, growl" accesskey="r" onclick="modalHide()"/>
-			        
-			        <p:commandLink  styleClass="btn btn-success btn-sm" value="#{text.html48}" immediate="true" update="tbResult, growl" onclick="modalHide()"/>
-			       </div>
-			    </div>
-			  </div>
-			</div>	
-               </h:form>         
-            </div>
-
-    </div>
-   </div> 
-   
-   
+<h:head>
+	<c:choose>
+	    <c:when test="#{bd.getBundle()}">
+	        <f:loadBundle basename="org.openbizview.util.MessagesBundle_es_VEN" var="msg"/>
+	    </c:when>
+	    <c:otherwise>
+	        <f:loadBundle basename="org.openbizview.util.MessagesBundle_en_US" var="msg"/>
+	    </c:otherwise>
+	</c:choose>
+ <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/login.xhtml"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Openbizview</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css"/>
+    <link rel="stylesheet" href="../assets/vendors/iconfonts/ionicons/css/ionicons.css"/>
+    <link rel="stylesheet" href="../assets/vendors/iconfonts/typicons/src/font/typicons.css"/>
+    <link rel="stylesheet" href="../assets/vendors/iconfonts/flag-icon-css/css/flag-icon.min.css"/>
+     
+    <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css"/>
     
-			
-			
-<script>
-      $(document).ready(function () {
-          $(".select2_single").select2({
-             placeholder: "#{text.html12}",
-             allowClear: true
-          });
-       });
-</script>   
-<ui:include src="/WEB-INF/templates/footer.xhtml" />
+    <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.addons.css"/>
+    
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="../assets/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
+    <!-- Datatable -->
+    <link rel="stylesheet" type="text/css" href="../assets/vendors/datatables/datatables.min.css"/>
+    <!-- End Datatable -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../assets/css/shared/style.css"/>
+    <link rel="stylesheet" href="../assets/css/shared/styleCustom.css"/>
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="../assets/css/demo_1/style.css"/>
+    <!-- End Layout styles -->
+    <link rel="shortcut icon" href="../assets/images/obvt.png" />
+
+</h:head>
+<h:body >
+<div class="container-scroller">
+<h:form prependId="false">
+      <!-- partial:../../partials/_navbar.html -->
+      <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+          <a class="navbar-brand brand-logo" href="openbizview.xhtml">
+            <img src="../assets/images/logo.svg" alt="logo" /> </a>
+          <a class="navbar-brand brand-logo-mini" href="index.html">
+            <img src="../assets/images/logo-mini.svg" alt="logo" /> </a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center">
+        <div class="form-group">
+        <div class="spinner-grow text-primary" id="loading-indicator1" style="display: none;"></div>
+		<div class="spinner-grow text-success" id="loading-indicator2" style="display: none;"></div>
+		<div class="spinner-grow text-warning" id="loading-indicator3" style="display: none;"></div>
+		<div class="spinner-grow text-danger" id="loading-indicator4" style="display: none;"></div>
+		</div>
+		 <ul class="navbar-nav ml-auto">
+		 
+		    <h:commandLink class="btn btn-icons btn-inverse-light" title="Wiki">
+              <i class="fa fa-book"></i>
+            </h:commandLink>
+            <h:commandLink class="btn btn-icons btn-inverse-light ml-2" title="Sign out" action="#{loginBean.logout}" immediate="true" >
+              <i class="fa fa-sign-out"></i>
+              <f:ajax execute="@this"  render="@form" onevent="monitor" />
+            </h:commandLink>
+         
+          </ul>
+
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <span class="mdi mdi-menu"></span>
+          </button>
+        </div>
+   </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item nav-profile">
+              <a href="openbizview" class="nav-link">
+                <div class="profile-image">
+                  <img class="img-xs rounded-circle" src="../assets/images/faces/images.png" alt="profile image"/>
+                  <div class="dot-indicator bg-success"></div>
+                </div>
+                <div class="text-wrapper">
+                  <p class="profile-name">#{loginBean.getLoggedUsr()}</p>
+                </div>
+              </a>
+            </li>
+            <li class="nav-item nav-category">Main Menu</li>
+            <li class="nav-item">
+              <a class="nav-link" href="bvt001">
+                <i class="menu-icon typcn typcn-document-text"></i>
+                <span class="menu-title">#{msg.rep}</span>
+              </a>
+            </li>
+            
+            <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M21')).vistaMenu=='0'}">
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#ui-basic3" aria-expanded="false" aria-controls="ui-basic3">
+                <i class="menu-icon typcn typcn-coffee"></i>
+                <span class="menu-title">#{msg.globalMail}</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="ui-basic3">
+                <ul class="nav flex-column sub-menu">
+                <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M22')).vistaMenu=='0'}">
+                  <li class="nav-item">
+                    <a class="nav-link" href="mailgrupos">#{msg.mail02}</a>
+                  </li>
+                  </h:panelGroup>
+                  <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M23')).vistaMenu=='0'}">
+                  <li class="nav-item">
+                    <a class="nav-link" href="mailgrupos">#{msg.mail03}</a>
+                  </li>
+                  </h:panelGroup>
+                  <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M24')).vistaMenu=='0'}">
+                  <li class="nav-item">
+                    <a class="nav-link" href="mailgrupos">#{msg.mail04}</a>
+                  </li>
+                  </h:panelGroup>
+                </ul>
+              </div>
+            </li>
+            </h:panelGroup>
+            
+            <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('R01')).vistaMenu=='0'}">
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <i class="menu-icon typcn typcn-coffee"></i>
+                <span class="menu-title">#{msg.globalBasico}</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M02')).vistaMenu=='0'}">
+                  <li class="nav-item">
+                    <a class="nav-link" href="bvtcat1">#{msg.bas1}</a>
+                  </li>
+                  </h:panelGroup>
+                  <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M03')).vistaMenu=='0'}">
+                  <li class="nav-item">
+                    <a class="nav-link" href="bvtcat2">#{msg.bas2}</a>
+                  </li>
+                  </h:panelGroup>
+                  <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M04')).vistaMenu=='0'}">
+                  <li class="nav-item">
+                    <a class="nav-link" href="bvtcat3">#{msg.bas3}</a>
+                  </li>
+                  </h:panelGroup>
+                  <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M05')).vistaMenu=='0'}">
+                  <li class="nav-item">
+                    <a class="nav-link" href="bvtcat4">#{msg.bas4}</a>
+                  </li>
+                  </h:panelGroup>
+                </ul>
+              </div>
+            </li>
+            </h:panelGroup>
+            
+            <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M06')).vistaMenu=='0'}">
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#ui-basic1" aria-expanded="false" aria-controls="ui-basic1">
+                <i class="menu-icon typcn typcn-coffee"></i>
+                <span class="menu-title">#{msg.globalAdmin}</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="ui-basic1">
+                <ul class="nav flex-column sub-menu">
+                <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M08')).vistaMenu=='0'}">
+                  <li class="nav-item">
+                    <a class="nav-link" href="bvt006">#{msg.adm2}</a>
+                  </li>
+                  </h:panelGroup>
+                  <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M01')).vistaMenu=='0'}">
+                  <li class="nav-item">
+                    <a class="nav-link" href="biaudit">#{msg.adm3}</a>
+                  </li>
+                  </h:panelGroup>
+                </ul>
+              </div>
+            </li>
+            </h:panelGroup>
+            
+            
+            <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M10')).vistaMenu=='0'}">
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic2">
+                <i class="menu-icon typcn typcn-coffee"></i>
+                <span class="menu-title">#{msg.globalSeguridad}</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="ui-basic2">
+                <ul class="nav flex-column sub-menu">
+                <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M11')).vistaMenu=='0'}">
+                  <li class="nav-item">
+                    <a class="nav-link" href="instancias">#{msg.instancias}</a>
+                  </li>
+                  </h:panelGroup>
+                  <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M12')).vistaMenu=='0'}">
+                  <li class="nav-item">
+                    <a class="nav-link" href="bvt003">#{msg.seg01}</a>
+                  </li>
+                  </h:panelGroup>
+                  <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M13')).vistaMenu=='0'}">
+                  <li class="nav-item">
+                    <a class="nav-link" href="bvtmenu">#{msg.seg02}</a>
+                  </li>
+                  </h:panelGroup>
+                  <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M14')).vistaMenu=='0'}">
+                  <li class="nav-item">
+                    <a class="nav-link" href="bvt002">#{msg.seg03}</a>
+                  </li>
+                  </h:panelGroup>
+                  
+                  <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M16')).vistaMenu=='0'}">
+                  <li class="nav-item">
+                    <a class="nav-link" href="bvt005">#{msg.seg09}</a>
+                  </li>
+                  </h:panelGroup>
+                  <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M17')).vistaMenu=='0'}">
+                  <li class="nav-item">
+                    <a class="nav-link" href="acccat1">#{msg.seg04}</a>
+                  </li>
+                  </h:panelGroup>
+                  <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M18')).vistaMenu=='0'}">
+                  <li class="nav-item">
+                    <a class="nav-link" href="acccat2">#{msg.seg05}</a>
+                  </li>
+                  </h:panelGroup>
+                  <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M19')).vistaMenu=='0'}">
+                  <li class="nav-item">
+                    <a class="nav-link" href="acccat3">#{msg.seg06}</a>
+                  </li>
+                  </h:panelGroup>
+                  <h:panelGroup rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M20')).vistaMenu=='0'}">
+                  <li class="nav-item">
+                    <a class="nav-link" href="acccat4">#{msg.seg07}</a>
+                  </li>
+                  </h:panelGroup>
+                </ul>
+              </div>
+            </li>
+            </h:panelGroup>
+
+          </ul>
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">		
+          <div class="content-wrapper">
+          <ui:insert name="content">Default value for Content</ui:insert>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:../../partials/_footer.html -->
+          <footer class="footer">
+            <div class="container-fluid clearfix">
+              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2015 <a href="http://www.dvconsultores.com.com/" target="_blank">DvConsultores</a>. All rights reserved.</span>
+              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">OpenBizview 7.5
+              </span>
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+      </h:form>
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
+    <script src="../assets/vendors/js/vendor.bundle.addons.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="../assets/js/shared/off-canvas.js"></script>
+    <script src="../assets/js/shared/misc.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <!-- End custom js for this page-->    
+    <!-- Datatable --> 
+    <script type="text/javascript" src="../assets/vendors/datatables/datatables.min.js"></script>
+	<!-- Cookies -->
+	<script src="../assets/js/shared/jquery.cookie.js"></script>
+	<script src="../assets/js/shared/load.js" />
+    <!-- End Datatable --> 
+    <!-- Javascripts custom -->
+    <script src="../assets/js/bvt001.js"></script>
+    <script type="text/javascript">
+    if($.cookie("obv_language")=='es'){
+    	$(document).ready(function() {
+	        $('#tbResult').DataTable( {
+	        	responsive: true,
+	        	ordering: true,
+	        	infoEmpty: "No records available - Got it?",
+	        	emptyTable: "There are currently no active jobs.",
+	        	zeroRecords: "There are currently no active jobs.",
+	            language: {
+	                url: '../assets/vendors/datatables/es.lang',
+	            
+	        	}
+	        } );
+	    } );
+    } else {
+    	$(document).ready(function() {
+	        $('#tbResult').DataTable( {
+	        	responsive: true,
+	        	ordering: true,
+	        	infoEmpty: "No records available - Got it?",
+	        	emptyTable: "There are currently no active jobs.",
+	        	zeroRecords: "There are currently no active jobs.",
+	        } );
+	    } );
+    	
+    }  
+
+    
+    function monitor(data){
+		var loading1 = document.getElementById("loading-indicator1");
+		var loading2 = document.getElementById("loading-indicator2");
+		var loading3 = document.getElementById("loading-indicator3");
+		var loading4 = document.getElementById("loading-indicator4");
+		if(data.status == "begin"){
+			loading1.style.display = "";
+			loading2.style.display = "";
+			loading3.style.display = "";
+			loading4.style.display = "";
+		}
+		else if(data.status == "success"){
+			loading1.style.display = "none";
+			loading2.style.display = "none";
+			loading3.style.display = "none";
+			loading4.style.display = "none";
+		}
+		
+	}
+    
+    
+    $(document).on('keyup keypress', 'form input[type="text"]', function(e) {
+    	  if(e.keyCode == 13) {
+    	    e.preventDefault();
+    	    return false;
+    	  }
+    	});
+    
+
+     </script> 
 </h:body>
 </html>

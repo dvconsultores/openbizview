@@ -2,7 +2,23 @@
 <faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
-<lifecycle>
-	<phase-listener id="nocache">org.openbizview.util.CacheControlPhaseListener</phase-listener>
-</lifecycle>
+
+
+	<lifecycle>
+    <phase-listener id="nocache">org.openbizview.util.CacheControlPhaseListener</phase-listener>
+    </lifecycle>
+    
+    <render-kit>
+        <renderer>
+            <component-family>javax.faces.Messages</component-family>
+            <renderer-type>javax.faces.Messages</renderer-type>
+            <renderer-class>org.openbizview.util.BootstrapMessagesRenderer</renderer-class>
+        </renderer>
+    </render-kit>
+    
+    <application>
+    <action-listener>org.omnifaces.eventlistener.ResetInputAjaxActionListener</action-listener>
+    </application>
+    
+
 </faces-config>
