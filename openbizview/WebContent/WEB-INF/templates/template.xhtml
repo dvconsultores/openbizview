@@ -355,7 +355,7 @@
 		
 	}
     
-    
+    <!-- Evita la tecla enter en el form -->
     $(document).on('keyup keypress', 'form input[type="text"]', function(e) {
     	  if(e.keyCode == 13) {
     	    e.preventDefault();

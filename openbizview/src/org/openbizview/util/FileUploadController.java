@@ -30,7 +30,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
-
 import org.primefaces.event.FileUploadEvent;
 
 @ManagedBean
@@ -69,78 +68,44 @@ public class FileUploadController extends Bd {
 	private static final int BUFFER_SIZE = 6124;
 	//private static final String RUTA_REPORTE = File.separator + "reportes";
 	FileUploadEvent event;
-	ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext(); //Toma ruta real de la aplicación
+    ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext(); //Toma ruta real de la aplicación
 
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////UPLOAD DE ARCHIVOS /////////////////////////////////////////////////  
-
-
-	public void handleReportUpload(FileUploadEvent event)  {
-		     //System.out.println("Thread is running");
-			 File ruta = new File(extContext.getRealPath(BIRT_VIEWER_WORKING_FOLDER) + File.separator +  event.getFile().getFileName());
-				try {
-					FileOutputStream fileOutputStream = new FileOutputStream(ruta);
-					byte[] buffer = new byte[BUFFER_SIZE];
-
-					int bulk;
-					InputStream inputStream = event.getFile().getInputstream();
-					while (true) {
-						bulk = inputStream.read(buffer);
-						if (bulk < 0) {
-							break;
-						}
-						fileOutputStream.write(buffer, 0, bulk);
-						fileOutputStream.flush();						
-					}
-					msj = new FacesMessage(FacesMessage.SEVERITY_INFO, getMessage("autos02Uploaded"), "");
-					FacesContext.getCurrentInstance().addMessage(null, msj);	
-					fileOutputStream.close();
-					inputStream.close();
-	        				
-				} catch (IOException  e) {
-					e.printStackTrace();
-					msj = new FacesMessage(FacesMessage.SEVERITY_FATAL,  e.getMessage(), "");
-					FacesContext.getCurrentInstance().addMessage(null, msj);
-
-				}			
-	}
-	
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////UPLOAD DE ARCHIVOS /////////////////////////////////////////////////  
-
-		public void handlePivotUpload(FileUploadEvent event) {
 		
-			// System.out.println("Thread is running");
-			File ruta = new File(extContext.getRealPath("/WEB-INF/pivot.config") + File.separator + event.getFile().getFileName());
-			try {
-				FileOutputStream fileOutputStream = new FileOutputStream(ruta);
-				byte[] buffer = new byte[BUFFER_SIZE];
-	
-				int bulk;
-				InputStream inputStream = event.getFile().getInputstream();
-				while (true) {
-					bulk = inputStream.read(buffer);
-					if (bulk < 0) {
-						break;
-					}
-					fileOutputStream.write(buffer, 0, bulk);
-					fileOutputStream.flush();
-				}
-				msj = new FacesMessage(FacesMessage.SEVERITY_INFO, getMessage("autos02Uploaded"), "");
-				FacesContext.getCurrentInstance().addMessage(null, msj);
-				fileOutputStream.close();
-				inputStream.close();
-	
-			} catch (IOException e) {
-				e.printStackTrace();
-				msj = new FacesMessage(FacesMessage.SEVERITY_FATAL, e.getMessage(), "");
-				FacesContext.getCurrentInstance().addMessage(null, msj);
-	
-			}
-		}
-	
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		///////////////////////////////////////UPLOAD DE ARCHIVOS /////////////////////////////////////////////////  
 
+
+		public void handleReportUpload(FileUploadEvent event)  {
+			     //System.out.println("Thread is running");
+				 File ruta = new File(extContext.getRealPath("reportes") + File.separator +  event.getFile().getFileName());
+					try {
+						FileOutputStream fileOutputStream = new FileOutputStream(ruta);
+						byte[] buffer = new byte[BUFFER_SIZE];
+
+						int bulk;
+						InputStream inputStream = event.getFile().getInputstream();
+						while (true) {
+							bulk = inputStream.read(buffer);
+							if (bulk < 0) {
+								break;
+							}
+							fileOutputStream.write(buffer, 0, bulk);
+							fileOutputStream.flush();						
+						}
+						msj = new FacesMessage(FacesMessage.SEVERITY_INFO, getMessage("autos02Uploaded"), "");
+						FacesContext.getCurrentInstance().addMessage(null, msj);	
+						fileOutputStream.close();
+						inputStream.close();
+		        				
+					} catch (IOException  e) {
+						e.printStackTrace();
+						msj = new FacesMessage(FacesMessage.SEVERITY_FATAL,  e.getMessage(), "");
+						FacesContext.getCurrentInstance().addMessage(null, msj);
+
+					}			
+		}
+
+	
 
 
 }

@@ -59,10 +59,11 @@
                           </h:commandLink>
                           
                           <h:commandLink  rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M07')).vistaMenu=='0'}" 
-                          title="#{msg.adm1}" styleClass="btn btn-icons btn-rounded btn-info ml-2">
+                          title="#{msg.adm1}" styleClass="btn btn-icons btn-rounded btn-info ml-2" action="#{bd.goTo('uploadreport')}">
                           <i class="fa fa-upload"></i>
-                          </h:commandLink>
-                          
+                          <f:ajax   onevent="monitor" />
+                          </h:commandLink> 
+
                           <h:commandLink  rendered="#{smnubean.listMenu.get(smnubean.opcmnu('M15')).vistaMenu=='0'}" 
                           title="#{msg.seg08}" styleClass="btn btn-icons btn-rounded btn-primary ml-2">
                           <i class="fa fa-lock"></i>
@@ -100,7 +101,7 @@
 						<h:column>
 							<f:facet name="header">#{msg.bvt001TbDes}</f:facet>  
 				              #{tb.desrep}  
-				            </h:column>
+				            </h:column>    
 
 
 						<h:column>
@@ -155,7 +156,7 @@
 			
 			      <!-- Modal body -->
 			      <div class="modal-body">
-			         <div class="row">
+			      <div class="row">
                    <div class="col-12 stretch-card">
                     <div class="card">
                       <div class="card-body">
@@ -214,8 +215,9 @@
                           <h:commandLink  immediate="true" onclick="$('#myModalForm').modal('hide');"
                           title="#{msg.html48}" styleClass="btn btn-icons btn-rounded btn-danger ml-2">
                           <i class="fa fa-close"></i>                  
-                          <f:ajax  render="@all" onevent="monitor" />
-                          </h:commandLink>			  
+                          <f:ajax   onevent="monitor" />
+                          </h:commandLink>	
+                         	  
 						 
                            </h:panelGroup>
                       </div>
@@ -284,13 +286,7 @@
 			  </div>
 			 </div> 
 			</div>
-			
-
-			
-			
-		
-				
-                   
+      
    </ui:define>
     
 </ui:composition>

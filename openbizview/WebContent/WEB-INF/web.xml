@@ -35,11 +35,6 @@
     <param-value>info@mail.com</param-value>
   </context-param>
   
- 
-    <context-param>
-     <param-name>primefaces.THEME</param-name>
-     <param-value>omega</param-value>
-     </context-param>
      
      <servlet>
     <servlet-name>QuartzInitializer</servlet-name>
@@ -54,6 +49,27 @@
     </init-param>
     <load-on-startup>2</load-on-startup>
   </servlet>
+  
+   <context-param>
+     <param-name>primefaces.THEME</param-name>
+     <param-value>omega</param-value>
+     </context-param>
+  
+  
+    <filter>
+    <filter-name>PrimeFaces FileUpload Filter</filter-name>
+    <filter-class>
+   org.primefaces.webapp.filter.FileUploadFilter
+ </filter-class>
+    <init-param>
+      <param-name>thresholdSize</param-name>
+      <param-value>51200</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>PrimeFaces FileUpload Filter</filter-name>
+    <servlet-name>Faces Servlet</servlet-name>
+  </filter-mapping>
   
   
    <error-page>
@@ -121,6 +137,11 @@
 		<filter-name>CrossSiteScriptingXSSFilter</filter-name>
 		<filter-class>org.openbizview.filters.CrossSiteScriptingXSSFilter</filter-class>
 	</filter>
+	
+	
+
+
+
 
 
 </web-app>

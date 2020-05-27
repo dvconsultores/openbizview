@@ -284,6 +284,18 @@ public class Bd  {
     }
 
 
+	/**
+	 * Navegación
+	 * @param pagina
+	 */
+	public void goTo(String pagina) {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect(pagina);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}	
 	
 	
 	

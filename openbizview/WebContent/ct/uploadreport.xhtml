@@ -1,19 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!-- 
-     Copyright (C) 2011 - 2016  DVCONSULTORES
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-	you may not use this file except in compliance with the License.
-	You may obtain a copy of the License at
-	
-	    http://www.apache.org/licenses/LICENSE-2.0
-	
-	Unless required by applicable law or agreed to in writing, software
-	distributed under the License is distributed on an "AS IS" BASIS,
-	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	See the License for the specific language governing permissions and
-	limitations under the License.
- --> 
+     Copyright (C) 2017 GLOBAL FORGE
+ -->  
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--[if IE 8]> <html lang="en" class="ie8"/> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9"/> <![endif]-->
@@ -21,55 +9,117 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<h:body class="nav-md">
 
-    <div class="container body">
-        <div class="main_container">
+<h:head>
+	<c:choose>
+	    <c:when test="#{bd.getBundle()}">
+	        <f:loadBundle basename="org.openbizview.util.MessagesBundle_es_VEN" var="msg"/>
+	    </c:when>
+	    <c:otherwise>
+	        <f:loadBundle basename="org.openbizview.util.MessagesBundle_en_US" var="msg"/>
+	    </c:otherwise>
+	</c:choose>
+ <!-- Required meta tags -->
+    <meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/login.xhtml"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Openbizview</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css"/>
+    <link rel="stylesheet" href="../assets/vendors/iconfonts/ionicons/css/ionicons.css"/>
+    <link rel="stylesheet" href="../assets/vendors/iconfonts/typicons/src/font/typicons.css"/>
+    <link rel="stylesheet" href="../assets/vendors/iconfonts/flag-icon-css/css/flag-icon.min.css"/>
+    <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css"/>
+    
+    <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.addons.css"/>
+    
+    <!-- endinject -->
+    <link rel="stylesheet" href="../assets/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../assets/css/shared/style.css"/>
+    <link rel="stylesheet" href="../assets/css/shared/styleCustom.css"/>
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="../assets/css/demo_1/style.css"/>
+    <!-- End Layout styles -->
+    <link rel="shortcut icon" href="../assets/images/obvt.png" />
 
-         <ui:include src="/WEB-INF/templates/menu.xhtml" />
-            <!-- page content -->
-            <div class="right_col" role="main">
-               <div class="page-title">
-                        <div class="title_left">
-                            <h3>#{msg.pntextreptit} &nbsp; </h3>    
-                             <!-- Mensaje -->                                       
-                        </div>                            
-                    </div>
-               <div class="clearfix"></div>
-               <h:form id="formAutoext" enctype="multipart/form-data" styleClass="form-horizontal form-label-left">
-               <f:event listener="#{fileUploadController.init}" type="preRenderView" /> 
-               <div class="col-md-12 col-sm-12 col-xs-12">
-                        <p:messages globalOnly="true" id="growl" closable="true" showIcon="true"/> 
-                            <div class="x_panel">
-                                <div class="x_title">
-                                <h2><small>#{msg.pntextreptit}</small></h2>
-                                    <ul class="nav navbar-right panel_toolbox">
-                                        <li class="dropdown">
-                                        <a HREF="http://www.openbizview.com/wiki/doku.php?id=upload" target="_new" title="Wiki"><i class="fa fa-file-text text-info"></i> #{text.html11}</a>
-                                        </li>
-                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                        </li>
-                                    </ul>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="x_content">
-                                <p:panel id="panel" style="border:0">
-                                
-                                <p:commandButton icon="fa fa-folder-open" update="panel" styleClass="btn btn-success btn-md"
-								process="@this" title="#{msg.html30}" value="#{msg.html30}">
-								<p:resetInput target="panel" />
-							</p:commandButton>
-							<br />
-							<div id="upload">		
+</h:head>
+<h:body >
+<div class="container-scroller">
+      <!-- partial:../../partials/_navbar.html -->
+      <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+          <a class="navbar-brand brand-logo" href="openbizview.xhtml">
+            <img src="../assets/images/logo.svg" alt="logo" /> </a>
+          <a class="navbar-brand brand-logo-mini" href="index.html">
+            <img src="../assets/images/logo-mini.svg" alt="logo" /> </a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center">
+          <ul class="navbar-nav ml-auto">
+		  <h:form prependId="false">
+		    <h:commandLink class="btn btn-icons btn-inverse-light" title="Wiki">
+              <i class="fa fa-book"></i>
+            </h:commandLink>
+            <h:commandLink class="btn btn-icons btn-inverse-light ml-2" title="Sign out" action="#{loginBean.logout}" immediate="true" >
+              <i class="fa fa-sign-out"></i>
+            </h:commandLink>
+           </h:form>
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <span class="mdi mdi-menu"></span>
+          </button>
+        </div>
+   </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item nav-profile">
+              <a href="openbizview" class="nav-link">
+                <div class="profile-image">
+                  <img class="img-xs rounded-circle" src="../assets/images/faces/images.png" alt="profile image"/>
+                  <div class="dot-indicator bg-success"></div>
+                </div>
+                <div class="text-wrapper">
+                  <p class="profile-name">#{loginBean.getLoggedUsr()}</p>
+                </div>
+              </a>
+            </li>
+            
+            <li class="nav-item nav-category">Main Menu</li>
+            <li class="nav-item">
+              <a class="nav-link" href="bvt001">
+                <i class="menu-icon typcn typcn-document-text"></i>
+                <span class="menu-title">#{msg.rep}</span>
+              </a>
+            </li>
+
+          </ul>
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+               <div class="row">
+                   <div class="col-12 stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                       <h4 class="card-title">#{msg.pntextreptit}</h4>
+                      <h:form id="formAutoext" enctype="multipart/form-data" styleClass="form-horizontal form-label-left">
+                      <f:event listener="#{fileUploadController.init}" type="preRenderView" />         
+                        <h:messages globalOnly="true"  id="growl"/>	
 								<p:fileUpload
 									fileUploadListener="#{fileUploadController.handleReportUpload}"
-									style="padding-top:10px" 
 									mode="advanced" 
-									update="growl"
+									update="@form"
 									auto="true"
+									styleClass="file-path-wrapper"
 									multiple="true" 
 									cancelLabel="#{msg.autos02Cancel}"
 									label="#{msg.autos02Sel}" 
@@ -78,26 +128,46 @@
 									invalidFileMessage="#{msg.autos02Rpt}"
 									oncomplete="HideUpload()">
 								</p:fileUpload>
-								</div>
-                                   
- 
-                                 </p:panel>
-
-                                </div>
-                            </div>
-                        </div>
-                        
-
+								
+						    <h:commandLink   immediate="true" action="#{bd.goTo('bvt001')}" 
+						   title="#{msg.htmlback}" styleClass="btn btn-icons btn-rounded btn-warning mt-2">
+						   <i class="fa fa-arrow-left"></i>
+						   </h:commandLink>
+                        </h:form>
                         
                         
-	
-               </h:form>         
+                     </div>
+                    </div>
+                   </div>
+                  </div>     
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:../../partials/_footer.html -->
+          <footer class="footer">
+            <div class="container-fluid clearfix">
+              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2015 <a href="http://www.dvconsultores.com.com/" target="_blank">DvConsultores</a>. All rights reserved.</span>
+              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">OpenBizview 7.5 - Static
+              </span>
             </div>
-
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
     </div>
-   </div> 
- 
+    <!-- container-scroller -->
+    <!-- plugins:js -->
 
-<ui:include src="/WEB-INF/templates/footer_no_jquery.xhtml" />
+    <!-- Cookies -->
+	<script src="../assets/js/shared/jquery.cookie.js"></script>
+	<script src="../assets/js/shared/load.js" />
+	<script type="text/javascript">
+		$(getLanguage());
+	</script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+
+    
 </h:body>
 </html>
