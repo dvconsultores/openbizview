@@ -1,4 +1,4 @@
-# openbizview
+# openbizview App sin mantenimiento, fin de su ciclo
 Repositorios de reportes en indicadores BI
 
 Es una solución orientada a la obtención de reportes, cubos de datos y dashboards de todas las áreas para que los líderes puedan obtener la información de la gestión de su negocio en forma expedita, ya sea diaria mensual o semanal. Ud podrá visualizar los reportes en línea o recibirlos por correo electrónico.
